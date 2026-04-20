@@ -14,7 +14,7 @@
     --parker:#D97706;
     --nora-softball:#DB2777;
     --nora-volleyball:#7C3AED;
-    --preston-football:#EA580C;
+    --preston-football:#EA580C;--ryman:#0891B2;
     --bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;
     --text:#1A1916;--muted:#6B6860;--subtle:#9A9890;
   }
@@ -40,6 +40,7 @@
   .filter-btn[data-kid="preston"].active{background:var(--preston-baseball)}
   .filter-btn[data-kid="parker"].active{background:var(--parker)}
   .filter-btn[data-kid="nora"].active{background:var(--nora-softball)}
+  .filter-btn[data-kid="ryman"].active{background:var(--ryman)}
 
   .summary-bar{display:flex;gap:12px;padding:12px 28px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;overflow-x:auto}
   .sum-card{text-align:center;flex:1;min-width:60px}
@@ -73,6 +74,7 @@
   .pill-nora-softball {background:#FCE7F3;color:#BE185D}
   .pill-nora-volleyball{background:#EDE9FE;color:#6D28D9}
   .pill-preston-football{background:#FFEDD5;color:#C2410C}
+  .pill-ryman{background:#CFFAFE;color:#0E7490}
   .pill.hidden{display:none}
 
   .busy-badge{display:inline-block;font-size:9px;font-family:'DM Mono',monospace;background:#F3F0EA;color:var(--subtle);border-radius:3px;padding:1px 4px;margin-bottom:3px}
@@ -124,6 +126,7 @@
     <div class="leg"><div class="leg-swatch" style="background:#DB2777"></div><span class="leg-name">Nora</span> · Dolphins · Softball 11/12U</div>
     <div class="leg"><div class="leg-swatch" style="background:#7C3AED"></div><span class="leg-name">Nora</span> · Smith · Volleyball 3rd/4th</div>
     <div class="leg"><div class="leg-swatch" style="background:#EA580C"></div><span class="leg-name">Preston</span> · Eagles · Flag Football</div>
+    <div class="leg"><div class="leg-swatch" style="background:#0891B2"></div><span class="leg-name">Ryman</span> · Monarchs 8U · Baseball</div>
   </div>
 </div>
 
@@ -140,6 +143,7 @@
   <button class="filter-btn" data-kid="preston">Preston</button>
   <button class="filter-btn" data-kid="parker">Parker</button>
   <button class="filter-btn" data-kid="nora">Nora</button>
+  <button class="filter-btn" data-kid="ryman">Ryman</button>
 </div>
 
 <div class="summary-bar" id="summary-bar"></div>
@@ -179,6 +183,7 @@ const KIDS = {
   'nora-softball':  { label:'Nora',    sport:'Softball',     team:'Dolphins',              age:'11/12U',    cls:'pill-nora-softball',   color:'#DB2777', group:'nora'    },
   'nora-volleyball':{ label:'Nora',    sport:'Volleyball',   team:'Smith',                 age:'3rd/4th',   cls:'pill-nora-volleyball', color:'#7C3AED', group:'nora'    },
   'preston-football':{ label:'Preston', sport:'Flag Football',team:'Eagles (Lombardi)',    age:'',          cls:'pill-preston-football',color:'#EA580C', group:'preston' },
+  'ryman':           { label:'Ryman',   sport:'Baseball',     team:'Monarchs 8U',          age:'8U',        cls:'pill-ryman',           color:'#0891B2', group:'ryman'   },
 };
 
 const EVENTS = [
@@ -262,12 +267,25 @@ const EVENTS = [
   {kid:'nora-volleyball', date:'2026-06-20', time:'10:30 AM',end:'11:30 AM',home:false, opp:'Net Ninjas',          field:'SVMS Court A, 1000 Midjay Dr, Liberty'},
 
   // ── PRESTON — Eagles Flag Football ────────────────────────────────────
-  {kid:'preston-football', date:'2026-04-18', time:'10:00 AM',end:'11:00 AM',home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1', note:'Week 1 · Won 33-0'},
-  {kid:'preston-football', date:'2026-04-25', time:'9:00 AM', end:'10:00 AM',home:false, opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1'},
-  {kid:'preston-football', date:'2026-04-25', time:'10:00 AM',end:'11:00 AM',home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1', note:'Double header'},
-  {kid:'preston-football', date:'2026-05-02', time:'9:00 AM', end:'10:00 AM',home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1', note:'Double header'},
-  {kid:'preston-football', date:'2026-05-09', time:'9:00 AM', end:'10:00 AM',home:true,  opp:'Lombardi - Collins - PANTHERS',       field:'Field 1'},
-  {kid:'preston-football', date:'2026-05-16', time:'9:00 AM', end:'10:00 AM',home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1'},
+  {kid:'preston-football', date:'2026-04-18', time:'10:00 AM',end:'11:00 AM',home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Week 1 · Won 33-0'},
+  {kid:'preston-football', date:'2026-04-25', time:'9:00 AM', end:'10:00 AM',home:false, opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School'},
+  {kid:'preston-football', date:'2026-04-25', time:'10:00 AM',end:'11:00 AM',home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School', note:'Double header'},
+  {kid:'preston-football', date:'2026-05-02', time:'9:00 AM', end:'10:00 AM',home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Double header'},
+  {kid:'preston-football', date:'2026-05-09', time:'9:00 AM', end:'10:00 AM',home:true,  opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School'},
+  {kid:'preston-football', date:'2026-05-16', time:'9:00 AM', end:'10:00 AM',home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School'},
+
+  // ── RYMAN — Monarchs 8U Baseball (Pony Express / Eagles Field, St. Joseph) ──
+  {kid:'ryman', date:'2026-04-21', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-04-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-04-28', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-04-28', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-05', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-06', time:'5:45 PM',  end:'7:00 PM',  home:false, opp:'Marek Baseball Academy', field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-06', time:'7:15 PM',  end:'8:30 PM',  home:false, opp:'Marek Baseball Academy', field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-08', time:'5:30 PM',  end:'6:45 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-12', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Chillicothe Bombers 7U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-12', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
+  {kid:'ryman', date:'2026-05-18', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Atchison Mudcats 8U',    field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO'},
 ];
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -285,6 +303,7 @@ const summaryKids = [
   {key:['preston-baseball','preston-football'], label:'Preston'},
   {key:'parker', label:'Parker'},
   {key:['nora-softball','nora-volleyball'], label:'Nora'},
+  {key:'ryman', label:'Ryman'},
 ];
 summaryKids.forEach(s => {
   const keys = Array.isArray(s.key) ? s.key : [s.key];
