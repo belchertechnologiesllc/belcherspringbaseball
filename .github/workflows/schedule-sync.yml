@@ -1,0 +1,95 @@
+name: Check & Deploy Schedule
+
+on:
+  # Run every 6 hours
+  schedule:
+    - cron: '0 */6 * * *'
+  # Allow manual trigger with optional force rebuild
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force rebuild even if no changes detected'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # needed to commit updated snapshot back to repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run schedule scraper & builder
+        id: build
+        env:
+          FORCE_REBUILD: ${{ inputs.force_rebuild == 'true' && '1' || '0' }}
+        run: |
+          node scripts/build.js
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+        # Exit code meanings:
+        #   0 = no changes, skip deploy
+        #   1 = changes detected, deploy needed
+        #   2 = network/parse error, fail
+        continue-on-error: true
+
+      - name: Capture build result
+        id: result
+        run: |
+          code="${{ steps.build.outputs.exit_code }}"
+          if [ "$code" = "1" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "✅ Schedule changes detected — will deploy"
+          elif [ "$code" = "0" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ No changes — skipping deploy"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "❌ Build error (exit $code)"
+            exit 1
+          fi
+
+      - name: Commit updated snapshot
+        if: steps.result.outputs.changed == 'true'
+        run: |
+          git config user.name  "Schedule Bot"
+          git config user.email "bot@belcherfamily.net"
+          git add schedule-snapshot.json changes.json public/index.html
+          git commit -m "chore: schedule sync $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Log change summary
+        if: steps.result.outputs.changed == 'true'
+        run: |
+          echo "=== Change Summary ==="
+          cat changes.json | python3 -m json.tool
+
+      - name: Send notification (optional — requires EMAIL_* secrets)
+        if: steps.result.outputs.changed == 'true' && env.SENDGRID_API_KEY != ''
+        env:
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+        run: |
+          CHANGES=$(cat changes.json)
+          ADDED=$(echo $CHANGES | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['added']))")
+          REMOVED=$(echo $CHANGES | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['removed']))")
+          MODIFIED=$(echo $CHANGES | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['modified']))")
+          BODY="Schedule updated: +${ADDED} added, -${REMOVED} removed, ~${MODIFIED} modified. See https://belcherspringbaseball.netlify.app"
+          curl -s --request POST \
+            --url https://api.sendgrid.com/v3/mail/send \
+            --header "Authorization: Bearer $SENDGRID_API_KEY" \
+            --header "Content-Type: application/json" \
+            --data "{
+              \"personalizations\":[{\"to\":[{\"email\":\"$NOTIFY_EMAIL\"}]}],
+              \"from\":{\"email\":\"bot@belcherfamily.net\",\"name\":\"Baseball Schedule Bot\"},
+              \"subject\":\"⚾ NKCA Schedule Changed\",
+              \"content\":[{\"type\":\"text/plain\",\"value\":\"$BODY\"}]
+            }"
