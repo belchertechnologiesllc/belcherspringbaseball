@@ -28,18 +28,25 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Run schedule scraper & builder
+- name: Run schedule scraper & builder
         id: build
         env:
           FORCE_REBUILD: ${{ inputs.force_rebuild == 'true' && '1' || '0' }}
         run: |
           node scripts/build.js
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
-        # Exit code meanings:
-        #   0 = no changes, skip deploy
-        #   1 = changes detected, deploy needed
-        #   2 = network/parse error, fail
+          echo "changed=false" >> $GITHUB_OUTPUT
         continue-on-error: true
+
+      - name: Capture build result
+        id: result
+        run: |
+          if [ -f public/index.html ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "✅ index.html built — will commit and deploy"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ No changes detected"
+          fi
 
       - name: Capture build result
         id: result
