@@ -31,30 +31,31 @@ jobs:
         env:
           FORCE_REBUILD: ${{ inputs.force_rebuild == 'true' && '1' || '0' }}
         run: |
-          node scripts/build.js || true
-
-      - name: Check if output was built
-        id: result
-        run: |
-          if [ -f public/index.html ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "index.html found - will commit and deploy"
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No changes detected"
+          node scripts/build.js; CODE=$?
+          echo "exit_code=$CODE" >> $GITHUB_OUTPUT
+          if [ "$CODE" = "2" ]; then
+            echo "Network/parse error - aborting"
+            exit 1
           fi
+          echo "Build finished with code $CODE"
 
-      - name: Commit updated files
-        if: steps.result.outputs.changed == 'true'
+      - name: Commit and deploy if changed
+        if: steps.build.outputs.exit_code == '1'
         run: |
+          echo "Changes detected - committing and deploying"
           git config user.name "Schedule Bot"
           git config user.email "bot@belcherfamily.net"
           git add public/index.html schedule-snapshot.json changes.json
           git commit -m "chore: schedule sync $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
+          echo "Pushed - Netlify will redeploy automatically"
+
+      - name: No changes
+        if: steps.build.outputs.exit_code == '0'
+        run: echo "No schedule changes detected - skipping deploy"
 
       - name: Log change summary
-        if: steps.result.outputs.changed == 'true'
+        if: steps.build.outputs.exit_code == '1'
         run: |
           echo "=== Change Summary ==="
-          cat changes.json
+          cat changes.json | python3 -m json.tool
