@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Belcher Grandkids Sports Schedule Builder
+ * Belcher/Bass Sports Schedule Builder
  *
  * Sources:
  *   LIVE (scraped daily):
