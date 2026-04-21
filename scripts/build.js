@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Belcher/Bass Sports Schedule Builder
+ * Belcher Grandkids Sports Schedule Builder
  *
  * Sources:
  *   LIVE (scraped daily):
@@ -72,6 +72,19 @@ const STATIC_EVENTS = [
   { kid:'ryman', date:'2026-05-12', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Chillicothe Bombers 7U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-05-12', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-05-18', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Atchison Mudcats 8U',    field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
+
+  // RIGGS — Monarchs 6U Baseball (Lions Field, St. Joseph — JS-rendered, no scrape possible)
+  { kid:'riggs', date:'2026-04-24', time:'5:30 PM',  end:'6:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-04-27', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Blue Jays',           field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-01', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'6U Cardinals',           field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-04', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Nationals',           field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-08', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'6U Pirates',             field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-11', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Rockies',             field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-15', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Blue Bombers',           field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-18', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'Blue Lightning',         field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-22', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Dragons',                field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-05-29', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-06-01', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'SJCS Lions - Burkart',   field:'Lions Field L1 · Saint Joseph MO' },
 ];
 
 const NKCA_BASE     = 'https://www.nkcabaseball.com/schedule/filter';
@@ -357,7 +370,7 @@ function buildHTML(events) {
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --dawson:#2563EB;--cameron:#059669;--preston-baseball:#DC2626;--parker:#D97706;
-    --nora-softball:#DB2777;--nora-volleyball:#7C3AED;--preston-football:#EA580C;--ryman:#0891B2;
+    --nora-softball:#DB2777;--nora-volleyball:#7C3AED;--preston-football:#EA580C;--ryman:#0891B2;--riggs:#16A34A;
     --bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890;
   }
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
@@ -380,6 +393,7 @@ function buildHTML(events) {
   .filter-btn[data-kid="parker"].active{background:var(--parker)}
   .filter-btn[data-kid="nora"].active{background:var(--nora-softball)}
   .filter-btn[data-kid="ryman"].active{background:var(--ryman)}
+  .filter-btn[data-kid="riggs"].active{background:var(--riggs)}
   .summary-bar{display:flex;gap:12px;padding:12px 28px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
   .sum-card{text-align:center;flex:1;min-width:55px}
   .sum-num{font-size:20px;font-weight:600;letter-spacing:-0.5px}
@@ -410,6 +424,7 @@ function buildHTML(events) {
   .pill-nora-volleyball{background:#EDE9FE;color:#6D28D9}
   .pill-preston-football{background:#FFEDD5;color:#C2410C}
   .pill-ryman{background:#CFFAFE;color:#0E7490}
+  .pill-riggs{background:#DCFCE7;color:#15803D}
   .busy-badge{display:inline-block;font-size:9px;font-family:'DM Mono',monospace;background:#F3F0EA;color:var(--subtle);border-radius:3px;padding:1px 4px;margin-bottom:3px}
   .updated-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:5px 28px;font-size:11px;color:var(--subtle);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;align-items:center}
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;padding:20px}
@@ -454,6 +469,7 @@ function buildHTML(events) {
     <div class="leg"><div class="leg-swatch" style="background:#7C3AED"></div><span class="leg-name">Nora</span> · Smith · Volleyball 3rd/4th</div>
     <div class="leg"><div class="leg-swatch" style="background:#EA580C"></div><span class="leg-name">Preston</span> · Eagles · Flag Football</div>
     <div class="leg"><div class="leg-swatch" style="background:#0891B2"></div><span class="leg-name">Ryman</span> · Monarchs 8U · Baseball</div>
+    <div class="leg"><div class="leg-swatch" style="background:#16A34A"></div><span class="leg-name">Riggs</span> · Monarchs 6U · Baseball</div>
   </div>
 </div>
 <div class="updated-bar">
@@ -469,6 +485,7 @@ function buildHTML(events) {
   <button class="filter-btn" data-kid="parker">Parker</button>
   <button class="filter-btn" data-kid="nora">Nora</button>
   <button class="filter-btn" data-kid="ryman">Ryman</button>
+  <button class="filter-btn" data-kid="riggs">Riggs</button>
 </div>
 <div class="summary-bar" id="summary-bar"></div>
 <div class="cal-nav">
@@ -501,6 +518,7 @@ const KIDS={
   'nora-volleyball':  {label:'Nora',    sport:'Volleyball',   team:'Smith',               age:'3rd/4th', cls:'pill-nora-volleyball', color:'#7C3AED',group:'nora'},
   'preston-football': {label:'Preston', sport:'Flag Football',team:'Eagles (Lombardi)',   age:'',        cls:'pill-preston-football',color:'#EA580C',group:'preston'},
   'ryman':            {label:'Ryman',   sport:'Baseball',     team:'Monarchs 8U',         age:'8U',      cls:'pill-ryman',           color:'#0891B2',group:'ryman'},
+  'riggs':            {label:'Riggs',   sport:'Baseball',     team:'Monarchs 6U',         age:'6U',      cls:'pill-riggs',           color:'#16A34A',group:'riggs'},
 };
 const EVENTS=${eventsJson};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -509,7 +527,7 @@ const TODAY='${new Date().toISOString().slice(0,10)}';
 let curYear=2026,curMonth=3,activeFilter='all';
 
 const bar=document.getElementById('summary-bar');
-[['dawson'],['cameron'],['preston-baseball','preston-football'],['parker'],['nora-softball','nora-volleyball'],['ryman']].forEach(keys=>{
+[['dawson'],['cameron'],['preston-baseball','preston-football'],['parker'],['nora-softball','nora-volleyball'],['ryman'],['riggs']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
   const t=KIDS[keys[0]];
   bar.innerHTML+=\`<div class="sum-card"><div class="sum-num" style="color:\${t.color}">\${n}</div><div class="sum-label">\${t.label}</div></div>\`;
