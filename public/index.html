@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Belcher/Bass Sports Schedule 2026</title>
+<title>Belcher Grandkids Sports Schedule 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -14,7 +14,7 @@
     --parker:#D97706;
     --nora-softball:#DB2777;
     --nora-volleyball:#7C3AED;
-    --preston-football:#EA580C;--ryman:#0891B2;
+    --preston-football:#EA580C;--ryman:#0891B2;--riggs:#16A34A;
     --bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;
     --text:#1A1916;--muted:#6B6860;--subtle:#9A9890;
   }
@@ -41,6 +41,7 @@
   .filter-btn[data-kid="parker"].active{background:var(--parker)}
   .filter-btn[data-kid="nora"].active{background:var(--nora-softball)}
   .filter-btn[data-kid="ryman"].active{background:var(--ryman)}
+  .filter-btn[data-kid="riggs"].active{background:var(--riggs)}
 
   .summary-bar{display:flex;gap:12px;padding:12px 28px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;overflow-x:auto}
   .sum-card{text-align:center;flex:1;min-width:60px}
@@ -75,6 +76,7 @@
   .pill-nora-volleyball{background:#EDE9FE;color:#6D28D9}
   .pill-preston-football{background:#FFEDD5;color:#C2410C}
   .pill-ryman{background:#CFFAFE;color:#0E7490}
+  .pill-riggs{background:#DCFCE7;color:#15803D}
   .pill.hidden{display:none}
 
   .busy-badge{display:inline-block;font-size:9px;font-family:'DM Mono',monospace;background:#F3F0EA;color:var(--subtle);border-radius:3px;padding:1px 4px;margin-bottom:3px}
@@ -127,6 +129,7 @@
     <div class="leg"><div class="leg-swatch" style="background:#7C3AED"></div><span class="leg-name">Nora</span> · Smith · Volleyball 3rd/4th</div>
     <div class="leg"><div class="leg-swatch" style="background:#EA580C"></div><span class="leg-name">Preston</span> · Eagles · Flag Football</div>
     <div class="leg"><div class="leg-swatch" style="background:#0891B2"></div><span class="leg-name">Ryman</span> · Monarchs 8U · Baseball</div>
+    <div class="leg"><div class="leg-swatch" style="background:#16A34A"></div><span class="leg-name">Riggs</span> · Monarchs 6U · Baseball</div>
   </div>
 </div>
 
@@ -144,6 +147,7 @@
   <button class="filter-btn" data-kid="parker">Parker</button>
   <button class="filter-btn" data-kid="nora">Nora</button>
   <button class="filter-btn" data-kid="ryman">Ryman</button>
+  <button class="filter-btn" data-kid="riggs">Riggs</button>
 </div>
 
 <div class="summary-bar" id="summary-bar"></div>
@@ -184,6 +188,7 @@ const KIDS = {
   'nora-volleyball':{ label:'Nora',    sport:'Volleyball',   team:'Smith',                 age:'3rd/4th',   cls:'pill-nora-volleyball', color:'#7C3AED', group:'nora'    },
   'preston-football':{ label:'Preston', sport:'Flag Football',team:'Eagles (Lombardi)',    age:'',          cls:'pill-preston-football',color:'#EA580C', group:'preston' },
   'ryman':           { label:'Ryman',   sport:'Baseball',     team:'Monarchs 8U',          age:'8U',        cls:'pill-ryman',           color:'#0891B2', group:'ryman'   },
+  'riggs':           { label:'Riggs',   sport:'Baseball',     team:'Monarchs 6U',          age:'6U',        cls:'pill-riggs',           color:'#16A34A', group:'riggs'   },
 };
 
 const EVENTS = [
@@ -286,6 +291,19 @@ const EVENTS = [
   {kid:'ryman', date:'2026-05-12', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Chillicothe Bombers 7U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
   {kid:'ryman', date:'2026-05-12', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO'},
   {kid:'ryman', date:'2026-05-18', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Atchison Mudcats 8U',    field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO'},
+
+  // ── RIGGS — Monarchs 6U Baseball (Lions Field, St. Joseph) ───────────────
+  {kid:'riggs', date:'2026-04-24', time:'5:30 PM',  end:'6:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-04-27', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Blue Jays',           field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-01', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'6U Cardinals',           field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-04', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Nationals',           field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-08', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'6U Pirates',             field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-11', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Rockies',             field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-15', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Blue Bombers',           field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-18', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'Blue Lightning',         field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-22', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Dragons',                field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-05-29', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO'},
+  {kid:'riggs', date:'2026-06-01', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'SJCS Lions - Burkart',   field:'Lions Field L1 · Saint Joseph MO'},
 ];
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -304,6 +322,7 @@ const summaryKids = [
   {key:'parker', label:'Parker'},
   {key:['nora-softball','nora-volleyball'], label:'Nora'},
   {key:'ryman', label:'Ryman'},
+  {key:'riggs', label:'Riggs'},
 ];
 summaryKids.forEach(s => {
   const keys = Array.isArray(s.key) ? s.key : [s.key];
