@@ -22,6 +22,22 @@ const http  = require('http');
 const fs    = require('fs');
 const path  = require('path');
 
+const now = new Date();
+const defaultSeasonYear = now.getMonth() >= 6 ? now.getFullYear() + 1 : now.getFullYear();
+const parsedSeasonYear = Number.parseInt(process.env.SEASON_YEAR || `${defaultSeasonYear}`, 10);
+const seasonYear = Number.isFinite(parsedSeasonYear) ? parsedSeasonYear : defaultSeasonYear;
+const seasonStart = process.env.SEASON_START || `${seasonYear}-01-01`;
+const seasonEnd = process.env.SEASON_END || `${seasonYear}-12-31`;
+const nkcaFromDate = process.env.NKCA_FROM_DATE || seasonStart;
+const nkcaToDate = process.env.NKCA_TO_DATE || seasonEnd;
+const SEASON_CONFIG = {
+  SEASON_YEAR: seasonYear,
+  SEASON_START: seasonStart,
+  SEASON_END: seasonEnd,
+  NKCA_FROM_DATE: nkcaFromDate,
+  NKCA_TO_DATE: nkcaToDate,
+};
+
 // ── NKCA team definitions ────────────────────────────────────────────────────
 const NKCA_TEAMS = [
   { kid: 'dawson',           id: '85056', label: 'Dawson',  team: 'Diamond Dawgs',      age: '7U'  },
@@ -91,6 +107,15 @@ const NKCA_BASE     = 'https://www.nkcabaseball.com/schedule/filter';
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
 const OUTPUT_FILE   = path.join(__dirname, '..', 'public', 'index.html');
 const CHANGE_LOG    = path.join(__dirname, '..', 'changes.json');
+
+function formatNKCAParamDate(isoDate) {
+  const d = new Date(`${isoDate}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return '';
+  const month = d.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+  const day = d.getUTCDate();
+  const year = d.getUTCFullYear();
+  return `${month}+${day}+${year}`;
+}
 
 // ── HTTP fetch with redirect support ─────────────────────────────────────────
 function fetchUrl(url, redirects = 0) {
@@ -178,6 +203,9 @@ function parseTeamSideline(html, source) {
   const games  = [];
   const myTeam = source.myTeam;
   const kid    = source.kid;
+  const configuredYear = SEASON_CONFIG.SEASON_YEAR;
+  let currentYear = configuredYear;
+  let lastMonth = null;
 
   // Find all schedule table rows (the full-width version has 7 cells per game row)
   // Date rows look like: <td ...>Tue 4/28</td>
@@ -208,7 +236,9 @@ function parseTeamSideline(html, source) {
     if (dateM) {
       const month = parseInt(dateM[2]);
       const day   = parseInt(dateM[3]);
-      currentDate = `2026-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      if (lastMonth !== null && month < lastMonth) currentYear += 1;
+      lastMonth = month;
+      currentDate = `${currentYear}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       continue;
     }
 
@@ -268,11 +298,13 @@ function parseTeamSideline(html, source) {
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   const liveGames = [];
+  const nkcaFromDateRange = formatNKCAParamDate(SEASON_CONFIG.NKCA_FROM_DATE);
+  const nkcaToDateRange = formatNKCAParamDate(SEASON_CONFIG.NKCA_TO_DATE);
 
   // 1. Scrape NKCA Baseball
   console.log('\n🔍 Fetching NKCA Baseball schedules...');
   for (const t of NKCA_TEAMS) {
-    const url = `${NKCA_BASE}?team=${t.id}&eventType=1&location=0&complexId=0&gameSeasonId=0&ageGoupDivisionId=0&homeAwayValue=0&dateRange=21&fromDateRange=Apr+17+2026&toDateRange=`;
+    const url = `${NKCA_BASE}?team=${t.id}&eventType=1&location=0&complexId=0&gameSeasonId=0&ageGoupDivisionId=0&homeAwayValue=0&dateRange=21&fromDateRange=${nkcaFromDateRange}&toDateRange=${nkcaToDateRange}`;
     console.log(`  ${t.label} (${t.id})...`);
     try {
       const html  = await fetchUrl(url);
@@ -358,6 +390,12 @@ function buildHTML(events) {
     hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
   });
   const eventsJson = JSON.stringify(events);
+  const earliestEvent = events
+    .map(e => new Date(`${e.date}T12:00:00`))
+    .filter(d => !Number.isNaN(d.getTime()))
+    .sort((a, b) => a.getTime() - b.getTime())[0];
+  const initialYear = earliestEvent ? earliestEvent.getFullYear() : SEASON_CONFIG.SEASON_YEAR;
+  const initialMonth = earliestEvent ? earliestEvent.getMonth() : 0;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -524,7 +562,7 @@ const EVENTS=${eventsJson};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY='${new Date().toISOString().slice(0,10)}';
-let curYear=2026,curMonth=3,activeFilter='all';
+let curYear=${initialYear},curMonth=${initialMonth},activeFilter='all';
 
 const bar=document.getElementById('summary-bar');
 [['dawson'],['cameron'],['preston-baseball','preston-football'],['parker'],['nora-softball','nora-volleyball'],['ryman'],['riggs']].forEach(keys=>{
