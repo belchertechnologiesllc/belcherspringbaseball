@@ -563,12 +563,35 @@ const MONTHS=['January','February','March','April','May','June','July','August',
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY='${new Date().toISOString().slice(0,10)}';
 let curYear=${initialYear},curMonth=${initialMonth},activeFilter='all';
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g,ch=>(
+    ch==='&'?'&amp;'
+    :ch==='<'?'&lt;'
+    :ch==='>'?'&gt;'
+    :ch==='"'?'&quot;'
+    :'&#39;'
+  ));
+}
+// Regression fixture:
+// input:  '<img src=x onerror=alert("xss")> & "quote" \'single\''
+// output: '&lt;img src=x onerror=alert(&quot;xss&quot;)&gt; &amp; &quot;quote&quot; &#39;single&#39;'
 
 const bar=document.getElementById('summary-bar');
 [['dawson'],['cameron'],['preston-baseball','preston-football'],['parker'],['nora-softball','nora-volleyball'],['ryman'],['riggs']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
   const t=KIDS[keys[0]];
-  bar.innerHTML+=\`<div class="sum-card"><div class="sum-num" style="color:\${t.color}">\${n}</div><div class="sum-label">\${t.label}</div></div>\`;
+  const card=document.createElement('div');
+  card.className='sum-card';
+  const num=document.createElement('div');
+  num.className='sum-num';
+  num.style.color=t.color;
+  num.textContent=String(n);
+  const label=document.createElement('div');
+  label.className='sum-label';
+  label.textContent=t.label;
+  card.appendChild(num);
+  card.appendChild(label);
+  bar.appendChild(card);
 });
 document.getElementById('hdr-totals').textContent=EVENTS.length+' total events';
 
@@ -622,10 +645,13 @@ function render(){
     if(evs.length>=3&&!other){const b=document.createElement('span');b.className='busy-badge';b.textContent=evs.length+' events';cell.appendChild(b)}
     evs.forEach(ev=>{
       const t=KIDS[ev.kid];
+      const safeOpp=escapeHtml(ev.opp);
+      const safeField=escapeHtml(ev.field);
+      const safeLabel=escapeHtml(t.label);
       const pill=document.createElement('button');
       pill.className='pill '+t.cls;
       pill.textContent=t.label+' '+ev.time;
-      pill.title=t.label+' '+t.sport+' vs '+ev.opp+' · '+(ev.home?'Home':'Away')+' · '+ev.field;
+      pill.title=safeLabel+' '+t.sport+' vs '+safeOpp+' · '+(ev.home?'Home':'Away')+' · '+safeField;
       pill.onclick=e=>{e.stopPropagation();showModal(dk,eventsOn(dk).sort(timeSort))};
       cell.appendChild(pill);
     });
@@ -640,12 +666,37 @@ function showModal(dk,evs){
   evs.forEach(ev=>{
     const t=KIDS[ev.kid];
     const div=document.createElement('div');div.className='modal-event';
-    div.innerHTML=\`<div class="modal-sport-badge" style="background:\${t.color}22;color:\${t.color}">\${t.sport}</div>
-      <div class="modal-kid-label" style="color:\${t.color}">\${t.label} — \${t.team}\${t.age?' ('+t.age+')':''}</div>
-      <div class="modal-opp">vs \${ev.opp}<span class="ha-badge \${ev.home?'ha-home':'ha-away'}">\${ev.home?'Home':'Away'}</span></div>
-      <div class="modal-meta">\${ev.time}\${ev.end?' – '+ev.end:''}<br>\${ev.field}</div>
-      \${ev.note?\`<span class="modal-note">\${ev.note}</span>\`:''}
-    \`;
+    const sportBadge=document.createElement('div');
+    sportBadge.className='modal-sport-badge';
+    sportBadge.style.background=t.color+'22';
+    sportBadge.style.color=t.color;
+    sportBadge.textContent=t.sport;
+    const kidLabel=document.createElement('div');
+    kidLabel.className='modal-kid-label';
+    kidLabel.style.color=t.color;
+    kidLabel.textContent=t.label+' — '+t.team+(t.age?' ('+t.age+')':'');
+    const opp=document.createElement('div');
+    opp.className='modal-opp';
+    opp.textContent='vs '+(ev.opp || '');
+    const haBadge=document.createElement('span');
+    haBadge.className='ha-badge '+(ev.home?'ha-home':'ha-away');
+    haBadge.textContent=ev.home?'Home':'Away';
+    opp.appendChild(haBadge);
+    const meta=document.createElement('div');
+    meta.className='modal-meta';
+    meta.textContent=ev.time+(ev.end?' – '+ev.end:'');
+    meta.appendChild(document.createElement('br'));
+    meta.appendChild(document.createTextNode(ev.field || ''));
+    div.appendChild(sportBadge);
+    div.appendChild(kidLabel);
+    div.appendChild(opp);
+    div.appendChild(meta);
+    if(ev.note){
+      const note=document.createElement('span');
+      note.className='modal-note';
+      note.textContent=ev.note;
+      div.appendChild(note);
+    }
     body.appendChild(div);
   });
   document.getElementById('modal-overlay').classList.add('open');
