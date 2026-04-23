@@ -217,9 +217,6 @@ function parseTeamSideline(html, source) {
   // Date rows look like: <td ...>Tue 4/28</td>
   // Game rows look like: <td>time</td><td>Home Team</td>...<td>Away Team</td>...<td>Location</td>
 
-  // Split the HTML into week sections by looking for date patterns
-  const datePattern = /(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+\d{1,2}\/\d{1,2}/g;
-
   // Extract all table rows with their cell content
   const allRows = [];
   const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
@@ -229,14 +226,68 @@ function parseTeamSideline(html, source) {
     const cellRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
     let cellM;
     while ((cellM = cellRe.exec(rowM[1])) !== null) {
-      cells.push(cellM[1].replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim());
+      const normalizedCell = cellM[1]
+        .replace(/<[^>]+>/g, '')
+        .replace(/&amp;/g, '&')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      cells.push(normalizedCell);
     }
     if (cells.length >= 2) allRows.push(cells);
+  }
+
+  function parseFullWidthRow(cells, date) {
+    if (cells.length < 5) return null;
+    // Example full-width row:
+    // ["Tue 4/28", "6:30 PM", "Dolphins", "0", "Blue Jays", "0", "Capitol Federal Sports Complex"]
+    const timeStr = cells[1].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0] || cells[0].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0];
+    if (!timeStr) return null;
+
+    const homeTeam = cells[2] || '';
+    const awayTeam = cells[4] || '';
+    const location = cells[6] || cells[cells.length - 1] || '';
+
+    const isHome = homeTeam.includes(myTeam);
+    const isAway = awayTeam.includes(myTeam);
+    if (!isHome && !isAway) return null;
+
+    const opp = (isHome ? awayTeam : homeTeam).trim();
+    if (!opp) return null;
+
+    return { kid, date, time: timeStr, end: '', home: isHome, opp, field: location.trim() };
+  }
+
+  function parseMobileRow(cells, date) {
+    if (cells.length < 2) return null;
+    // Example mobile row:
+    // ["6:30 PM", "Dolphins  Blue Jays  Capitol Federal Sports Complex"]
+    const timeStr = cells.find(c => /^\d{1,2}:\d{2}\s*[AP]M$/i.test(c));
+    if (!timeStr) return null;
+
+    const gameCell = cells.find(c => c.includes(myTeam) && c !== timeStr) || '';
+    if (!gameCell) return null;
+
+    // Assumption: merged game cell order is "Home Team  Away Team  Location".
+    const parts = gameCell.split(/\s{2,}/).map(s => s.trim()).filter(Boolean);
+    if (parts.length < 2) return null;
+
+    const myIdx = parts.findIndex(p => p.includes(myTeam));
+    if (myIdx === -1) return null;
+
+    const home = myIdx === 0;
+    const oppIdx = home ? 1 : 0;
+    const opp = (parts[oppIdx] || 'TBD').trim();
+    const field = (parts[parts.length - 1] || '').trim();
+
+    return { kid, date, time: timeStr, end: '', home, opp, field };
   }
 
   let currentDate = '';
 
   for (const cells of allRows) {
+    if (cells.length < 2) continue;
+
     // Date row: first cell matches "Tue 4/28" pattern
     const dateM = cells[0].match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\d{1,2})\/(\d{1,2})$/i);
     if (dateM) {
@@ -259,43 +310,10 @@ function parseTeamSideline(html, source) {
     // Full-width table: Date | Time | Home | Score | Away | Score | Location (7 cols)
     // Mobile table:     Date | Time | Game (3 cols, game cell has both teams)
     // We handle both layouts
-
-    if (cells.length >= 5) {
-      // Full-width layout — cells[1]=time, cells[2]=home, cells[4]=away, cells[6]=location
-      const timeStr = cells[1].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0] || cells[0].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0];
-      if (!timeStr) continue;
-
-      const homeTeam = cells[2] || '';
-      const awayTeam = cells[4] || '';
-      const location = cells[6] || cells[cells.length - 1] || '';
-
-      const isHome = homeTeam.includes(myTeam);
-      const isAway = awayTeam.includes(myTeam);
-      if (!isHome && !isAway) continue;
-
-      const opp = isHome ? awayTeam : homeTeam;
-      games.push({ kid, date: currentDate, time: timeStr, end: '', home: isHome, opp: opp.trim(), field: location.trim() });
-
-    } else if (cells.length >= 2) {
-      // Mobile/merged layout — find time cell, then game cell
-      const timeStr = cells.find(c => /^\d{1,2}:\d{2}\s*[AP]M$/i.test(c));
-      if (!timeStr) continue;
-
-      const gameCell = cells.find(c => c.includes(myTeam) && c !== timeStr) || '';
-      if (!gameCell) continue;
-
-      // Text order in merged cell: "Home Team  Away Team  Location"
-      const parts = gameCell.split(/\s{2,}/).map(s => s.trim()).filter(Boolean);
-      const myIdx  = parts.findIndex(p => p.includes(myTeam));
-      if (myIdx === -1) continue;
-
-      const home   = myIdx === 0;
-      const oppIdx = home ? 1 : 0;
-      const opp    = parts[oppIdx] || 'TBD';
-      const field  = parts[parts.length - 1] || '';
-
-      games.push({ kid, date: currentDate, time: timeStr, end: '', home, opp, field });
-    }
+    const parsed = cells.length >= 5
+      ? parseFullWidthRow(cells, currentDate)
+      : parseMobileRow(cells, currentDate);
+    if (parsed) games.push(parsed);
   }
 
   return games;
