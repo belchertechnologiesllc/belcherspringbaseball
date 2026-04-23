@@ -121,7 +121,11 @@ function formatNKCAParamDate(isoDate) {
 function fetchUrl(url, redirects = 0) {
   if (redirects > 5) return Promise.reject(new Error('Too many redirects'));
   return new Promise((resolve, reject) => {
-    const mod = url.startsWith('https') ? https : http;
+    const parsedUrl = new URL(url);
+    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+      return reject(new Error(`Unsupported URL protocol: ${parsedUrl.protocol}`));
+    }
+    const mod = parsedUrl.protocol === 'https:' ? https : http;
     const req = mod.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; ScheduleBot/1.0)',
@@ -129,7 +133,9 @@ function fetchUrl(url, redirects = 0) {
       }
     }, res => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return fetchUrl(res.headers.location, redirects + 1).then(resolve).catch(reject);
+        const redirectedUrl = new URL(res.headers.location, url).toString();
+        console.debug(`[fetchUrl] redirect ${url} -> ${redirectedUrl}`);
+        return fetchUrl(redirectedUrl, redirects + 1).then(resolve).catch(reject);
       }
       let data = '';
       res.on('data', chunk => data += chunk);
