@@ -6,7 +6,7 @@ Live site: **https://belcherspringbaseball.netlify.app**
 ## How it works
 
 ```
-Every 6 hours:
+Once per day at 12:00 UTC:
   GitHub Actions → scrapes nkcabaseball.com (4 team URLs)
        ↓ changes detected?
       YES → rebuild index.html → commit snapshot → trigger Netlify deploy hook
@@ -55,5 +55,7 @@ Each sync writes `changes.json` with:
 
 ## Schedule frequency
 
-Edit `.github/workflows/schedule-sync.yml` → `cron: '0 */6 * * *'`  
-to change check frequency (currently every 6 hours).
+Edit `.github/workflows/schedule-sync.yml` → `cron: '0 12 * * *'`  
+to change check frequency (currently once per day at 12:00 UTC).
+
+> **Timezone note:** GitHub Actions cron uses **UTC** time.
