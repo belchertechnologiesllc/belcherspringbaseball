@@ -45,14 +45,30 @@ jobs:
             exit 1
           fi
 
+      - name: Show built file info
+        if: steps.build.outputs.exit_code == '1'
+        run: |
+          echo "=== public/index.html ==="
+          ls -lh public/index.html || echo "FILE NOT FOUND"
+          echo "=== schedule-snapshot.json ==="
+          ls -lh schedule-snapshot.json || echo "FILE NOT FOUND"
+          echo "=== changes.json ==="
+          ls -lh changes.json || echo "FILE NOT FOUND"
+          echo "=== Event count in index.html ==="
+          grep -o "kid:'" public/index.html | wc -l || echo "could not count"
+
       - name: Commit and push if changed
         if: steps.build.outputs.exit_code == '1'
         run: |
           git config user.name "Schedule Bot"
           git config user.email "bot@belcherfamily.net"
-          git add -A public/index.html schedule-snapshot.json changes.json
-          git commit -m "chore: schedule sync $(date -u '+%Y-%m-%d %H:%M UTC')"
-          git push
+          git add public/index.html
+          git add schedule-snapshot.json || true
+          git add changes.json || true
+          git status
+          git diff --cached --stat
+          git commit -m "chore: schedule sync $(date -u '+%Y-%m-%d %H:%M UTC')" || echo "Nothing to commit"
+          git push || echo "Nothing to push"
 
       - name: No changes detected
         if: steps.build.outputs.exit_code == '0'
@@ -60,4 +76,4 @@ jobs:
 
       - name: Show change summary
         if: steps.build.outputs.exit_code == '1'
-        run: cat changes.json
+        run: cat changes.json || echo "No changes.json found"
