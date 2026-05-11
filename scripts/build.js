@@ -58,7 +58,6 @@ const STATIC_EVENTS = [
   { kid:'preston-football', date:'2026-04-25', time:'10:00 AM', end:'11:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School', note:'Double header' },
   { kid:'preston-football', date:'2026-05-02', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Double header' },
   { kid:'preston-football', date:'2026-05-09', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
-  { kid:'preston-football', date:'2026-05-16', time:'9:00 AM',  end:'10:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
 
   // RYMAN — Monarchs 8U Baseball (SportsEngine — JS-rendered, no scrape possible)
   { kid:'ryman', date:'2026-04-21', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
@@ -72,6 +71,7 @@ const STATIC_EVENTS = [
   { kid:'ryman', date:'2026-05-12', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Chillicothe Bombers 7U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-05-12', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-05-18', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Atchison Mudcats 8U',    field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
+  { kid:'ryman', date:'2026-05-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',    field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
 
   // RIGGS — Monarchs 6U Baseball (Lions Field, St. Joseph — JS-rendered, no scrape possible)
   { kid:'riggs', date:'2026-04-24', time:'5:30 PM',  end:'6:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
@@ -85,6 +85,9 @@ const STATIC_EVENTS = [
   { kid:'riggs', date:'2026-05-22', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Dragons',                field:'Lions Field L1 · Saint Joseph MO' },
   { kid:'riggs', date:'2026-05-29', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
   { kid:'riggs', date:'2026-06-01', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'SJCS Lions - Burkart',   field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-06-02', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6u Blue Jays',   field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-06-05', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6u SJCS Lions - Ryba',   field:'Lions Field L1 · Saint Joseph MO' },
+
 ];
 
 const NKCA_BASE     = 'https://www.nkcabaseball.com/team';
