@@ -22,22 +22,6 @@ const http  = require('http');
 const fs    = require('fs');
 const path  = require('path');
 
-const now = new Date();
-const defaultSeasonYear = now.getMonth() >= 6 ? now.getFullYear() + 1 : now.getFullYear();
-const parsedSeasonYear = Number.parseInt(process.env.SEASON_YEAR || `${defaultSeasonYear}`, 10);
-const seasonYear = Number.isFinite(parsedSeasonYear) ? parsedSeasonYear : defaultSeasonYear;
-const seasonStart = process.env.SEASON_START || `${seasonYear}-01-01`;
-const seasonEnd = process.env.SEASON_END || `${seasonYear}-12-31`;
-const nkcaFromDate = process.env.NKCA_FROM_DATE || seasonStart;
-const nkcaToDate = process.env.NKCA_TO_DATE || seasonEnd;
-const SEASON_CONFIG = {
-  SEASON_YEAR: seasonYear,
-  SEASON_START: seasonStart,
-  SEASON_END: seasonEnd,
-  NKCA_FROM_DATE: nkcaFromDate,
-  NKCA_TO_DATE: nkcaToDate,
-};
-
 // ── NKCA team definitions ────────────────────────────────────────────────────
 const NKCA_TEAMS = [
   { kid: 'dawson',           id: '85056', label: 'Dawson',  team: 'Diamond Dawgs',      age: '7U'  },
@@ -74,6 +58,7 @@ const STATIC_EVENTS = [
   { kid:'preston-football', date:'2026-04-25', time:'10:00 AM', end:'11:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School', note:'Double header' },
   { kid:'preston-football', date:'2026-05-02', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Double header' },
   { kid:'preston-football', date:'2026-05-09', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
+  { kid:'preston-football', date:'2026-05-16', time:'9:00 AM',  end:'10:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
 
   // RYMAN — Monarchs 8U Baseball (SportsEngine — JS-rendered, no scrape possible)
   { kid:'ryman', date:'2026-04-21', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
@@ -102,29 +87,16 @@ const STATIC_EVENTS = [
   { kid:'riggs', date:'2026-06-01', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'SJCS Lions - Burkart',   field:'Lions Field L1 · Saint Joseph MO' },
 ];
 
-const NKCA_BASE     = 'https://www.nkcabaseball.com/schedule/filter';
+const NKCA_BASE     = 'https://www.nkcabaseball.com/team';
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
 const OUTPUT_FILE   = path.join(__dirname, '..', 'public', 'index.html');
 const CHANGE_LOG    = path.join(__dirname, '..', 'changes.json');
-
-function formatNKCAParamDate(isoDate) {
-  const d = new Date(`${isoDate}T12:00:00`);
-  if (Number.isNaN(d.getTime())) return '';
-  const month = d.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
-  const day = d.getUTCDate();
-  const year = d.getUTCFullYear();
-  return `${month}+${day}+${year}`;
-}
 
 // ── HTTP fetch with redirect support ─────────────────────────────────────────
 function fetchUrl(url, redirects = 0) {
   if (redirects > 5) return Promise.reject(new Error('Too many redirects'));
   return new Promise((resolve, reject) => {
-    const parsedUrl = new URL(url);
-    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
-      return reject(new Error(`Unsupported URL protocol: ${parsedUrl.protocol}`));
-    }
-    const mod = parsedUrl.protocol === 'https:' ? https : http;
+    const mod = url.startsWith('https') ? https : http;
     const req = mod.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; ScheduleBot/1.0)',
@@ -132,9 +104,7 @@ function fetchUrl(url, redirects = 0) {
       }
     }, res => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        const redirectedUrl = new URL(res.headers.location, url).toString();
-        console.debug(`[fetchUrl] redirect ${url} -> ${redirectedUrl}`);
-        return fetchUrl(redirectedUrl, redirects + 1).then(resolve).catch(reject);
+        return fetchUrl(res.headers.location, redirects + 1).then(resolve).catch(reject);
       }
       let data = '';
       res.on('data', chunk => data += chunk);
@@ -145,58 +115,58 @@ function fetchUrl(url, redirects = 0) {
   });
 }
 
-// ── Parse NKCA schedule HTML ─────────────────────────────────────────────────
+// ── Parse NKCA schedule-list HTML ────────────────────────────────────────────
+// URL: https://www.nkcabaseball.com/team/${id}/schedule-list
+// Table columns: Game/Practice/Event | Date & Time | Location | Opponent/Notes
+// Home/Away: col1 has <img title="Home Team"> or <img title="Away Team">
 function parseNKCA(html, kid) {
   const games = [];
-  const myId  = NKCA_TEAMS.find(t => t.kid === kid)?.id;
-  const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
-  let rowMatch;
-  while ((rowMatch = rowRe.exec(html)) !== null) {
-    const row = rowMatch[1];
-    const dateRe = /(\w{3}),\s+(\w{3}\s+\d+\s+\d{4})\s+([\d:]+\s+[AP]M)\s+to\s+([\d:]+\s+[AP]M)/i;
-    const dateMatch = row.match(dateRe);
-    if (!dateMatch) continue;
 
+  // Each game is in a <tr id="event_NNNNNN"> row
+  const eventRowRe = /<tr\s+id="event_\d+">([\s\S]*?)<\/tr>/gi;
+  let rowMatch;
+
+  while ((rowMatch = eventRowRe.exec(html)) !== null) {
+    const row = rowMatch[1];
+
+    // Skip rows without times (practices, non-game events)
+    if (!row.includes('icon-clock')) continue;
+
+    // Home/Away: col1 has a Game label + icon
+    // "Game <img title="Home Team">" = we are Home
+    // "Game <img title="Away Team">" = we are Away
+    const isHome = /<span>Game\s+<img[^>]*title="Home Team"/i.test(row);
+
+    // Date: "Mon, May 18 2026"
+    const dateMatch = row.match(/(\w{3}),\s+(\w{3}\s+\d{1,2}\s+\d{4})/);
+    if (!dateMatch) continue;
     const d = new Date(dateMatch[2]);
     if (isNaN(d.getTime())) continue;
     const dateKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const timeStr = dateMatch[3];
-    const endStr  = dateMatch[4];
 
-    // Opponent
-    const oppRe = /team\/(\d+)[^>]*>([\w\s\-&;]+?)<\/a>/g;
-    const opponents = [];
-    let oppMatch;
-    while ((oppMatch = oppRe.exec(row)) !== null) {
-      if (oppMatch[1] !== myId) {
-        const name = oppMatch[2].replace(/&amp;/g, '&').trim();
-        if (!opponents.includes(name)) opponents.push(name);
-      }
-    }
-    if (!opponents.length) continue;
+    // Time: "05:45 PM to 07:30 PM"
+    const timeMatch = row.match(/(\d{1,2}:\d{2}\s+[AP]M)\s+to\s+(\d{1,2}:\d{2}\s+[AP]M)/i);
+    if (!timeMatch) continue;
+    const timeStr = timeMatch[1];
+    const endStr  = timeMatch[2];
 
-    // Home/Away
-    const home = new RegExp(`\\(Home\\)[\\s\\S]{0,600}?team\\/${myId}`).test(row);
-
-    // Field
-    const fieldMatch = row.match(/maps[^"]+"\s*>([\w\s\-#]+)<\/a>/i);
+    // Field: <span class="with-tooltip" title="Map">AJ Spruytte</span>
+    const fieldMatch = row.match(/title="Map">([^<]+)<\/span>/i);
     const field = fieldMatch ? fieldMatch[1].trim() : '';
 
-    // Note
-    let note = '';
-    const cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/g) || [];
-    for (const cell of cells) {
-      const stripped = cell.replace(/<[^>]+>/g, '').trim();
-      if (stripped.length > 5 && stripped.length < 150
-          && !stripped.includes('Machine Pitch') && !stripped.includes('Coach Pitch')
-          && !/^\d/.test(stripped) && !stripped.includes('Arrive')
-          && !stripped.includes(opponents[0]) && !stripped.includes('Vs') && stripped !== field) {
-        note = stripped;
-      }
-    }
+    // Opponent: <span class="small-padding-left small-padding-right" ...>Warriors</span>
+    const oppMatch = row.match(/class="small-padding-left small-padding-right"[^>]*>([^<]+)<\/span>/i);
+    if (!oppMatch) continue;
+    const opp = oppMatch[1].replace(/&amp;/g, '&').trim();
+    if (!opp || opp.length < 2) continue;
 
-    games.push({ kid, date: dateKey, time: timeStr, end: endStr, home, opp: opponents[0], field, note: note || undefined });
+    // Notes (optional): <div class="margin-left schedule_more_info" ...>note text</div>
+    const noteMatch = row.match(/class="margin-left schedule_more_info"[^>]*>([^<]+)<\/div>/i);
+    const note = noteMatch ? noteMatch[1].trim() : undefined;
+
+    games.push({ kid, date: dateKey, time: timeStr, end: endStr, home: isHome, opp, field, note });
   }
+
   return games;
 }
 
@@ -208,13 +178,13 @@ function parseTeamSideline(html, source) {
   const games  = [];
   const myTeam = source.myTeam;
   const kid    = source.kid;
-  const configuredYear = SEASON_CONFIG.SEASON_YEAR;
-  let currentYear = configuredYear;
-  let lastMonth = null;
 
   // Find all schedule table rows (the full-width version has 7 cells per game row)
   // Date rows look like: <td ...>Tue 4/28</td>
   // Game rows look like: <td>time</td><td>Home Team</td>...<td>Away Team</td>...<td>Location</td>
+
+  // Split the HTML into week sections by looking for date patterns
+  const datePattern = /(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+\d{1,2}\/\d{1,2}/g;
 
   // Extract all table rows with their cell content
   const allRows = [];
@@ -225,76 +195,20 @@ function parseTeamSideline(html, source) {
     const cellRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
     let cellM;
     while ((cellM = cellRe.exec(rowM[1])) !== null) {
-      const normalizedCell = cellM[1]
-        .replace(/<[^>]+>/g, '')
-        .replace(/&amp;/g, '&')
-        .replace(/&nbsp;/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-      cells.push(normalizedCell);
+      cells.push(cellM[1].replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim());
     }
     if (cells.length >= 2) allRows.push(cells);
-  }
-
-  function parseFullWidthRow(cells, date) {
-    if (cells.length < 5) return null;
-    // Example full-width row:
-    // ["Tue 4/28", "6:30 PM", "Dolphins", "0", "Blue Jays", "0", "Capitol Federal Sports Complex"]
-    const timeStr = cells[1].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0] || cells[0].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0];
-    if (!timeStr) return null;
-
-    const homeTeam = cells[2] || '';
-    const awayTeam = cells[4] || '';
-    const location = cells[6] || cells[cells.length - 1] || '';
-
-    const isHome = homeTeam.includes(myTeam);
-    const isAway = awayTeam.includes(myTeam);
-    if (!isHome && !isAway) return null;
-
-    const opp = (isHome ? awayTeam : homeTeam).trim();
-    if (!opp) return null;
-
-    return { kid, date, time: timeStr, end: '', home: isHome, opp, field: location.trim() };
-  }
-
-  function parseMobileRow(cells, date) {
-    if (cells.length < 2) return null;
-    // Example mobile row:
-    // ["6:30 PM", "Dolphins  Blue Jays  Capitol Federal Sports Complex"]
-    const timeStr = cells.find(c => /^\d{1,2}:\d{2}\s*[AP]M$/i.test(c));
-    if (!timeStr) return null;
-
-    const gameCell = cells.find(c => c.includes(myTeam) && c !== timeStr) || '';
-    if (!gameCell) return null;
-
-    // Assumption: merged game cell order is "Home Team  Away Team  Location".
-    const parts = gameCell.split(/\s{2,}/).map(s => s.trim()).filter(Boolean);
-    if (parts.length < 2) return null;
-
-    const myIdx = parts.findIndex(p => p.includes(myTeam));
-    if (myIdx === -1) return null;
-
-    const home = myIdx === 0;
-    const oppIdx = home ? 1 : 0;
-    const opp = (parts[oppIdx] || 'TBD').trim();
-    const field = (parts[parts.length - 1] || '').trim();
-
-    return { kid, date, time: timeStr, end: '', home, opp, field };
   }
 
   let currentDate = '';
 
   for (const cells of allRows) {
-    if (cells.length < 2) continue;
-
     // Date row: first cell matches "Tue 4/28" pattern
     const dateM = cells[0].match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\d{1,2})\/(\d{1,2})$/i);
     if (dateM) {
       const month = parseInt(dateM[2]);
       const day   = parseInt(dateM[3]);
-      if (lastMonth !== null && month < lastMonth) currentYear += 1;
-      lastMonth = month;
-      currentDate = `${currentYear}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      currentDate = `2026-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       continue;
     }
 
@@ -309,10 +223,43 @@ function parseTeamSideline(html, source) {
     // Full-width table: Date | Time | Home | Score | Away | Score | Location (7 cols)
     // Mobile table:     Date | Time | Game (3 cols, game cell has both teams)
     // We handle both layouts
-    const parsed = cells.length >= 5
-      ? parseFullWidthRow(cells, currentDate)
-      : parseMobileRow(cells, currentDate);
-    if (parsed) games.push(parsed);
+
+    if (cells.length >= 5) {
+      // Full-width layout — cells[1]=time, cells[2]=home, cells[4]=away, cells[6]=location
+      const timeStr = cells[1].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0] || cells[0].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0];
+      if (!timeStr) continue;
+
+      const homeTeam = cells[2] || '';
+      const awayTeam = cells[4] || '';
+      const location = cells[6] || cells[cells.length - 1] || '';
+
+      const isHome = homeTeam.includes(myTeam);
+      const isAway = awayTeam.includes(myTeam);
+      if (!isHome && !isAway) continue;
+
+      const opp = isHome ? awayTeam : homeTeam;
+      games.push({ kid, date: currentDate, time: timeStr, end: '', home: isHome, opp: opp.trim(), field: location.trim() });
+
+    } else if (cells.length >= 2) {
+      // Mobile/merged layout — find time cell, then game cell
+      const timeStr = cells.find(c => /^\d{1,2}:\d{2}\s*[AP]M$/i.test(c));
+      if (!timeStr) continue;
+
+      const gameCell = cells.find(c => c.includes(myTeam) && c !== timeStr) || '';
+      if (!gameCell) continue;
+
+      // Text order in merged cell: "Home Team  Away Team  Location"
+      const parts = gameCell.split(/\s{2,}/).map(s => s.trim()).filter(Boolean);
+      const myIdx  = parts.findIndex(p => p.includes(myTeam));
+      if (myIdx === -1) continue;
+
+      const home   = myIdx === 0;
+      const oppIdx = home ? 1 : 0;
+      const opp    = parts[oppIdx] || 'TBD';
+      const field  = parts[parts.length - 1] || '';
+
+      games.push({ kid, date: currentDate, time: timeStr, end: '', home, opp, field });
+    }
   }
 
   return games;
@@ -321,13 +268,11 @@ function parseTeamSideline(html, source) {
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   const liveGames = [];
-  const nkcaFromDateRange = formatNKCAParamDate(SEASON_CONFIG.NKCA_FROM_DATE);
-  const nkcaToDateRange = formatNKCAParamDate(SEASON_CONFIG.NKCA_TO_DATE);
 
   // 1. Scrape NKCA Baseball
   console.log('\n🔍 Fetching NKCA Baseball schedules...');
   for (const t of NKCA_TEAMS) {
-    const url = `${NKCA_BASE}?team=${t.id}&eventType=1&location=0&complexId=0&gameSeasonId=0&ageGoupDivisionId=0&homeAwayValue=0&dateRange=21&fromDateRange=${nkcaFromDateRange}&toDateRange=${nkcaToDateRange}`;
+    const url = `${NKCA_BASE}/${t.id}/schedule-list`;
     console.log(`  ${t.label} (${t.id})...`);
     try {
       const html  = await fetchUrl(url);
@@ -413,12 +358,6 @@ function buildHTML(events) {
     hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
   });
   const eventsJson = JSON.stringify(events);
-  const earliestEvent = events
-    .map(e => new Date(`${e.date}T12:00:00`))
-    .filter(d => !Number.isNaN(d.getTime()))
-    .sort((a, b) => a.getTime() - b.getTime())[0];
-  const initialYear = earliestEvent ? earliestEvent.getFullYear() : SEASON_CONFIG.SEASON_YEAR;
-  const initialMonth = earliestEvent ? earliestEvent.getMonth() : 0;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -585,36 +524,13 @@ const EVENTS=${eventsJson};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY='${new Date().toISOString().slice(0,10)}';
-let curYear=${initialYear},curMonth=${initialMonth},activeFilter='all';
-function escapeHtml(value){
-  return String(value ?? '').replace(/[&<>"']/g,ch=>(
-    ch==='&'?'&amp;'
-    :ch==='<'?'&lt;'
-    :ch==='>'?'&gt;'
-    :ch==='"'?'&quot;'
-    :'&#39;'
-  ));
-}
-// Regression fixture:
-// input:  '<img src=x onerror=alert("xss")> & "quote" \'single\''
-// output: '&lt;img src=x onerror=alert(&quot;xss&quot;)&gt; &amp; &quot;quote&quot; &#39;single&#39;'
+let curYear=new Date().getFullYear(),curMonth=new Date().getMonth(),activeFilter='all';
 
 const bar=document.getElementById('summary-bar');
 [['dawson'],['cameron'],['preston-baseball','preston-football'],['parker'],['nora-softball','nora-volleyball'],['ryman'],['riggs']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
   const t=KIDS[keys[0]];
-  const card=document.createElement('div');
-  card.className='sum-card';
-  const num=document.createElement('div');
-  num.className='sum-num';
-  num.style.color=t.color;
-  num.textContent=String(n);
-  const label=document.createElement('div');
-  label.className='sum-label';
-  label.textContent=t.label;
-  card.appendChild(num);
-  card.appendChild(label);
-  bar.appendChild(card);
+  bar.innerHTML+=\`<div class="sum-card"><div class="sum-num" style="color:\${t.color}">\${n}</div><div class="sum-label">\${t.label}</div></div>\`;
 });
 document.getElementById('hdr-totals').textContent=EVENTS.length+' total events';
 
@@ -668,13 +584,10 @@ function render(){
     if(evs.length>=3&&!other){const b=document.createElement('span');b.className='busy-badge';b.textContent=evs.length+' events';cell.appendChild(b)}
     evs.forEach(ev=>{
       const t=KIDS[ev.kid];
-      const safeOpp=escapeHtml(ev.opp);
-      const safeField=escapeHtml(ev.field);
-      const safeLabel=escapeHtml(t.label);
       const pill=document.createElement('button');
       pill.className='pill '+t.cls;
       pill.textContent=t.label+' '+ev.time;
-      pill.title=safeLabel+' '+t.sport+' vs '+safeOpp+' · '+(ev.home?'Home':'Away')+' · '+safeField;
+      pill.title=t.label+' '+t.sport+' vs '+ev.opp+' · '+(ev.home?'Home':'Away')+' · '+ev.field;
       pill.onclick=e=>{e.stopPropagation();showModal(dk,eventsOn(dk).sort(timeSort))};
       cell.appendChild(pill);
     });
@@ -689,37 +602,12 @@ function showModal(dk,evs){
   evs.forEach(ev=>{
     const t=KIDS[ev.kid];
     const div=document.createElement('div');div.className='modal-event';
-    const sportBadge=document.createElement('div');
-    sportBadge.className='modal-sport-badge';
-    sportBadge.style.background=t.color+'22';
-    sportBadge.style.color=t.color;
-    sportBadge.textContent=t.sport;
-    const kidLabel=document.createElement('div');
-    kidLabel.className='modal-kid-label';
-    kidLabel.style.color=t.color;
-    kidLabel.textContent=t.label+' — '+t.team+(t.age?' ('+t.age+')':'');
-    const opp=document.createElement('div');
-    opp.className='modal-opp';
-    opp.textContent='vs '+(ev.opp || '');
-    const haBadge=document.createElement('span');
-    haBadge.className='ha-badge '+(ev.home?'ha-home':'ha-away');
-    haBadge.textContent=ev.home?'Home':'Away';
-    opp.appendChild(haBadge);
-    const meta=document.createElement('div');
-    meta.className='modal-meta';
-    meta.textContent=ev.time+(ev.end?' – '+ev.end:'');
-    meta.appendChild(document.createElement('br'));
-    meta.appendChild(document.createTextNode(ev.field || ''));
-    div.appendChild(sportBadge);
-    div.appendChild(kidLabel);
-    div.appendChild(opp);
-    div.appendChild(meta);
-    if(ev.note){
-      const note=document.createElement('span');
-      note.className='modal-note';
-      note.textContent=ev.note;
-      div.appendChild(note);
-    }
+    div.innerHTML=\`<div class="modal-sport-badge" style="background:\${t.color}22;color:\${t.color}">\${t.sport}</div>
+      <div class="modal-kid-label" style="color:\${t.color}">\${t.label} — \${t.team}\${t.age?' ('+t.age+')':''}</div>
+      <div class="modal-opp">vs \${ev.opp}<span class="ha-badge \${ev.home?'ha-home':'ha-away'}">\${ev.home?'Home':'Away'}</span></div>
+      <div class="modal-meta">\${ev.time}\${ev.end?' – '+ev.end:''}<br>\${ev.field}</div>
+      \${ev.note?\`<span class="modal-note">\${ev.note}</span>\`:''}
+    \`;
     body.appendChild(div);
   });
   document.getElementById('modal-overlay').classList.add('open');
