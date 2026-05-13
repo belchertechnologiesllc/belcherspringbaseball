@@ -27,6 +27,24 @@
     "field": "Platte Purchase 10"
   },
   {
+    "kid": "dawson",
+    "date": "2026-05-15",
+    "time": "05:45 PM",
+    "end": "07:00 PM",
+    "home": false,
+    "opp": "Prodigy Bulldogs",
+    "field": "AJ Wiar"
+  },
+  {
+    "kid": "dawson",
+    "date": "2026-05-16",
+    "time": "09:00 AM",
+    "end": "10:15 AM",
+    "home": false,
+    "opp": "Triple Play Sharks",
+    "field": "AJ Wiar"
+  },
+  {
     "kid": "cameron",
     "date": "2026-05-18",
     "time": "05:45 PM",
