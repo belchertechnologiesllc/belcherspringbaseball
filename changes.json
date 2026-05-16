@@ -1,24 +1,15 @@
 {
-  "detected_at": "2026-05-15T14:11:09.469Z",
+  "detected_at": "2026-05-16T13:26:20.250Z",
   "added": [],
   "removed": [
     {
-      "kid": "parker",
-      "date": "2026-05-14",
+      "kid": "dawson",
+      "date": "2026-05-15",
       "time": "05:45 PM",
-      "end": "07:30 PM",
+      "end": "07:00 PM",
       "home": false,
-      "opp": "KC Gators Academy - Meck",
-      "field": "Platte Purchase 10"
-    },
-    {
-      "kid": "parker",
-      "date": "2026-05-14",
-      "time": "08:00 PM",
-      "end": "09:45 PM",
-      "home": true,
-      "opp": "Prodigy Blitz",
-      "field": "Platte Purchase 10"
+      "opp": "Prodigy Bulldogs",
+      "field": "AJ Wiar"
     }
   ],
   "modified": []
