@@ -1,6 +1,7 @@
 {
-  "detected_at": "2026-05-17T13:24:31.549Z",
-  "added": [
+  "detected_at": "2026-05-18T15:36:54.842Z",
+  "added": [],
+  "removed": [
     {
       "kid": "dawson",
       "date": "2026-05-17",
@@ -8,17 +9,6 @@
       "end": "01:15 PM",
       "home": false,
       "opp": "816 Avengers",
-      "field": "AJ Wiar"
-    }
-  ],
-  "removed": [
-    {
-      "kid": "dawson",
-      "date": "2026-05-16",
-      "time": "09:00 AM",
-      "end": "10:15 AM",
-      "home": false,
-      "opp": "Triple Play Sharks",
       "field": "AJ Wiar"
     }
   ],
