@@ -1,32 +1,5 @@
 [
   {
-    "kid": "cameron",
-    "date": "2026-05-18",
-    "time": "05:45 PM",
-    "end": "07:30 PM",
-    "home": true,
-    "opp": "Warriors",
-    "field": "AJ Spruytte"
-  },
-  {
-    "kid": "preston-baseball",
-    "date": "2026-05-18",
-    "time": "05:45 PM",
-    "end": "06:35 PM",
-    "home": true,
-    "opp": "Bambitos Blue",
-    "field": "AJ Karaff"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-05-18",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": false,
-    "opp": "Warriors",
-    "field": "AJ Spruytte"
-  },
-  {
     "kid": "dawson",
     "date": "2026-05-19",
     "time": "07:30 PM",
