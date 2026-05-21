@@ -1,15 +1,15 @@
 {
-  "detected_at": "2026-05-20T15:25:04.432Z",
+  "detected_at": "2026-05-21T02:37:18.144Z",
   "added": [],
   "removed": [
     {
       "kid": "dawson",
-      "date": "2026-05-19",
-      "time": "07:30 PM",
-      "end": "08:50 PM",
-      "home": true,
-      "opp": "KC Gators - Hansen",
-      "field": "AJ Wiar"
+      "date": "2026-05-20",
+      "time": "05:45 PM",
+      "end": "07:05 PM",
+      "home": false,
+      "opp": "Prodigy Bulldogs",
+      "field": "Platte Purchase 12"
     }
   ],
   "modified": []
