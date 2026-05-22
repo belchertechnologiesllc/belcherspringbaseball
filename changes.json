@@ -1,15 +1,44 @@
 {
-  "detected_at": "2026-05-21T02:37:18.144Z",
-  "added": [],
+  "detected_at": "2026-05-22T12:04:45.872Z",
+  "added": [
+    {
+      "kid": "cameron",
+      "date": "2026-06-01",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "Pirates",
+      "field": "AJ Spruytte",
+      "note": "Common opponent swap per coach agreement"
+    }
+  ],
   "removed": [
     {
-      "kid": "dawson",
-      "date": "2026-05-20",
+      "kid": "parker",
+      "date": "2026-05-21",
       "time": "05:45 PM",
-      "end": "07:05 PM",
+      "end": "07:30 PM",
       "home": false,
-      "opp": "Prodigy Bulldogs",
-      "field": "Platte Purchase 12"
+      "opp": "KC Kings",
+      "field": "Platte Purchase 13"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-05-21",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "KC Kings",
+      "field": "Platte Purchase 13"
+    },
+    {
+      "kid": "cameron",
+      "date": "2026-06-03",
+      "time": "05:45 PM",
+      "end": "07:30 PM",
+      "home": true,
+      "opp": "Pirates",
+      "field": "AJ Spruytte"
     }
   ],
   "modified": []
