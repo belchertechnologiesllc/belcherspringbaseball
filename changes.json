@@ -1,44 +1,60 @@
 {
-  "detected_at": "2026-05-22T12:04:45.872Z",
-  "added": [
-    {
-      "kid": "cameron",
-      "date": "2026-06-01",
-      "time": "08:00 PM",
-      "end": "09:45 PM",
-      "home": true,
-      "opp": "Pirates",
-      "field": "AJ Spruytte",
-      "note": "Common opponent swap per coach agreement"
-    }
-  ],
+  "detected_at": "2026-05-23T13:39:22.064Z",
+  "added": [],
   "removed": [
     {
       "kid": "parker",
-      "date": "2026-05-21",
+      "date": "2026-05-26",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "KC Gators Academy - Meck",
+      "field": "Platte Purchase 11"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-06-03",
       "time": "05:45 PM",
       "end": "07:30 PM",
       "home": false,
-      "opp": "KC Kings",
+      "opp": "Thunder Baseball",
+      "field": "Platte Purchase 10"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-06-03",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "KC Gators Academy - McBride",
       "field": "Platte Purchase 13"
     },
     {
       "kid": "parker",
-      "date": "2026-05-21",
-      "time": "08:00 PM",
-      "end": "09:45 PM",
-      "home": true,
-      "opp": "KC Kings",
-      "field": "Platte Purchase 13"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-06-03",
+      "date": "2026-06-09",
       "time": "05:45 PM",
       "end": "07:30 PM",
       "home": true,
-      "opp": "Pirates",
-      "field": "AJ Spruytte"
+      "opp": "Competitive Edge",
+      "field": "AJ Conway"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-06-09",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": false,
+      "opp": "SBC - Oryshyn",
+      "field": "AJ Conway"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-06-17",
+      "time": "05:45 PM",
+      "end": "07:30 PM",
+      "home": false,
+      "opp": "Prodigy Blitz",
+      "field": "Platte Purchase 10"
     }
   ],
   "modified": []

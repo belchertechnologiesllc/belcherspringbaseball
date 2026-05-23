@@ -18,15 +18,6 @@
     "field": "Waterwell 03"
   },
   {
-    "kid": "parker",
-    "date": "2026-05-26",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": true,
-    "opp": "KC Gators Academy - Meck",
-    "field": "Platte Purchase 11"
-  },
-  {
     "kid": "dawson",
     "date": "2026-05-27",
     "time": "07:30 PM",
@@ -64,15 +55,6 @@
     "field": "AJ Karaff"
   },
   {
-    "kid": "parker",
-    "date": "2026-06-03",
-    "time": "05:45 PM",
-    "end": "07:30 PM",
-    "home": false,
-    "opp": "Thunder Baseball",
-    "field": "Platte Purchase 10"
-  },
-  {
     "kid": "dawson",
     "date": "2026-06-03",
     "time": "07:30 PM",
@@ -90,15 +72,6 @@
     "opp": "High Impact",
     "field": "AJ Spruytte",
     "note": "Time change due to systemic error"
-  },
-  {
-    "kid": "parker",
-    "date": "2026-06-03",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": true,
-    "opp": "KC Gators Academy - McBride",
-    "field": "Platte Purchase 13"
   },
   {
     "kid": "dawson",
@@ -128,15 +101,6 @@
     "field": "AJ Karaff"
   },
   {
-    "kid": "parker",
-    "date": "2026-06-09",
-    "time": "05:45 PM",
-    "end": "07:30 PM",
-    "home": true,
-    "opp": "Competitive Edge",
-    "field": "AJ Conway"
-  },
-  {
     "kid": "dawson",
     "date": "2026-06-09",
     "time": "07:30 PM",
@@ -155,15 +119,6 @@
     "field": "AJ Harris"
   },
   {
-    "kid": "parker",
-    "date": "2026-06-09",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": false,
-    "opp": "SBC - Oryshyn",
-    "field": "AJ Conway"
-  },
-  {
     "kid": "cameron",
     "date": "2026-06-15",
     "time": "08:00 PM",
@@ -172,14 +127,5 @@
     "opp": "BPC - Grasshoppers",
     "field": "Platte Purchase 10",
     "note": "Date change"
-  },
-  {
-    "kid": "parker",
-    "date": "2026-06-17",
-    "time": "05:45 PM",
-    "end": "07:30 PM",
-    "home": false,
-    "opp": "Prodigy Blitz",
-    "field": "Platte Purchase 10"
   }
 ]
