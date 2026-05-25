@@ -1,7 +1,6 @@
 {
-  "detected_at": "2026-05-23T13:39:22.064Z",
-  "added": [],
-  "removed": [
+  "detected_at": "2026-05-25T14:56:38.702Z",
+  "added": [
     {
       "kid": "parker",
       "date": "2026-05-26",
@@ -48,6 +47,16 @@
       "field": "AJ Conway"
     },
     {
+      "kid": "dawson",
+      "date": "2026-06-16",
+      "time": "07:30 PM",
+      "end": "08:50 PM",
+      "home": true,
+      "opp": "KC Gators - Hansen",
+      "field": "Platte Purchase 12",
+      "note": "5/19 Rain out make up"
+    },
+    {
       "kid": "parker",
       "date": "2026-06-17",
       "time": "05:45 PM",
@@ -55,7 +64,18 @@
       "home": false,
       "opp": "Prodigy Blitz",
       "field": "Platte Purchase 10"
+    },
+    {
+      "kid": "cameron",
+      "date": "2026-06-18",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": false,
+      "opp": "Warriors",
+      "field": "AJ Spruytte",
+      "note": "5/18 Rain out make up"
     }
   ],
+  "removed": [],
   "modified": []
 }
