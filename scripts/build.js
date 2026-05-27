@@ -31,35 +31,37 @@ const NKCA_TEAMS = [
 ];
 
 // ── TeamSideline sources ─────────────────────────────────────────────────────
-const TEAMSIDELINE_SOURCES = [
-  {
-    kid:    'nora-softball',
-    label:  'Nora',
-    team:   'Dolphins',
-    age:    '11/12U',
-    myTeam: 'Dolphins',
-    url:    'https://teamsideline.com/sites/liberty/schedule/709215/1112U',
-  },
-  {
-    kid:    'nora-volleyball',
-    label:  'Nora',
-    team:   'Smith',
-    age:    '3rd/4th',
-    myTeam: 'Smith',
-    url:    'https://teamsideline.com/sites/liberty/schedule/705824/3rd4th-Grade',
-  },
-];
+// NOTE: TeamSideline redirects to a JS-rendered site and cannot be scraped.
+// Nora's events are maintained as STATIC_EVENTS below instead.
+const TEAMSIDELINE_SOURCES = [];
 
-// ── Static events (JS-rendered sources, manually maintained) ─────────────────
+// ── Static events (manually maintained — update when schedules change) ────────
 const STATIC_EVENTS = [
-  // PRESTON — Eagles Flag Football (NFL Flag portal — JS-rendered, no scrape possible)
+  // NORA — Dolphins Softball 11/12U (Liberty Parks & Rec / TeamSideline — JS-rendered)
+  { kid:'nora-softball', date:'2026-05-26', time:'7:30 PM',  end:'9:00 PM',  home:true,  opp:"Team Silvey",       field:"Minsky's Pizza - Capitol Federal Sports Complex" },
+  { kid:'nora-softball', date:'2026-06-02', time:'6:00 PM',  end:'7:30 PM',  home:false, opp:"Team Overton",      field:"Minsky's Pizza - Capitol Federal Sports Complex" },
+  { kid:'nora-softball', date:'2026-06-09', time:'6:00 PM',  end:'7:30 PM',  home:true,  opp:"Team Moore-Smith",  field:"Minsky's Pizza - Capitol Federal Sports Complex" },
+  { kid:'nora-softball', date:'2026-06-09', time:'7:30 PM',  end:'9:00 PM',  home:false, opp:"Team Silvey",       field:"Minsky's Pizza - Capitol Federal Sports Complex" },
+  { kid:'nora-softball', date:'2026-06-30', time:'6:00 PM',  end:'7:30 PM',  home:false, opp:"Team Overton",      field:"The Landing" },
+
+  // NORA — Smith Volleyball 3rd/4th Grade (Liberty Parks & Rec / TeamSideline — JS-rendered)
+  { kid:'nora-volleyball', date:'2026-05-09', time:'9:30 AM',  end:'10:30 AM', home:true,  opp:'Violet Vipers',       field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-05-16', time:'12:30 PM', end:'1:30 PM',  home:true,  opp:'Wilson',              field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-05-16', time:'1:30 PM',  end:'2:30 PM',  home:false, opp:'Junior Mints',        field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-05-30', time:'12:30 PM', end:'1:30 PM',  home:true,  opp:'Icy Blue Queens',     field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-06-06', time:'10:30 AM', end:'11:30 AM', home:false, opp:'Ruby Rocket Hitters', field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-06-13', time:'1:30 PM',  end:'2:30 PM',  home:false, opp:'Goodman',             field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-06-20', time:'10:30 AM', end:'11:30 AM', home:false, opp:'Net Ninjas',          field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
+
+  // PRESTON — Eagles Flag Football (NFL Flag portal — JS-rendered)
   { kid:'preston-football', date:'2026-04-18', time:'10:00 AM', end:'11:00 AM', home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Week 1 · Won 33-0' },
   { kid:'preston-football', date:'2026-04-25', time:'9:00 AM',  end:'10:00 AM', home:false, opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School' },
   { kid:'preston-football', date:'2026-04-25', time:'10:00 AM', end:'11:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School', note:'Double header' },
   { kid:'preston-football', date:'2026-05-02', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Double header' },
   { kid:'preston-football', date:'2026-05-09', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
+  { kid:'preston-football', date:'2026-05-16', time:'9:00 AM',  end:'10:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
 
-  // RYMAN — Monarchs 8U Baseball (SportsEngine — JS-rendered, no scrape possible)
+  // RYMAN — Monarchs 8U Baseball (SportsEngine — JS-rendered)
   { kid:'ryman', date:'2026-04-21', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-04-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-04-28', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
@@ -71,9 +73,9 @@ const STATIC_EVENTS = [
   { kid:'ryman', date:'2026-05-12', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Chillicothe Bombers 7U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-05-12', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
   { kid:'ryman', date:'2026-05-18', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Atchison Mudcats 8U',    field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',    field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
+  { kid:'ryman', date:'2026-05-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
 
-  // RIGGS — Monarchs 6U Baseball (Lions Field, St. Joseph — JS-rendered, no scrape possible)
+  // RIGGS — Monarchs 6U Baseball (Lions Field, St. Joseph — JS-rendered)
   { kid:'riggs', date:'2026-04-24', time:'5:30 PM',  end:'6:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
   { kid:'riggs', date:'2026-04-27', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Blue Jays',           field:'Lions Field L1 · Saint Joseph MO' },
   { kid:'riggs', date:'2026-05-01', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'6U Cardinals',           field:'Lions Field L1 · Saint Joseph MO' },
@@ -85,9 +87,8 @@ const STATIC_EVENTS = [
   { kid:'riggs', date:'2026-05-22', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Dragons',                field:'Lions Field L1 · Saint Joseph MO' },
   { kid:'riggs', date:'2026-05-29', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
   { kid:'riggs', date:'2026-06-01', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'SJCS Lions - Burkart',   field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-06-02', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6u Blue Jays',   field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-06-05', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6u SJCS Lions - Ryba',   field:'Lions Field L1 · Saint Joseph MO' },
-
+  { kid:'riggs', date:'2026-06-02', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6U Blue Jays',           field:'Lions Field L1 · Saint Joseph MO' },
+  { kid:'riggs', date:'2026-06-05', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6U SJCS Lions - Ryba',   field:'Lions Field L1 · Saint Joseph MO' },
 ];
 
 const NKCA_BASE     = 'https://www.nkcabaseball.com/team';
@@ -288,22 +289,7 @@ async function main() {
     }
   }
 
-  // 2. Scrape TeamSideline
-  console.log('\n🔍 Fetching TeamSideline schedules...');
-  for (const src of TEAMSIDELINE_SOURCES) {
-    console.log(`  ${src.kid} (${src.myTeam})...`);
-    try {
-      const html  = await fetchUrl(src.url);
-      const games = parseTeamSideline(html, src);
-      console.log(`  → ${games.length} games`);
-      liveGames.push(...games);
-    } catch (err) {
-      console.error(`  ✗ Error fetching ${src.kid}: ${err.message}`);
-      process.exit(2);
-    }
-  }
-
-  // 3. Merge live + static, sort
+  // 2. Merge live + static, sort
   const allEvents = [...liveGames, ...STATIC_EVENTS];
   allEvents.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
   liveGames.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
