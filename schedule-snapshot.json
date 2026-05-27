@@ -1,23 +1,5 @@
 [
   {
-    "kid": "cameron",
-    "date": "2026-05-26",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": true,
-    "opp": "Saints Baseball Club",
-    "field": "Waterwell 03"
-  },
-  {
-    "kid": "parker",
-    "date": "2026-05-26",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": true,
-    "opp": "KC Gators Academy - Meck",
-    "field": "Platte Purchase 11"
-  },
-  {
     "kid": "dawson",
     "date": "2026-05-27",
     "time": "07:30 PM",

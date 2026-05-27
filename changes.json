@@ -1,15 +1,24 @@
 {
-  "detected_at": "2026-05-27T03:30:47.711Z",
+  "detected_at": "2026-05-27T15:49:15.469Z",
   "added": [],
   "removed": [
     {
-      "kid": "preston-baseball",
+      "kid": "cameron",
       "date": "2026-05-26",
-      "time": "06:45 PM",
-      "end": "07:35 PM",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
       "home": true,
-      "opp": "Warriors-6U-Farrell",
-      "field": "AJ Karaff"
+      "opp": "Saints Baseball Club",
+      "field": "Waterwell 03"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-05-26",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "KC Gators Academy - Meck",
+      "field": "Platte Purchase 11"
     }
   ],
   "modified": []
