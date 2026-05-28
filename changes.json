@@ -1,24 +1,15 @@
 {
-  "detected_at": "2026-05-27T15:49:15.469Z",
+  "detected_at": "2026-05-28T16:02:45.311Z",
   "added": [],
   "removed": [
     {
-      "kid": "cameron",
-      "date": "2026-05-26",
-      "time": "08:00 PM",
-      "end": "09:45 PM",
-      "home": true,
-      "opp": "Saints Baseball Club",
-      "field": "Waterwell 03"
-    },
-    {
-      "kid": "parker",
-      "date": "2026-05-26",
-      "time": "08:00 PM",
-      "end": "09:45 PM",
-      "home": true,
-      "opp": "KC Gators Academy - Meck",
-      "field": "Platte Purchase 11"
+      "kid": "dawson",
+      "date": "2026-05-27",
+      "time": "07:30 PM",
+      "end": "08:50 PM",
+      "home": false,
+      "opp": "Old School Ducks - Williams",
+      "field": "AJ Vick"
     }
   ],
   "modified": []
