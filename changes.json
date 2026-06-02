@@ -1,17 +1,17 @@
 {
-  "detected_at": "2026-06-01T17:44:13.406Z",
-  "added": [
+  "detected_at": "2026-06-02T16:29:09.202Z",
+  "added": [],
+  "removed": [
     {
-      "kid": "dawson",
-      "date": "2026-06-21",
-      "time": "01:00 PM",
-      "end": "02:20 PM",
-      "home": false,
-      "opp": "KC Bones",
-      "field": "AJ Wiar",
-      "note": "5/30 Rain out make up"
+      "kid": "cameron",
+      "date": "2026-06-01",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "Pirates",
+      "field": "AJ Spruytte",
+      "note": "Common opponent swap per coach agreement"
     }
   ],
-  "removed": [],
   "modified": []
 }
