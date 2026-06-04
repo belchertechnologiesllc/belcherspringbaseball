@@ -1,15 +1,43 @@
 {
-  "detected_at": "2026-06-03T16:52:44.385Z",
+  "detected_at": "2026-06-04T15:19:46.063Z",
   "added": [],
   "removed": [
     {
-      "kid": "preston-baseball",
-      "date": "2026-06-02",
+      "kid": "parker",
+      "date": "2026-06-03",
       "time": "05:45 PM",
-      "end": "06:35 PM",
+      "end": "07:30 PM",
       "home": false,
-      "opp": "Panthers",
-      "field": "AJ Karaff"
+      "opp": "Thunder Baseball",
+      "field": "Platte Purchase 10"
+    },
+    {
+      "kid": "dawson",
+      "date": "2026-06-03",
+      "time": "07:30 PM",
+      "end": "08:50 PM",
+      "home": true,
+      "opp": "Old School Ducks - Williams",
+      "field": "Platte Purchase 12"
+    },
+    {
+      "kid": "cameron",
+      "date": "2026-06-03",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": false,
+      "opp": "High Impact",
+      "field": "AJ Spruytte",
+      "note": "Time change due to systemic error"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-06-03",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
+      "home": true,
+      "opp": "KC Gators Academy - McBride",
+      "field": "Platte Purchase 13"
     }
   ],
   "modified": []
