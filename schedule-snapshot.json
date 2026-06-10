@@ -1,60 +1,6 @@
 [
   {
     "kid": "cameron",
-    "date": "2026-06-09",
-    "time": "05:45 PM",
-    "end": "07:30 PM",
-    "home": false,
-    "opp": "KC Mud Dogs",
-    "field": "AJ Harris"
-  },
-  {
-    "kid": "preston-baseball",
-    "date": "2026-06-09",
-    "time": "05:45 PM",
-    "end": "06:35 PM",
-    "home": false,
-    "opp": "KC Kraken",
-    "field": "AJ Karaff"
-  },
-  {
-    "kid": "parker",
-    "date": "2026-06-09",
-    "time": "05:45 PM",
-    "end": "07:30 PM",
-    "home": true,
-    "opp": "Competitive Edge",
-    "field": "AJ Conway"
-  },
-  {
-    "kid": "dawson",
-    "date": "2026-06-09",
-    "time": "07:30 PM",
-    "end": "08:50 PM",
-    "home": true,
-    "opp": "816 Avengers",
-    "field": "AJ Wiar"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-06-09",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": true,
-    "opp": "Chillicothe Cardinals",
-    "field": "AJ Harris"
-  },
-  {
-    "kid": "parker",
-    "date": "2026-06-09",
-    "time": "08:00 PM",
-    "end": "09:45 PM",
-    "home": false,
-    "opp": "SBC - Oryshyn",
-    "field": "AJ Conway"
-  },
-  {
-    "kid": "cameron",
     "date": "2026-06-15",
     "time": "08:00 PM",
     "end": "09:45 PM",
