@@ -1,15 +1,16 @@
 {
-  "detected_at": "2026-06-14T14:06:49.617Z",
+  "detected_at": "2026-06-16T16:56:36.473Z",
   "added": [],
   "removed": [
     {
-      "kid": "dawson",
-      "date": "2026-06-13",
-      "time": "09:00 AM",
-      "end": "10:15 AM",
+      "kid": "cameron",
+      "date": "2026-06-15",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
       "home": false,
-      "opp": "KC Pilots",
-      "field": "AJ Wiar"
+      "opp": "BPC - Grasshoppers",
+      "field": "Platte Purchase 10",
+      "note": "Date change"
     }
   ],
   "modified": []
