@@ -1,15 +1,16 @@
 {
-  "detected_at": "2026-06-18T15:29:00.666Z",
+  "detected_at": "2026-06-19T15:22:35.343Z",
   "added": [],
   "removed": [
     {
-      "kid": "parker",
-      "date": "2026-06-17",
-      "time": "05:45 PM",
-      "end": "07:30 PM",
+      "kid": "cameron",
+      "date": "2026-06-18",
+      "time": "08:00 PM",
+      "end": "09:45 PM",
       "home": false,
-      "opp": "Prodigy Blitz",
-      "field": "Platte Purchase 10"
+      "opp": "Warriors",
+      "field": "AJ Spruytte",
+      "note": "5/18 Rain out make up"
     }
   ],
   "modified": []
