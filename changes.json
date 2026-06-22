@@ -1,16 +1,27 @@
 {
-  "detected_at": "2026-06-19T15:22:35.343Z",
-  "added": [],
+  "detected_at": "2026-06-22T17:00:52.694Z",
+  "added": [
+    {
+      "kid": "dawson",
+      "date": "2026-07-01",
+      "time": "05:45 PM",
+      "end": "07:05 PM",
+      "home": false,
+      "opp": "KC Bones",
+      "field": "AJ Wiar",
+      "note": "6/21 Rain out make up"
+    }
+  ],
   "removed": [
     {
-      "kid": "cameron",
-      "date": "2026-06-18",
-      "time": "08:00 PM",
-      "end": "09:45 PM",
+      "kid": "dawson",
+      "date": "2026-06-21",
+      "time": "01:00 PM",
+      "end": "02:20 PM",
       "home": false,
-      "opp": "Warriors",
-      "field": "AJ Spruytte",
-      "note": "5/18 Rain out make up"
+      "opp": "KC Bones",
+      "field": "AJ Wiar",
+      "note": "5/30 Rain out make up"
     }
   ],
   "modified": []
