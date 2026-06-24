@@ -1,28 +1,34 @@
 {
-  "detected_at": "2026-06-23T14:52:46.676Z",
+  "detected_at": "2026-06-24T14:34:32.702Z",
   "added": [
     {
-      "kid": "dawson",
-      "date": "2026-06-24",
-      "time": "07:30 PM",
-      "end": "08:50 PM",
+      "kid": "parker",
+      "date": "2026-06-27",
+      "time": "03:00 PM",
+      "end": "04:45 PM",
       "home": false,
-      "opp": "KC Bones",
-      "field": "AJ Wiar",
-      "note": "6/21 Rain out make up"
-    }
-  ],
-  "removed": [
+      "opp": "TBD1",
+      "field": "AJ Conway"
+    },
+    {
+      "kid": "preston-baseball",
+      "date": "2026-06-27",
+      "time": "09:00 AM",
+      "end": "09:50 AM",
+      "home": false,
+      "opp": "Sons of Thunder",
+      "field": "AJ Ferguson"
+    },
     {
       "kid": "dawson",
-      "date": "2026-07-01",
-      "time": "05:45 PM",
-      "end": "07:05 PM",
+      "date": "2026-06-28",
+      "time": "02:30 PM",
+      "end": "03:50 PM",
       "home": false,
-      "opp": "KC Bones",
-      "field": "AJ Wiar",
-      "note": "6/21 Rain out make up"
+      "opp": "KC Gators - Hansen",
+      "field": "AJ Wiar"
     }
   ],
+  "removed": [],
   "modified": []
 }
