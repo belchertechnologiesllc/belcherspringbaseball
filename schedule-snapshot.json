@@ -1,23 +1,5 @@
 [
   {
-    "kid": "parker",
-    "date": "2026-06-27",
-    "time": "03:00 PM",
-    "end": "04:40 PM",
-    "home": false,
-    "opp": "KC Gators Academy - Meck",
-    "field": "AJ Conway"
-  },
-  {
-    "kid": "preston-baseball",
-    "date": "2026-06-27",
-    "time": "09:00 AM",
-    "end": "09:50 AM",
-    "home": false,
-    "opp": "Sons of Thunder",
-    "field": "AJ Ferguson"
-  },
-  {
     "kid": "dawson",
     "date": "2026-06-28",
     "time": "02:30 PM",
