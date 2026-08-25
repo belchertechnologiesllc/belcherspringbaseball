@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 /**
- * Belcher Grandkids Sports Schedule Builder
+ * Belcher Grandkids Sports Schedule Builder — Fall 2026
  *
  * Sources:
  *   LIVE (scraped daily):
- *     - NKCA Baseball: Dawson, Cameron, Preston, Parker  → nkcabaseball.com
- *     - TeamSideline:  Nora Softball, Nora Volleyball    → teamsideline.com
+ *     - NKCA Baseball (filter URL)  → Dawson (91945), Cameron (92229)
+ *     - GameChanger iCal feeds      → Dawson, Cameron, Nora Softball
+ *     - TeamSnap iCal feed          → Preston Eagles (Gold + Navy)
  *
- *   STATIC (hardcoded, update manually if changed):
- *     - Preston Flag Football (Eagles / NFL Flag portal — JS-rendered)
- *     - Ryman Baseball (Monarchs 8U / SportsEngine — JS-rendered)
+ *   STATIC (hardcoded — update manually when schedules change):
+ *     - Preston Eagles Gold/Navy — Flag Football (fallback if TeamSnap feed fails)
  *
  * Exit codes:
- *   0 = no changes detected, skip deploy
- *   1 = changes detected, deploy needed
+ *   0 = no changes, skip deploy
+ *   1 = changes detected, rebuild + deploy
  *   2 = network/parse error, abort
  */
 
@@ -22,90 +22,130 @@ const http  = require('http');
 const fs    = require('fs');
 const path  = require('path');
 
-// ── NKCA team definitions ────────────────────────────────────────────────────
+// ── NKCA team definitions ─────────────────────────────────────────────────────
 const NKCA_TEAMS = [
-  { kid: 'dawson',           id: '85056', label: 'Dawson',  team: 'Diamond Dawgs',      age: '7U'  },
-  { kid: 'cameron',          id: '86968', label: 'Cameron', team: 'KC Sharks 11U',       age: '11U' },
-  { kid: 'preston-baseball', id: '87630', label: 'Preston', team: 'KC Diamond Crushers', age: '6U'  },
-  { kid: 'parker',           id: '87764', label: 'Parker',  team: 'BPC Tower Buzzers',   age: '10U' },
+  { kid: 'dawson',  id: '91945', label: 'Dawson',  team: 'Diamond Dawgs', age: '8U'  },
+  { kid: 'cameron', id: '92229', label: 'Cameron', team: 'KC Sharks',      age: '12U' },
+];
+const NKCA_BASE = 'https://nkcabaseball.com/schedule/filter';
+const NKCA_FROM = 'Aug+25+2026';
+
+// ── GameChanger iCal feeds ────────────────────────────────────────────────────
+const GC_FEEDS = [
+  {
+    kid:   'dawson',
+    label: 'Dawson',
+    team:  'Diamond Dawgs',
+    url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=ac231855-94fe-4f22-8497-f395f19a6439&token=1d34c56ed4ed0959a4bfac392f6c9875558daed486b85640113c6b6331a72c80',
+  },
+  {
+    kid:   'cameron',
+    label: 'Cameron',
+    team:  'KC Sharks',
+    url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=5683a9ec-54a0-4bac-8716-4ccb015308f3&token=260be27b263f0132104c53ab6ac6907328cb6a774e946240bb1f35fc7b30aeb3',
+  },
+  {
+    kid:   'nora-softball',
+    label: 'Nora',
+    team:  'Team Melton',
+    url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=ea0953e3-591b-490e-a153-b801b9c9f8ad&token=bbb439d074d26415e3fe4341ae2c7db5b0b936a640918da0d50f3a0dd9677cab',
+  },
 ];
 
-// ── TeamSideline sources ─────────────────────────────────────────────────────
-// NOTE: TeamSideline redirects to a JS-rendered site and cannot be scraped.
-// Nora's events are maintained as STATIC_EVENTS below instead.
-const TEAMSIDELINE_SOURCES = [];
-
-// ── Static events (manually maintained — update when schedules change) ────────
-const STATIC_EVENTS = [
-  // NORA — Dolphins Softball 11/12U (Liberty Parks & Rec / TeamSideline — JS-rendered)
-  { kid:'nora-softball', date:'2026-05-26', time:'7:30 PM',  end:'9:00 PM',  home:true,  opp:"Team Silvey",       field:"Minsky's Pizza - Capitol Federal Sports Complex" },
-  { kid:'nora-softball', date:'2026-06-02', time:'6:00 PM',  end:'7:30 PM',  home:false, opp:"Team Overton",      field:"Minsky's Pizza - Capitol Federal Sports Complex" },
-  { kid:'nora-softball', date:'2026-06-09', time:'6:00 PM',  end:'7:30 PM',  home:true,  opp:"Team Moore-Smith",  field:"Minsky's Pizza - Capitol Federal Sports Complex" },
-  { kid:'nora-softball', date:'2026-06-09', time:'7:30 PM',  end:'9:00 PM',  home:false, opp:"Team Silvey",       field:"Minsky's Pizza - Capitol Federal Sports Complex" },
-  { kid:'nora-softball', date:'2026-06-30', time:'6:00 PM',  end:'7:30 PM',  home:false, opp:"Team Overton",      field:"The Landing" },
-
-  // NORA — Smith Volleyball 3rd/4th Grade (Liberty Parks & Rec / TeamSideline — JS-rendered)
-  { kid:'nora-volleyball', date:'2026-05-09', time:'9:30 AM',  end:'10:30 AM', home:true,  opp:'Violet Vipers',       field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-05-16', time:'12:30 PM', end:'1:30 PM',  home:true,  opp:'Wilson',              field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-05-16', time:'1:30 PM',  end:'2:30 PM',  home:false, opp:'Junior Mints',        field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-05-30', time:'12:30 PM', end:'1:30 PM',  home:true,  opp:'Icy Blue Queens',     field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-06-06', time:'10:30 AM', end:'11:30 AM', home:false, opp:'Ruby Rocket Hitters', field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-06-13', time:'1:30 PM',  end:'2:30 PM',  home:false, opp:'Goodman',             field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-06-20', time:'10:30 AM', end:'11:30 AM', home:false, opp:'Net Ninjas',          field:'SVMS Court A, 1000 Midjay Dr, Liberty' },
-
-  // PRESTON — Eagles Flag Football (NFL Flag portal — JS-rendered)
-  { kid:'preston-football', date:'2026-04-18', time:'10:00 AM', end:'11:00 AM', home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Week 1 · Won 33-0' },
-  { kid:'preston-football', date:'2026-04-25', time:'9:00 AM',  end:'10:00 AM', home:false, opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School' },
-  { kid:'preston-football', date:'2026-04-25', time:'10:00 AM', end:'11:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School', note:'Double header' },
-  { kid:'preston-football', date:'2026-05-02', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Silva - Wright - FALCONS', field:'Field 1 · Heritage Middle School', note:'Double header' },
-  { kid:'preston-football', date:'2026-05-09', time:'9:00 AM',  end:'10:00 AM', home:true,  opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
-  { kid:'preston-football', date:'2026-05-16', time:'9:00 AM',  end:'10:00 AM', home:false, opp:'Lombardi - Collins - PANTHERS',       field:'Field 1 · Heritage Middle School' },
-
-  // RYMAN — Monarchs 8U Baseball (SportsEngine — JS-rendered)
-  { kid:'ryman', date:'2026-04-21', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-04-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-04-28', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'St Joe Storm',           field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-04-28', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-05', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-06', time:'5:45 PM',  end:'7:00 PM',  home:false, opp:'Marek Baseball Academy', field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-06', time:'7:15 PM',  end:'8:30 PM',  home:false, opp:'Marek Baseball Academy', field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-08', time:'5:30 PM',  end:'6:45 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-12', time:'5:45 PM',  end:'7:00 PM',  home:true,  opp:'Chillicothe Bombers 7U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-12', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Chillicothe Bombers 8U', field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-18', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Atchison Mudcats 8U',    field:'Eagles Field E1 · 2302 Marion St, Saint Joseph MO' },
-  { kid:'ryman', date:'2026-05-21', time:'7:15 PM',  end:'8:30 PM',  home:true,  opp:'Midwest Longhorns 8U',   field:'Eagles Field E2 · 2302 Marion St, Saint Joseph MO' },
-
-  // RIGGS — Monarchs 6U Baseball (Lions Field, St. Joseph — JS-rendered)
-  { kid:'riggs', date:'2026-04-24', time:'5:30 PM',  end:'6:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-04-27', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Blue Jays',           field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-01', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'6U Cardinals',           field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-04', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Nationals',           field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-08', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'6U Pirates',             field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-11', time:'6:30 PM',  end:'7:25 PM',  home:false, opp:'6U Rockies',             field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-15', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Blue Bombers',           field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-18', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'Blue Lightning',         field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-22', time:'7:30 PM',  end:'8:25 PM',  home:false, opp:'Dragons',                field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-05-29', time:'7:30 PM',  end:'8:25 PM',  home:true,  opp:'SJCS Lions - Ryba',      field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-06-01', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'SJCS Lions - Burkart',   field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-06-02', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6U Blue Jays',           field:'Lions Field L1 · Saint Joseph MO' },
-  { kid:'riggs', date:'2026-06-05', time:'6:30 PM',  end:'7:25 PM',  home:true,  opp:'6U SJCS Lions - Ryba',   field:'Lions Field L1 · Saint Joseph MO' },
+// ── TeamSnap iCal feeds ───────────────────────────────────────────────────────
+// These are fetched as plain iCal. Games are split into Gold/Navy by time slot.
+// Gold = earlier game each day, Navy = later game each day.
+const TEAMSNAP_FEEDS = [
+  {
+    label: 'Preston Eagles',
+    url:   'https://ical-cdn.teamsnap.com/team_schedule/7e606136-a4f4-421c-884d-d945b17870fb.ics',
+  },
 ];
 
-const NKCA_BASE     = 'https://www.nkcabaseball.com/team';
+// ── Parse TeamSnap iCal ───────────────────────────────────────────────────────
+function parseTeamSnapiCal(icsText) {
+  const games = [];
+  const eventBlocks = icsText.split('BEGIN:VEVENT').slice(1);
+
+  for (const block of eventBlocks) {
+    const end = block.indexOf('END:VEVENT');
+    const ev  = block.slice(0, end);
+
+    const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+    if (!summary) continue;
+    if (/practice|camp|meeting/i.test(summary)) continue;
+
+    // Date/time
+    const dtMatch = ev.match(/DTSTART(?:;[^:]+)?:(\d{8})T(\d{6})/);
+    if (!dtMatch) continue;
+    const dateStr = dtMatch[1];
+    const timeStr = dtMatch[2];
+    const year  = parseInt(dateStr.slice(0,4));
+    const month = parseInt(dateStr.slice(4,6));
+    const day   = parseInt(dateStr.slice(6,8));
+    const hour  = parseInt(timeStr.slice(0,2));
+    const min   = parseInt(timeStr.slice(2,4));
+    const dateKey = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    if (dateKey < '2026-08-25') continue;
+
+    const h12  = hour % 12 || 12;
+    const ampm = hour < 12 ? 'AM' : 'PM';
+    const timeFormatted = `${h12}:${String(min).padStart(2,'0')} ${ampm}`;
+
+    let endFormatted = '';
+    const dtEnd = ev.match(/DTEND(?:;[^:]+)?:(\d{8})T(\d{6})/);
+    if (dtEnd) {
+      const eh = parseInt(dtEnd[2].slice(0,2));
+      const em = parseInt(dtEnd[2].slice(2,4));
+      endFormatted = `${eh % 12 || 12}:${String(em).padStart(2,'0')} ${eh < 12 ? 'AM' : 'PM'}`;
+    }
+
+    const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+
+    // Opponent from summary — TeamSnap format: "Eagles vs Opponent" or "Eagles @ Opponent"
+    let opp  = summary;
+    let home = true;
+    const vsMatch = summary.match(/(?:vs\.?\s+|@\s*)(.+)$/i);
+    if (vsMatch) {
+      opp  = vsMatch[1].trim();
+      home = !/@/.test(summary.slice(0, summary.search(/vs\.|@/i)));
+    }
+
+    games.push({ dateKey, timeFormatted, endFormatted, home, opp, field: location, hour, min });
+  }
+
+  // Sort by date then time
+  games.sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.hour * 60 + a.min - (b.hour * 60 + b.min));
+
+  // Split into Gold (earlier game) and Navy (later game) by day
+  const byDay = {};
+  for (const g of games) {
+    (byDay[g.dateKey] = byDay[g.dateKey] || []).push(g);
+  }
+
+  const result = [];
+  for (const [date, dayGames] of Object.entries(byDay)) {
+    dayGames.forEach((g, idx) => {
+      const kid = idx === 0 ? 'gold-football' : 'navy-football';
+      result.push({ kid, date, time: g.timeFormatted, end: g.endFormatted, home: g.home, opp: g.opp, field: g.field });
+    });
+  }
+
+  return result;
+}
+const STATIC_EVENTS = []; // Preston football now scraped from TeamSnap iCal
+
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
 const OUTPUT_FILE   = path.join(__dirname, '..', 'public', 'index.html');
 const CHANGE_LOG    = path.join(__dirname, '..', 'changes.json');
 
-// ── HTTP fetch with redirect support ─────────────────────────────────────────
+// ── HTTP fetch ────────────────────────────────────────────────────────────────
 function fetchUrl(url, redirects = 0) {
   if (redirects > 5) return Promise.reject(new Error('Too many redirects'));
   return new Promise((resolve, reject) => {
     const mod = url.startsWith('https') ? https : http;
     const req = mod.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; ScheduleBot/1.0)',
-        'Accept': 'text/html,application/xhtml+xml',
-      }
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ScheduleBot/1.0)', 'Accept': 'text/html,text/calendar,*/*' }
     }, res => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return fetchUrl(res.headers.location, redirects + 1).then(resolve).catch(reject);
@@ -115,168 +155,110 @@ function fetchUrl(url, redirects = 0) {
       res.on('end', () => resolve(data));
     });
     req.on('error', reject);
-    req.setTimeout(15000, () => { req.destroy(); reject(new Error('Request timed out')); });
+    req.setTimeout(15000, () => { req.destroy(); reject(new Error('Timeout')); });
   });
 }
 
-// ── Parse NKCA schedule-list HTML ────────────────────────────────────────────
-// URL: https://www.nkcabaseball.com/team/${id}/schedule-list
-// Table columns: Game/Practice/Event | Date & Time | Location | Opponent/Notes
-// Home/Away: col1 has <img title="Home Team"> or <img title="Away Team">
+// ── Parse NKCA schedule filter HTML ──────────────────────────────────────────
 function parseNKCA(html, kid) {
   const games = [];
-
-  // Each game is in a <tr id="event_NNNNNN"> row
-  const eventRowRe = /<tr\s+id="event_\d+">([\s\S]*?)<\/tr>/gi;
+  const myId  = NKCA_TEAMS.find(t => t.kid === kid)?.id;
+  const rowRe = /<tr\s+id="event_\d+">([\s\S]*?)<\/tr>/gi;
   let rowMatch;
-
-  while ((rowMatch = eventRowRe.exec(html)) !== null) {
+  while ((rowMatch = rowRe.exec(html)) !== null) {
     const row = rowMatch[1];
-
-    // Skip rows without times (practices, non-game events)
     if (!row.includes('icon-clock')) continue;
-
-    // Home/Away: col1 has a Game label + icon
-    // "Game <img title="Home Team">" = we are Home
-    // "Game <img title="Away Team">" = we are Away
     const isHome = /<span>Game\s+<img[^>]*title="Home Team"/i.test(row);
-
-    // Date: "Mon, May 18 2026"
     const dateMatch = row.match(/(\w{3}),\s+(\w{3}\s+\d{1,2}\s+\d{4})/);
     if (!dateMatch) continue;
     const d = new Date(dateMatch[2]);
     if (isNaN(d.getTime())) continue;
     const dateKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-
-    // Time: "05:45 PM to 07:30 PM"
     const timeMatch = row.match(/(\d{1,2}:\d{2}\s+[AP]M)\s+to\s+(\d{1,2}:\d{2}\s+[AP]M)/i);
     if (!timeMatch) continue;
-    const timeStr = timeMatch[1];
-    const endStr  = timeMatch[2];
-
-    // Field: <span class="with-tooltip" title="Map">AJ Spruytte</span>
     const fieldMatch = row.match(/title="Map">([^<]+)<\/span>/i);
     const field = fieldMatch ? fieldMatch[1].trim() : '';
-
-    // Opponent: <span class="small-padding-left small-padding-right" ...>Warriors</span>
     const oppMatch = row.match(/class="small-padding-left small-padding-right"[^>]*>([^<]+)<\/span>/i);
     if (!oppMatch) continue;
     const opp = oppMatch[1].replace(/&amp;/g, '&').trim();
     if (!opp || opp.length < 2) continue;
-
-    // Notes (optional): <div class="margin-left schedule_more_info" ...>note text</div>
     const noteMatch = row.match(/class="margin-left schedule_more_info"[^>]*>([^<]+)<\/div>/i);
-    const note = noteMatch ? noteMatch[1].trim() : undefined;
-
-    games.push({ kid, date: dateKey, time: timeStr, end: endStr, home: isHome, opp, field, note });
+    games.push({ kid, date: dateKey, time: timeMatch[1], end: timeMatch[2], home: isHome, opp, field, note: noteMatch ? noteMatch[1].trim() : undefined });
   }
-
   return games;
 }
 
-// ── Parse TeamSideline schedule HTML ─────────────────────────────────────────
-// TeamSideline renders schedule as an HTML table in the initial response.
-// The full-width table has columns: Date | Time | Home | Score | Away | Score | Location
-// We find rows where our team appears and determine home/away by column position.
-function parseTeamSideline(html, source) {
-  const games  = [];
-  const myTeam = source.myTeam;
-  const kid    = source.kid;
+// ── Parse GameChanger iCal feed ───────────────────────────────────────────────
+function parseGCiCal(icsText, kid) {
+  const games = [];
+  // Split into VEVENT blocks
+  const eventBlocks = icsText.split('BEGIN:VEVENT').slice(1);
+  for (const block of eventBlocks) {
+    const end = block.indexOf('END:VEVENT');
+    const ev  = block.slice(0, end);
 
-  // Find all schedule table rows (the full-width version has 7 cells per game row)
-  // Date rows look like: <td ...>Tue 4/28</td>
-  // Game rows look like: <td>time</td><td>Home Team</td>...<td>Away Team</td>...<td>Location</td>
+    // Only include games, not practices
+    const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+    if (!summary) continue;
+    // Skip practices — GC labels them "Practice" or "Team Practice"
+    if (/practice/i.test(summary)) continue;
 
-  // Split the HTML into week sections by looking for date patterns
-  const datePattern = /(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+\d{1,2}\/\d{1,2}/g;
+    // Date/time: DTSTART;TZID=...:20260913T163000 or DTSTART:20260913T163000Z
+    const dtMatch = ev.match(/DTSTART(?:;[^:]+)?:(\d{8})T(\d{6})/);
+    if (!dtMatch) continue;
+    const dateStr = dtMatch[1]; // e.g. 20260913
+    const timeStr = dtMatch[2]; // e.g. 163000
+    const year  = parseInt(dateStr.slice(0,4));
+    const month = parseInt(dateStr.slice(4,6));
+    const day   = parseInt(dateStr.slice(6,8));
+    const hour  = parseInt(timeStr.slice(0,2));
+    const min   = parseInt(timeStr.slice(2,4));
+    const dateKey = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
 
-  // Extract all table rows with their cell content
-  const allRows = [];
-  const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
-  let rowM;
-  while ((rowM = rowRe.exec(html)) !== null) {
-    const cells = [];
-    const cellRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
-    let cellM;
-    while ((cellM = cellRe.exec(rowM[1])) !== null) {
-      cells.push(cellM[1].replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim());
+    // Format time as "4:30 PM"
+    const h12  = hour % 12 || 12;
+    const ampm = hour < 12 ? 'AM' : 'PM';
+    const timeFormatted = `${h12}:${String(min).padStart(2,'0')} ${ampm}`;
+
+    // End time
+    let endFormatted = '';
+    const dtEnd = ev.match(/DTEND(?:;[^:]+)?:(\d{8})T(\d{6})/);
+    if (dtEnd) {
+      const eh = parseInt(dtEnd[2].slice(0,2));
+      const em = parseInt(dtEnd[2].slice(2,4));
+      const eh12 = eh % 12 || 12;
+      const eampm = eh < 12 ? 'AM' : 'PM';
+      endFormatted = `${eh12}:${String(em).padStart(2,'0')} ${eampm}`;
     }
-    if (cells.length >= 2) allRows.push(cells);
+
+    // Location
+    const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+
+    // Opponent — GC puts "vs OpponentName" or "@ OpponentName" in summary
+    let opp = summary;
+    let home = true;
+    const vsMatch = summary.match(/^.*?(?:vs\.?\s+|@\s*)(.+)$/i);
+    if (vsMatch) {
+      opp  = vsMatch[1].trim();
+      home = !/^\s*@/.test(summary);
+    }
+
+    // Only include future events (from Aug 25 2026)
+    if (dateKey < '2026-08-25') continue;
+
+    games.push({ kid, date: dateKey, time: timeFormatted, end: endFormatted, home, opp, field: location });
   }
-
-  let currentDate = '';
-
-  for (const cells of allRows) {
-    // Date row: first cell matches "Tue 4/28" pattern
-    const dateM = cells[0].match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\d{1,2})\/(\d{1,2})$/i);
-    if (dateM) {
-      const month = parseInt(dateM[2]);
-      const day   = parseInt(dateM[3]);
-      currentDate = `2026-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-      continue;
-    }
-
-    if (!currentDate) continue;
-
-    // Skip week headers, bye rows, standings, non-game rows
-    const rowText = cells.join(' ');
-    if (!rowText.includes(myTeam)) continue;
-    if (rowText.toLowerCase().includes('bye')) continue;
-    if (!rowText.match(/\d{1,2}:\d{2}\s*[AP]M/i)) continue;
-
-    // Full-width table: Date | Time | Home | Score | Away | Score | Location (7 cols)
-    // Mobile table:     Date | Time | Game (3 cols, game cell has both teams)
-    // We handle both layouts
-
-    if (cells.length >= 5) {
-      // Full-width layout — cells[1]=time, cells[2]=home, cells[4]=away, cells[6]=location
-      const timeStr = cells[1].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0] || cells[0].match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0];
-      if (!timeStr) continue;
-
-      const homeTeam = cells[2] || '';
-      const awayTeam = cells[4] || '';
-      const location = cells[6] || cells[cells.length - 1] || '';
-
-      const isHome = homeTeam.includes(myTeam);
-      const isAway = awayTeam.includes(myTeam);
-      if (!isHome && !isAway) continue;
-
-      const opp = isHome ? awayTeam : homeTeam;
-      games.push({ kid, date: currentDate, time: timeStr, end: '', home: isHome, opp: opp.trim(), field: location.trim() });
-
-    } else if (cells.length >= 2) {
-      // Mobile/merged layout — find time cell, then game cell
-      const timeStr = cells.find(c => /^\d{1,2}:\d{2}\s*[AP]M$/i.test(c));
-      if (!timeStr) continue;
-
-      const gameCell = cells.find(c => c.includes(myTeam) && c !== timeStr) || '';
-      if (!gameCell) continue;
-
-      // Text order in merged cell: "Home Team  Away Team  Location"
-      const parts = gameCell.split(/\s{2,}/).map(s => s.trim()).filter(Boolean);
-      const myIdx  = parts.findIndex(p => p.includes(myTeam));
-      if (myIdx === -1) continue;
-
-      const home   = myIdx === 0;
-      const oppIdx = home ? 1 : 0;
-      const opp    = parts[oppIdx] || 'TBD';
-      const field  = parts[parts.length - 1] || '';
-
-      games.push({ kid, date: currentDate, time: timeStr, end: '', home, opp, field });
-    }
-  }
-
   return games;
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+// ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   const liveGames = [];
 
-  // 1. Scrape NKCA Baseball
-  console.log('\n🔍 Fetching NKCA Baseball schedules...');
+  // 1. Scrape NKCA
+  console.log('\n🔍 Fetching NKCA schedules...');
   for (const t of NKCA_TEAMS) {
-    const url = `${NKCA_BASE}/${t.id}/schedule-list`;
+    const url = `${NKCA_BASE}?team=${t.id}&eventType=1&location=0&complexId=0&gameSeasonId=0&ageGoupDivisionId=0&homeAwayValue=0&dateRange=21&fromDateRange=${NKCA_FROM}&toDateRange=`;
     console.log(`  ${t.label} (${t.id})...`);
     try {
       const html  = await fetchUrl(url);
@@ -284,69 +266,92 @@ async function main() {
       console.log(`  → ${games.length} games`);
       liveGames.push(...games);
     } catch (err) {
-      console.error(`  ✗ Error fetching ${t.label}: ${err.message}`);
+      console.error(`  ✗ ${t.label}: ${err.message}`);
       process.exit(2);
     }
   }
 
-  // 2. Merge live + static, sort
+  // 2. Fetch GameChanger iCal feeds
+  console.log('\n🔍 Fetching GameChanger iCal feeds...');
+  const gcKidsFound = new Set();
+  for (const feed of GC_FEEDS) {
+    console.log(`  ${feed.label} (GameChanger)...`);
+    try {
+      const ics   = await fetchUrl(feed.url);
+      const games = parseGCiCal(ics, feed.kid);
+      console.log(`  → ${games.length} games`);
+      // Only use GC games for kids that NKCA didn't already find
+      // (GC is supplementary — adds tournaments, makeup games, etc.)
+      const nkcaDates = new Set(liveGames.filter(g => g.kid === feed.kid).map(g => g.date + g.time));
+      const newGames  = games.filter(g => !nkcaDates.has(g.date + g.time));
+      console.log(`  → ${newGames.length} new/additional games from GameChanger`);
+      liveGames.push(...newGames);
+      gcKidsFound.add(feed.kid);
+    } catch (err) {
+      console.warn(`  ⚠ ${feed.label} GC feed failed: ${err.message} — continuing`);
+    }
+  }
+
+  // 3. Fetch TeamSnap iCal feeds (Preston football)
+  console.log('\n🔍 Fetching TeamSnap iCal feeds...');
+  for (const feed of TEAMSNAP_FEEDS) {
+    console.log(`  ${feed.label}...`);
+    try {
+      const ics   = await fetchUrl(feed.url);
+      const games = parseTeamSnapiCal(ics);
+      console.log(`  → ${games.length} games (split Gold/Navy by time slot)`);
+      liveGames.push(...games);
+    } catch (err) {
+      console.warn(`  ⚠ ${feed.label} TeamSnap feed failed: ${err.message} — continuing`);
+    }
+  }
+
+  // 4. Merge live + static, sort
   const allEvents = [...liveGames, ...STATIC_EVENTS];
   allEvents.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
   liveGames.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
 
-  // Snapshot covers only live-scraped games
   const newSnapshot = JSON.stringify(liveGames, null, 2);
 
-  // ── Diff against last snapshot ─────────────────────────────────────────────
+  // 4. Diff
   let changed = true;
   const changes = { detected_at: new Date().toISOString(), added: [], removed: [], modified: [] };
-
   if (fs.existsSync(SNAPSHOT_FILE)) {
-    const oldSnapshot = fs.readFileSync(SNAPSHOT_FILE, 'utf8');
-    if (oldSnapshot === newSnapshot) {
+    const old = fs.readFileSync(SNAPSHOT_FILE, 'utf8');
+    if (old === newSnapshot) {
       changed = false;
       console.log('\n✅ No schedule changes detected.');
     } else {
-      console.log('\n⚡ Schedule changes detected!');
-      const oldGames = JSON.parse(oldSnapshot);
+      console.log('\n⚡ Changes detected!');
+      const oldGames = JSON.parse(old);
       const oldMap   = Object.fromEntries(oldGames.map(g => [`${g.kid}|${g.date}|${g.time}`, g]));
       const newMap   = Object.fromEntries(liveGames.map(g => [`${g.kid}|${g.date}|${g.time}`, g]));
-      for (const [k, g] of Object.entries(newMap)) {
-        if (!oldMap[k]) changes.added.push(g);
-        else if (JSON.stringify(g) !== JSON.stringify(oldMap[k])) changes.modified.push({ old: oldMap[k], new: g });
-      }
-      for (const [k, g] of Object.entries(oldMap)) {
-        if (!newMap[k]) changes.removed.push(g);
-      }
+      for (const [k,g] of Object.entries(newMap)) { if (!oldMap[k]) changes.added.push(g); else if (JSON.stringify(g)!==JSON.stringify(oldMap[k])) changes.modified.push({old:oldMap[k],new:g}); }
+      for (const [k,g] of Object.entries(oldMap)) { if (!newMap[k]) changes.removed.push(g); }
       console.log(`  Added: ${changes.added.length}, Removed: ${changes.removed.length}, Modified: ${changes.modified.length}`);
     }
   } else {
     console.log('\n📋 No snapshot — first run.');
   }
 
-  if (!changed && process.env.FORCE_REBUILD !== '1') {
-    process.exit(0);
-  }
+  if (!changed && process.env.FORCE_REBUILD !== '1') { process.exit(0); }
 
   fs.writeFileSync(SNAPSHOT_FILE, newSnapshot);
   fs.writeFileSync(CHANGE_LOG, JSON.stringify(changes, null, 2));
   console.log('💾 Snapshot updated.');
-
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, buildHTML(allEvents));
   console.log(`✅ Built ${OUTPUT_FILE} with ${allEvents.length} events.`);
-
-  process.exit(1); // signal CI: rebuild happened, deploy
+  process.exit(1);
 }
 
-// ── HTML builder ─────────────────────────────────────────────────────────────
+// ── HTML builder ──────────────────────────────────────────────────────────────
 function buildHTML(events) {
   const lastUpdated = new Date().toLocaleString('en-US', {
-    timeZone: 'America/Chicago',
-    month: 'short', day: 'numeric', year: 'numeric',
-    hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+    timeZone: 'America/Chicago', month:'short', day:'numeric', year:'numeric',
+    hour:'numeric', minute:'2-digit', timeZoneName:'short'
   });
-  const eventsJson = JSON.stringify(events);
+  const eventsJson = JSON.stringify(events, null, 0);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -357,11 +362,7 @@ function buildHTML(events) {
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --dawson:#2563EB;--cameron:#059669;--preston-baseball:#DC2626;--parker:#D97706;
-    --nora-softball:#DB2777;--nora-volleyball:#7C3AED;--preston-football:#EA580C;--ryman:#0891B2;--riggs:#16A34A;
-    --bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890;
-  }
+  :root{--dawson:#2563EB;--cameron:#059669;--gold-football:#D97706;--navy-football:#1D4ED8;--nora-softball:#DB2777;--bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .page-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 28px 16px}
   .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -378,13 +379,10 @@ function buildHTML(events) {
   .filter-btn[data-kid="all"].active{background:var(--text)}
   .filter-btn[data-kid="dawson"].active{background:var(--dawson)}
   .filter-btn[data-kid="cameron"].active{background:var(--cameron)}
-  .filter-btn[data-kid="preston"].active{background:var(--preston-baseball)}
-  .filter-btn[data-kid="parker"].active{background:var(--parker)}
+  .filter-btn[data-kid="preston"].active{background:var(--gold-football)}
   .filter-btn[data-kid="nora"].active{background:var(--nora-softball)}
-  .filter-btn[data-kid="ryman"].active{background:var(--ryman)}
-  .filter-btn[data-kid="riggs"].active{background:var(--riggs)}
   .summary-bar{display:flex;gap:12px;padding:12px 28px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
-  .sum-card{text-align:center;flex:1;min-width:55px}
+  .sum-card{text-align:center;flex:1;min-width:60px}
   .sum-num{font-size:20px;font-weight:600;letter-spacing:-0.5px}
   .sum-label{font-size:9px;color:var(--subtle);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;line-height:1.3}
   .cal-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px 10px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
@@ -407,13 +405,9 @@ function buildHTML(events) {
   .pill:hover{opacity:.75;transform:scale(.98)}
   .pill-dawson{background:#DBEAFE;color:#1D4ED8}
   .pill-cameron{background:#D1FAE5;color:#047857}
-  .pill-preston-baseball{background:#FEE2E2;color:#B91C1C}
-  .pill-parker{background:#FEF3C7;color:#B45309}
+  .pill-gold-football{background:#FEF3C7;color:#B45309}
+  .pill-navy-football{background:#DBEAFE;color:#1E40AF}
   .pill-nora-softball{background:#FCE7F3;color:#BE185D}
-  .pill-nora-volleyball{background:#EDE9FE;color:#6D28D9}
-  .pill-preston-football{background:#FFEDD5;color:#C2410C}
-  .pill-ryman{background:#CFFAFE;color:#0E7490}
-  .pill-riggs{background:#DCFCE7;color:#15803D}
   .busy-badge{display:inline-block;font-size:9px;font-family:'DM Mono',monospace;background:#F3F0EA;color:var(--subtle);border-radius:3px;padding:1px 4px;margin-bottom:3px}
   .updated-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:5px 28px;font-size:11px;color:var(--subtle);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;align-items:center}
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;padding:20px}
@@ -434,47 +428,31 @@ function buildHTML(events) {
   .ha-badge{display:inline-block;font-size:9px;font-weight:600;border-radius:3px;padding:1px 5px;margin-left:4px;text-transform:uppercase;letter-spacing:.3px}
   .ha-home{background:#D1FAE5;color:#047857}
   .ha-away{background:#FEE2E2;color:#B91C1C}
-  @media(max-width:640px){
-    .page-header,.cal-nav,.cal-wrap,.summary-bar,.updated-bar,.filter-bar{padding-left:12px;padding-right:12px}
-    .day-cell{min-height:72px}.page-title{font-size:16px}.summary-bar{gap:8px}
-  }
+  @media(max-width:640px){.page-header,.cal-nav,.cal-wrap,.summary-bar,.updated-bar,.filter-bar{padding-left:12px;padding-right:12px}.day-cell{min-height:72px}.page-title{font-size:16px}.summary-bar{gap:8px}}
 </style>
 </head>
 <body>
 <div class="page-header">
   <div class="header-top">
-    <div>
-      <div class="page-title">Belcher Grandkids Sports Schedule</div>
-      <div class="page-subtitle">Spring 2026 · NKCA Baseball · Liberty Parks &amp; Rec · NFL Flag Football · Pony Express Baseball</div>
-    </div>
+    <div><div class="page-title">Belcher Grandkids Sports Schedule</div><div class="page-subtitle">Fall 2026 · NKCA Baseball · Liberty Parks &amp; Rec · Flag Football</div></div>
     <div style="font-size:11px;color:#9A9890;font-family:'DM Mono',monospace;text-align:right;line-height:1.9" id="hdr-totals"></div>
   </div>
   <div class="legend">
-    <div class="leg"><div class="leg-swatch" style="background:#2563EB"></div><span class="leg-name">Dawson</span> · Diamond Dawgs · Baseball 7U</div>
-    <div class="leg"><div class="leg-swatch" style="background:#059669"></div><span class="leg-name">Cameron</span> · KC Sharks 11U · Baseball 11U</div>
-    <div class="leg"><div class="leg-swatch" style="background:#DC2626"></div><span class="leg-name">Preston</span> · KC Diamond Crushers · Baseball 6U</div>
-    <div class="leg"><div class="leg-swatch" style="background:#D97706"></div><span class="leg-name">Parker</span> · BPC Tower Buzzers · Baseball 10U</div>
-    <div class="leg"><div class="leg-swatch" style="background:#DB2777"></div><span class="leg-name">Nora</span> · Dolphins · Softball 11/12U</div>
-    <div class="leg"><div class="leg-swatch" style="background:#7C3AED"></div><span class="leg-name">Nora</span> · Smith · Volleyball 3rd/4th</div>
-    <div class="leg"><div class="leg-swatch" style="background:#EA580C"></div><span class="leg-name">Preston</span> · Eagles · Flag Football</div>
-    <div class="leg"><div class="leg-swatch" style="background:#0891B2"></div><span class="leg-name">Ryman</span> · Monarchs 8U · Baseball</div>
-    <div class="leg"><div class="leg-swatch" style="background:#16A34A"></div><span class="leg-name">Riggs</span> · Monarchs 6U · Baseball</div>
+    <div class="leg"><div class="leg-swatch" style="background:#2563EB"></div><span class="leg-name">Dawson</span> · Diamond Dawgs · Baseball 8U</div>
+    <div class="leg"><div class="leg-swatch" style="background:#059669"></div><span class="leg-name">Cameron</span> · KC Sharks · Baseball 12U</div>
+    <div class="leg"><div class="leg-swatch" style="background:#D97706"></div><span class="leg-name">Preston</span> · Eagles Gold · Flag Football</div>
+    <div class="leg"><div class="leg-swatch" style="background:#1D4ED8"></div><span class="leg-name">Preston</span> · Eagles Navy · Flag Football</div>
+    <div class="leg"><div class="leg-swatch" style="background:#DB2777"></div><span class="leg-name">Nora</span> · Team Melton · Softball 9/10U</div>
   </div>
 </div>
-<div class="updated-bar">
-  <span>Last synced: ${lastUpdated}</span>
-  <span id="conflict-label" style="color:#B91C1C"></span>
-</div>
+<div class="updated-bar"><span>Last synced: ${lastUpdated}</span><span id="conflict-label" style="color:#B91C1C"></span></div>
 <div class="filter-bar">
   <span style="font-size:11px;color:var(--subtle);align-self:center;margin-right:4px">Filter:</span>
   <button class="filter-btn active" data-kid="all">All kids</button>
   <button class="filter-btn" data-kid="dawson">Dawson</button>
   <button class="filter-btn" data-kid="cameron">Cameron</button>
   <button class="filter-btn" data-kid="preston">Preston</button>
-  <button class="filter-btn" data-kid="parker">Parker</button>
   <button class="filter-btn" data-kid="nora">Nora</button>
-  <button class="filter-btn" data-kid="ryman">Ryman</button>
-  <button class="filter-btn" data-kid="riggs">Riggs</button>
 </div>
 <div class="summary-bar" id="summary-bar"></div>
 <div class="cal-nav">
@@ -484,72 +462,44 @@ function buildHTML(events) {
   </div>
   <span class="game-count" id="game-count"></span>
 </div>
-<div class="cal-wrap">
-  <div class="week-header" id="week-header"></div>
-  <div class="cal-grid" id="cal-grid"></div>
-</div>
+<div class="cal-wrap"><div class="week-header" id="week-header"></div><div class="cal-grid" id="cal-grid"></div></div>
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-date" id="modal-date"></span>
-      <button class="modal-close" id="modal-close">&times;</button>
-    </div>
+    <div class="modal-header"><span class="modal-date" id="modal-date"></span><button class="modal-close" id="modal-close">&times;</button></div>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 <script>
 const KIDS={
-  'dawson':           {label:'Dawson',  sport:'Baseball',     team:'Diamond Dawgs',      age:'7U',      cls:'pill-dawson',          color:'#2563EB',group:'dawson'},
-  'cameron':          {label:'Cameron', sport:'Baseball',     team:'KC Sharks 11U',       age:'11U',     cls:'pill-cameron',         color:'#059669',group:'cameron'},
-  'preston-baseball': {label:'Preston', sport:'Baseball',     team:'KC Diamond Crushers', age:'6U',      cls:'pill-preston-baseball',color:'#DC2626',group:'preston'},
-  'parker':           {label:'Parker',  sport:'Baseball',     team:'BPC Tower Buzzers',   age:'10U',     cls:'pill-parker',          color:'#D97706',group:'parker'},
-  'nora-softball':    {label:'Nora',    sport:'Softball',     team:'Dolphins',            age:'11/12U',  cls:'pill-nora-softball',   color:'#DB2777',group:'nora'},
-  'nora-volleyball':  {label:'Nora',    sport:'Volleyball',   team:'Smith',               age:'3rd/4th', cls:'pill-nora-volleyball', color:'#7C3AED',group:'nora'},
-  'preston-football': {label:'Preston', sport:'Flag Football',team:'Eagles (Lombardi)',   age:'',        cls:'pill-preston-football',color:'#EA580C',group:'preston'},
-  'ryman':            {label:'Ryman',   sport:'Baseball',     team:'Monarchs 8U',         age:'8U',      cls:'pill-ryman',           color:'#0891B2',group:'ryman'},
-  'riggs':            {label:'Riggs',   sport:'Baseball',     team:'Monarchs 6U',         age:'6U',      cls:'pill-riggs',           color:'#16A34A',group:'riggs'},
+  'dawson':       {label:'Dawson',  sport:'Baseball',     team:'Diamond Dawgs',age:'8U',   cls:'pill-dawson',       color:'#2563EB',group:'dawson'},
+  'cameron':      {label:'Cameron', sport:'Baseball',     team:'KC Sharks',     age:'12U',  cls:'pill-cameron',      color:'#059669',group:'cameron'},
+  'gold-football':{label:'Preston', sport:'Flag Football',team:'Eagles Gold',   age:'',     cls:'pill-gold-football',color:'#D97706',group:'preston'},
+  'navy-football':{label:'Preston', sport:'Flag Football',team:'Eagles Navy',   age:'',     cls:'pill-navy-football',color:'#1D4ED8',group:'preston'},
+  'nora-softball':{label:'Nora',    sport:'Softball',     team:'Team Melton',  age:'9/10U',cls:'pill-nora-softball',color:'#DB2777',group:'nora'},
 };
 const EVENTS=${eventsJson};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const TODAY='${new Date().toISOString().slice(0,10)}';
+const TODAY=new Date().toISOString().slice(0,10);
 let curYear=new Date().getFullYear(),curMonth=new Date().getMonth(),activeFilter='all';
-
 const bar=document.getElementById('summary-bar');
-[['dawson'],['cameron'],['preston-baseball','preston-football'],['parker'],['nora-softball','nora-volleyball'],['ryman'],['riggs']].forEach(keys=>{
+[['dawson'],['cameron'],['gold-football','navy-football'],['nora-softball']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
   const t=KIDS[keys[0]];
   bar.innerHTML+=\`<div class="sum-card"><div class="sum-num" style="color:\${t.color}">\${n}</div><div class="sum-label">\${t.label}</div></div>\`;
 });
 document.getElementById('hdr-totals').textContent=EVENTS.length+' total events';
-
-const byDate={};
-EVENTS.forEach(e=>{byDate[e.date]=(byDate[e.date]||[]).concat(e)});
-let conflicts=0;
-for(const evs of Object.values(byDate)){
-  if([...new Set(evs.map(e=>KIDS[e.kid].group))].length>=3)conflicts++;
-}
+const byDate={};EVENTS.forEach(e=>{byDate[e.date]=(byDate[e.date]||[]).concat(e)});
+let conflicts=0;for(const evs of Object.values(byDate)){if([...new Set(evs.map(e=>KIDS[e.kid].group))].length>=3)conflicts++;}
 if(conflicts)document.getElementById('conflict-label').textContent='⚠ '+conflicts+' busy day'+(conflicts>1?'s':'')+' (3+ kids)';
-
-document.querySelectorAll('.filter-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter=btn.dataset.kid;
-    render();
-  });
-});
-
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeFilter=btn.dataset.kid;render();});});
 function pad(n){return String(n).padStart(2,'0')}
 function dateKey(y,m,d){return \`\${y}-\${pad(m+1)}-\${pad(d)}\`}
 function daysInMonth(y,m){return new Date(y,m+1,0).getDate()}
 function firstDow(y,m){return new Date(y,m,1).getDay()}
 function eventsOn(dk){return EVENTS.filter(e=>e.date===dk)}
 function visibleOn(dk){return eventsOn(dk).filter(e=>activeFilter==='all'||KIDS[e.kid].group===activeFilter)}
-function timeSort(a,b){
-  const p=t=>{const[hm,ap]=t.split(' ');let[h,mn]=hm.split(':').map(Number);if(ap==='PM'&&h!==12)h+=12;if(ap==='AM'&&h===12)h=0;return h*60+mn};
-  return p(a.time)-p(b.time);
-}
+function timeSort(a,b){const p=t=>{const[hm,ap]=t.split(' ');let[h,mn]=hm.split(':').map(Number);if(ap==='PM'&&h!==12)h+=12;if(ap==='AM'&&h===12)h=0;return h*60+mn};return p(a.time)-p(b.time);}
 function render(){
   document.getElementById('month-label').textContent=MONTHS[curMonth]+' '+curYear;
   const grid=document.getElementById('cal-grid'),wh=document.getElementById('week-header');
@@ -557,30 +507,24 @@ function render(){
   DAYS.forEach(d=>{const c=document.createElement('div');c.className='wh-cell';c.textContent=d;wh.appendChild(c)});
   const first=firstDow(curYear,curMonth),days=daysInMonth(curYear,curMonth);
   const prevDays=daysInMonth(curYear,curMonth===0?11:curMonth-1);
-  const total=Math.ceil((first+days)/7)*7;
-  let monthGames=0;
+  const total=Math.ceil((first+days)/7)*7;let monthGames=0;
   for(let i=0;i<total;i++){
     let y=curYear,m=curMonth,d,other=false;
     if(i<first){m=curMonth===0?11:curMonth-1;y=curMonth===0?curYear-1:curYear;d=prevDays-first+i+1;other=true}
     else if(i>=first+days){m=curMonth===11?0:curMonth+1;y=curMonth===11?curYear+1:curYear;d=i-first-days+1;other=true}
     else d=i-first+1;
-    const dk=dateKey(y,m,d);
-    const evs=visibleOn(dk).sort(timeSort);
+    const dk=dateKey(y,m,d);const evs=visibleOn(dk).sort(timeSort);
     if(!other)monthGames+=evs.length;
     const cell=document.createElement('div');
     cell.className='day-cell'+(other?' other-month':'')+(dk===TODAY?' today':'');
     const num=document.createElement('span');num.className='day-num';num.textContent=d;cell.appendChild(num);
     if(evs.length>=3&&!other){const b=document.createElement('span');b.className='busy-badge';b.textContent=evs.length+' events';cell.appendChild(b)}
     evs.forEach(ev=>{
-      const t=KIDS[ev.kid];
-      const pill=document.createElement('button');
-      pill.className='pill '+t.cls;
-      pill.textContent=t.label+' '+ev.time;
-      pill.title=t.label+' '+t.sport+' vs '+ev.opp+' · '+(ev.home?'Home':'Away')+' · '+ev.field;
-      pill.onclick=e=>{e.stopPropagation();showModal(dk,eventsOn(dk).sort(timeSort))};
-      cell.appendChild(pill);
-    });
-    grid.appendChild(cell);
+      const t=KIDS[ev.kid];const pill=document.createElement('button');
+      pill.className='pill '+t.cls;pill.textContent=t.label+' '+ev.time;
+      pill.title=t.label+' '+t.sport+' vs '+ev.opp+' \xb7 '+(ev.home?'Home':'Away')+' \xb7 '+ev.field;
+      pill.onclick=e=>{e.stopPropagation();showModal(dk,eventsOn(dk).sort(timeSort))};cell.appendChild(pill);
+    });grid.appendChild(cell);
   }
   document.getElementById('game-count').textContent=monthGames+' event'+(monthGames!==1?'s':'')+' this month'+(activeFilter!=='all'?' (filtered)':'');
 }
@@ -589,14 +533,12 @@ function showModal(dk,evs){
   document.getElementById('modal-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   const body=document.getElementById('modal-body');body.innerHTML='';
   evs.forEach(ev=>{
-    const t=KIDS[ev.kid];
-    const div=document.createElement('div');div.className='modal-event';
+    const t=KIDS[ev.kid];const div=document.createElement('div');div.className='modal-event';
+    const note=ev.note?\`<span class="modal-note">\${ev.note}</span>\`:'';
     div.innerHTML=\`<div class="modal-sport-badge" style="background:\${t.color}22;color:\${t.color}">\${t.sport}</div>
-      <div class="modal-kid-label" style="color:\${t.color}">\${t.label} — \${t.team}\${t.age?' ('+t.age+')':''}</div>
+      <div class="modal-kid-label" style="color:\${t.color}">\${t.label} \u2014 \${t.team}\${t.age?' ('+t.age+')':''}</div>
       <div class="modal-opp">vs \${ev.opp}<span class="ha-badge \${ev.home?'ha-home':'ha-away'}">\${ev.home?'Home':'Away'}</span></div>
-      <div class="modal-meta">\${ev.time}\${ev.end?' – '+ev.end:''}<br>\${ev.field}</div>
-      \${ev.note?\`<span class="modal-note">\${ev.note}</span>\`:''}
-    \`;
+      <div class="modal-meta">\${ev.time}\${ev.end?' \u2013 '+ev.end:''}<br>\${ev.field}</div>\${note}\`;
     body.appendChild(div);
   });
   document.getElementById('modal-overlay').classList.add('open');
