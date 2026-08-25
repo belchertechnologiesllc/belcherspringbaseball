@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--gold-football:#D97706;--navy-football:#1D4ED8;--nora-softball:#DB2777;--bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890}
+  :root{--dawson:#2563EB;--cameron:#059669;--gold-football:#D97706;--navy-football:#1D4ED8;--nora-softball:#DB2777;--bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .page-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 28px 16px}
   .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -22,10 +22,12 @@
   .filter-btn:hover{border-color:var(--muted)}
   .filter-btn.active{color:#fff;border-color:transparent}
   .filter-btn[data-kid="all"].active{background:var(--text)}
+  .filter-btn[data-kid="dawson"].active{background:var(--dawson)}
+  .filter-btn[data-kid="cameron"].active{background:var(--cameron)}
   .filter-btn[data-kid="preston"].active{background:var(--gold-football)}
   .filter-btn[data-kid="nora"].active{background:var(--nora-softball)}
   .summary-bar{display:flex;gap:12px;padding:12px 28px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
-  .sum-card{text-align:center;flex:1;min-width:70px}
+  .sum-card{text-align:center;flex:1;min-width:60px}
   .sum-num{font-size:20px;font-weight:600;letter-spacing:-0.5px}
   .sum-label{font-size:9px;color:var(--subtle);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;line-height:1.3}
   .cal-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px 10px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
@@ -46,6 +48,8 @@
   .day-cell.other-month .day-num{color:#C4C0B8}
   .pill{display:block;font-size:10px;font-weight:500;border-radius:4px;padding:2px 5px;margin-bottom:2px;cursor:pointer;line-height:1.4;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:opacity .1s,transform .1s;border:none;text-align:left;width:100%}
   .pill:hover{opacity:.75;transform:scale(.98)}
+  .pill-dawson{background:#DBEAFE;color:#1D4ED8}
+  .pill-cameron{background:#D1FAE5;color:#047857}
   .pill-gold-football{background:#FEF3C7;color:#B45309}
   .pill-navy-football{background:#DBEAFE;color:#1E40AF}
   .pill-nora-softball{background:#FCE7F3;color:#BE185D}
@@ -75,10 +79,12 @@
 <body>
 <div class="page-header">
   <div class="header-top">
-    <div><div class="page-title">Belcher Grandkids Sports Schedule</div><div class="page-subtitle">Fall 2026 · Liberty Parks &amp; Rec · TeamSnap Football</div></div>
+    <div><div class="page-title">Belcher Grandkids Sports Schedule</div><div class="page-subtitle">Fall 2026 · NKCA Baseball · Liberty Parks &amp; Rec · Flag Football</div></div>
     <div style="font-size:11px;color:#9A9890;font-family:'DM Mono',monospace;text-align:right;line-height:1.9" id="hdr-totals"></div>
   </div>
   <div class="legend">
+    <div class="leg"><div class="leg-swatch" style="background:#2563EB"></div><span class="leg-name">Dawson</span> · Diamond Dawgs · Baseball 8U</div>
+    <div class="leg"><div class="leg-swatch" style="background:#059669"></div><span class="leg-name">Cameron</span> · KC Sharks · Baseball 12U</div>
     <div class="leg"><div class="leg-swatch" style="background:#D97706"></div><span class="leg-name">Preston</span> · Eagles Gold · Flag Football</div>
     <div class="leg"><div class="leg-swatch" style="background:#1D4ED8"></div><span class="leg-name">Preston</span> · Eagles Navy · Flag Football</div>
     <div class="leg"><div class="leg-swatch" style="background:#DB2777"></div><span class="leg-name">Nora</span> · Team Melton · Softball 9/10U</div>
@@ -88,6 +94,8 @@
 <div class="filter-bar">
   <span style="font-size:11px;color:var(--subtle);align-self:center;margin-right:4px">Filter:</span>
   <button class="filter-btn active" data-kid="all">All kids</button>
+  <button class="filter-btn" data-kid="dawson">Dawson</button>
+  <button class="filter-btn" data-kid="cameron">Cameron</button>
   <button class="filter-btn" data-kid="preston">Preston</button>
   <button class="filter-btn" data-kid="nora">Nora</button>
 </div>
@@ -108,23 +116,33 @@
 </div>
 <script>
 const KIDS={
-  'gold-football':{label:'Preston',sport:'Flag Football',team:'Eagles Gold',age:'',cls:'pill-gold-football',color:'#D97706',group:'preston'},
-  'navy-football':{label:'Preston',sport:'Flag Football',team:'Eagles Navy',age:'',cls:'pill-navy-football',color:'#1D4ED8',group:'preston'},
-  'nora-softball':{label:'Nora',  sport:'Softball',     team:'Team Melton',age:'9/10U',cls:'pill-nora-softball',color:'#DB2777',group:'nora'},
+  'dawson':       {label:'Dawson',  sport:'Baseball',     team:'Diamond Dawgs', age:'8U',    cls:'pill-dawson',       color:'#2563EB',group:'dawson'},
+  'cameron':      {label:'Cameron', sport:'Baseball',     team:'KC Sharks',      age:'12U',   cls:'pill-cameron',      color:'#059669',group:'cameron'},
+  'gold-football':{label:'Preston', sport:'Flag Football',team:'Eagles Gold',    age:'',      cls:'pill-gold-football',color:'#D97706',group:'preston'},
+  'navy-football':{label:'Preston', sport:'Flag Football',team:'Eagles Navy',    age:'',      cls:'pill-navy-football',color:'#1D4ED8',group:'preston'},
+  'nora-softball':{label:'Nora',    sport:'Softball',     team:'Team Melton',    age:'9/10U', cls:'pill-nora-softball',color:'#DB2777',group:'nora'},
 };
-const EVENTS=[{"kid":"gold-football","date":"2026-09-05","time":"11:00 AM","end":"","home":false,"opp":"S1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-09-05","time":"2:00 PM","end":"","home":false,"opp":"PC1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"nora-softball","date":"2026-09-08","time":"6:00 PM","end":"7:30 PM","home":false,"opp":"Ducks","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"navy-football","date":"2026-09-12","time":"8:00 AM","end":"","home":false,"opp":"S1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"gold-football","date":"2026-09-12","time":"11:00 AM","end":"","home":true,"opp":"PC1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"nora-softball","date":"2026-09-15","time":"6:00 PM","end":"7:30 PM","home":true,"opp":"Team Coultis","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"gold-football","date":"2026-09-19","time":"9:30 AM","end":"","home":true,"opp":"EB1","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-09-19","time":"12:30 PM","end":"","home":true,"opp":"S2D","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"nora-softball","date":"2026-09-22","time":"6:00 PM","end":"7:30 PM","home":false,"opp":"Savage Queens","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"gold-football","date":"2026-09-26","time":"8:00 AM","end":"","home":false,"opp":"S1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-09-26","time":"11:00 AM","end":"","home":false,"opp":"PC1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"nora-softball","date":"2026-09-29","time":"7:30 PM","end":"9:00 PM","home":true,"opp":"Savage Queens","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"gold-football","date":"2026-10-03","time":"11:00 AM","end":"","home":false,"opp":"PC1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-10-03","time":"12:30 PM","end":"","home":true,"opp":"EB1","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-10-10","time":"11:00 AM","end":"","home":false,"opp":"S1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"gold-football","date":"2026-10-10","time":"11:00 AM","end":"","home":false,"opp":"S2C","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"nora-softball","date":"2026-10-13","time":"6:00 PM","end":"7:30 PM","home":true,"opp":"Cotton Candy Crushers","field":"Sonic \u00b7 Liberty Parks & Rec"},{"kid":"nora-softball","date":"2026-10-20","time":"6:00 PM","end":"7:30 PM","home":false,"opp":"Team Coultis","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"nora-softball","date":"2026-10-27","time":"6:00 PM","end":"7:30 PM","home":true,"opp":"Ducks","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"nora-softball","date":"2026-10-27","time":"7:30 PM","end":"9:00 PM","home":false,"opp":"Cotton Candy Crushers","field":"The Landing \u00b7 Liberty Parks & Rec"}];
+const EVENTS=[{"kid":"gold-football","date":"2026-09-05","time":"11:00 AM","end":"","home":false,"opp":"S1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-09-05","time":"2:00 PM","end":"","home":false,"opp":"PC1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"nora-softball","date":"2026-09-08","time":"6:00 PM","end":"7:30 PM","home":false,"opp":"Ducks","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"gold-football","date":"2026-09-12","time":"11:00 AM","end":"","home":true,"opp":"PC1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-09-12","time":"8:00 AM","end":"","home":false,"opp":"S1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"dawson","date":"2026-09-13","time":"4:30 PM","end":"5:50 PM","home":true,"opp":"KC Pilots","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"dawson","date":"2026-09-13","time":"6:15 PM","end":"7:35 PM","home":false,"opp":"Triple Play Sharks","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"nora-softball","date":"2026-09-15","time":"6:00 PM","end":"7:30 PM","home":true,"opp":"Team Coultis","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"cameron","date":"2026-09-16","time":"5:45 PM","end":"7:30 PM","home":true,"opp":"NoMo MudDogs L/T","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"cameron","date":"2026-09-16","time":"8:00 PM","end":"9:45 PM","home":false,"opp":"NoMo MudDogs L/T","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"navy-football","date":"2026-09-19","time":"12:30 PM","end":"","home":true,"opp":"S2D","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"gold-football","date":"2026-09-19","time":"9:30 AM","end":"","home":true,"opp":"EB1","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"dawson","date":"2026-09-20","time":"4:30 PM","end":"5:50 PM","home":true,"opp":"KC Gators - Winfrey 8U","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"dawson","date":"2026-09-20","time":"6:15 PM","end":"7:35 PM","home":false,"opp":"816 Avengers","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"nora-softball","date":"2026-09-22","time":"6:00 PM","end":"7:30 PM","home":false,"opp":"Savage Queens","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"cameron","date":"2026-09-23","time":"5:45 PM","end":"7:30 PM","home":false,"opp":"KC Natives JOE","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"cameron","date":"2026-09-23","time":"8:00 PM","end":"9:45 PM","home":true,"opp":"KC Natives JOE","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"navy-football","date":"2026-09-26","time":"11:00 AM","end":"","home":false,"opp":"PC1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"gold-football","date":"2026-09-26","time":"8:00 AM","end":"","home":false,"opp":"S1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"cameron","date":"2026-09-27","time":"11:00 AM","end":"12:45 PM","home":true,"opp":"36 HWY Athletics","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"cameron","date":"2026-09-27","time":"9:00 AM","end":"10:45 AM","home":false,"opp":"36 HWY Athletics","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"nora-softball","date":"2026-09-29","time":"7:30 PM","end":"9:00 PM","home":true,"opp":"Savage Queens","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"gold-football","date":"2026-10-03","time":"11:00 AM","end":"","home":false,"opp":"PC1A","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"navy-football","date":"2026-10-03","time":"12:30 PM","end":"","home":true,"opp":"EB1","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"dawson","date":"2026-10-04","time":"4:30 PM","end":"5:50 PM","home":false,"opp":"KC Pilots","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"dawson","date":"2026-10-04","time":"6:15 PM","end":"7:35 PM","home":true,"opp":"Triple Play Sharks","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"navy-football","date":"2026-10-10","time":"11:00 AM","end":"","home":false,"opp":"S1B","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"gold-football","date":"2026-10-10","time":"11:00 AM","end":"","home":false,"opp":"S2C","field":"Platte Ridge Park \u00b7 17130 RT-371, Platte City MO"},{"kid":"cameron","date":"2026-10-11","time":"11:00 AM","end":"12:45 PM","home":false,"opp":"36 Hwy Athletics 11U","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"dawson","date":"2026-10-11","time":"1:00 PM","end":"2:20 PM","home":true,"opp":"KC Pilots","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"dawson","date":"2026-10-11","time":"2:45 PM","end":"4:05 PM","home":false,"opp":"Triple Play Sharks","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"cameron","date":"2026-10-11","time":"9:00 AM","end":"10:45 AM","home":true,"opp":"36 Hwy Athletics 11U","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"nora-softball","date":"2026-10-13","time":"6:00 PM","end":"7:30 PM","home":true,"opp":"Cotton Candy Crushers","field":"Sonic \u00b7 Liberty Parks & Rec"},{"kid":"dawson","date":"2026-10-18","time":"4:30 PM","end":"5:50 PM","home":true,"opp":"816 Avengers","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"cameron","date":"2026-10-18","time":"5:00 PM","end":"6:45 PM","home":false,"opp":"Saints Baseball Club","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"dawson","date":"2026-10-18","time":"6:15 PM","end":"7:35 PM","home":false,"opp":"KC Gators - Winfrey 8U","field":"AJ Vick \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"cameron","date":"2026-10-18","time":"7:00 PM","end":"8:45 PM","home":true,"opp":"Saints Baseball Club","field":"AJ Harris \u00b7 9217 N Brighton Ave, Kansas City MO"},{"kid":"nora-softball","date":"2026-10-20","time":"6:00 PM","end":"7:30 PM","home":false,"opp":"Team Coultis","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"nora-softball","date":"2026-10-27","time":"6:00 PM","end":"7:30 PM","home":true,"opp":"Ducks","field":"The Landing \u00b7 Liberty Parks & Rec"},{"kid":"nora-softball","date":"2026-10-27","time":"7:30 PM","end":"9:00 PM","home":false,"opp":"Cotton Candy Crushers","field":"The Landing \u00b7 Liberty Parks & Rec"}];
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY=new Date().toISOString().slice(0,10);
 let curYear=new Date().getFullYear(),curMonth=new Date().getMonth(),activeFilter='all';
 
 const bar=document.getElementById('summary-bar');
-[['gold-football','navy-football'],['nora-softball']].forEach(keys=>{
+[['dawson'],['cameron'],['gold-football','navy-football'],['nora-softball']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
   const t=KIDS[keys[0]];
-  bar.innerHTML+=`<div class="sum-card"><div class="sum-num" style="color:${t.color}">${n}</div><div class="sum-label">${t.label}<br>${t.sport}</div></div>`;
+  bar.innerHTML+=`<div class="sum-card"><div class="sum-num" style="color:${t.color}">${n}</div><div class="sum-label">${t.label}</div></div>`;
 });
 document.getElementById('hdr-totals').textContent=EVENTS.length+' total events';
+
+const byDate={};
+EVENTS.forEach(e=>{byDate[e.date]=(byDate[e.date]||[]).concat(e)});
+let conflicts=0;
+for(const evs of Object.values(byDate)){
+  if([...new Set(evs.map(e=>KIDS[e.kid].group))].length>=3)conflicts++;
+}
+if(conflicts)document.getElementById('conflict-label').textContent='⚠ '+conflicts+' busy day'+(conflicts>1?'s':'')+' (3+ kids)';
 
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -167,7 +185,7 @@ function render(){
       const t=KIDS[ev.kid];
       const pill=document.createElement('button');
       pill.className='pill '+t.cls;
-      pill.textContent=t.team+' '+ev.time;
+      pill.textContent=t.label+' '+ev.time;
       pill.title=t.label+' '+t.sport+' vs '+ev.opp+' · '+(ev.home?'Home':'Away')+' · '+ev.field;
       pill.onclick=e=>{e.stopPropagation();showModal(dk,eventsOn(dk).sort(timeSort))};
       cell.appendChild(pill);
