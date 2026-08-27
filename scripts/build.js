@@ -72,7 +72,9 @@ const TEAMSNAP_FEEDS = [
 // ── Parse TeamSnap iCal ───────────────────────────────────────────────────────
 function parseTeamSnapiCal(icsText) {
   const games = [];
-  const eventBlocks = icsText.split('BEGIN:VEVENT').slice(1);
+  // Unfold iCal line continuations
+  const unfolded = icsText.replace(/\r\n[ \t]/g, '').replace(/\n[ \t]/g, '');
+  const eventBlocks = unfolded.split('BEGIN:VEVENT').slice(1);
 
   for (const block of eventBlocks) {
     const end = block.indexOf('END:VEVENT');
@@ -208,7 +210,12 @@ function parseNKCA(html, kid) {
 // ── Parse GameChanger / Google Calendar iCal feed ────────────────────────────
 function parseGCiCal(icsText, kid) {
   const games = [];
-  const eventBlocks = icsText.split('BEGIN:VEVENT').slice(1);
+
+  // iCal lines can be "folded" — long lines wrapped with CRLF + space/tab
+  // Unfold before parsing: remove any newline followed by whitespace
+  const unfolded = icsText.replace(/\r\n[ \t]/g, '').replace(/\n[ \t]/g, '');
+
+  const eventBlocks = unfolded.split('BEGIN:VEVENT').slice(1);
 
   for (const block of eventBlocks) {
     const end = block.indexOf('END:VEVENT');
@@ -399,6 +406,7 @@ async function main() {
 
   if (!changed && process.env.FORCE_REBUILD !== '1') { process.exit(0); }
   if (!changed) console.log('🔄 Force rebuild requested — rebuilding anyway.');
+  changed = true; // ensure we always write and exit 1 when forced
 
   fs.writeFileSync(SNAPSHOT_FILE, newSnapshot);
   fs.writeFileSync(CHANGE_LOG, JSON.stringify(changes, null, 2));
