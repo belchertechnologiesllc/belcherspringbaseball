@@ -50,6 +50,18 @@ const GC_FEEDS = [
     team:  'Team Melton',
     url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=ea0953e3-591b-490e-a153-b801b9c9f8ad&token=bbb439d074d26415e3fe4341ae2c7db5b0b936a640918da0d50f3a0dd9677cab',
   },
+  {
+    kid:   'parker',
+    label: 'Parker',
+    team:  'TBD',
+    url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=958c2928-7e95-478b-8664-42eb815654c2&token=c175c47fd421697bc215603542a333d5b8631f7f8d98383537cd7d27c5be3132',
+  },
+  {
+    kid:   'nora-volleyball',
+    label: 'Nora',
+    team:  'Waves',
+    url:   'https://calendar.google.com/calendar/ical/i112eo380a71u1ef10q9djc7mj82qs2l%40import.calendar.google.com/public/basic.ics',
+  },
 ];
 
 // ── TeamSnap iCal feeds ───────────────────────────────────────────────────────
@@ -362,7 +374,7 @@ function buildHTML(events) {
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--dawson:#2563EB;--cameron:#059669;--gold-football:#D97706;--navy-football:#1D4ED8;--nora-softball:#DB2777;--bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890}
+  :root{--dawson:#2563EB;--cameron:#059669;--gold-football:#D97706;--navy-football:#1D4ED8;--nora-softball:#DB2777;--nora-volleyball:#9333EA;--parker:#7C3AED;--bg:#F9F7F4;--surface:#FFFFFF;--border:#E5E2DC;--text:#1A1916;--muted:#6B6860;--subtle:#9A9890}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .page-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 28px 16px}
   .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -381,6 +393,7 @@ function buildHTML(events) {
   .filter-btn[data-kid="cameron"].active{background:var(--cameron)}
   .filter-btn[data-kid="preston"].active{background:var(--gold-football)}
   .filter-btn[data-kid="nora"].active{background:var(--nora-softball)}
+  .filter-btn[data-kid="parker"].active{background:var(--parker)}
   .summary-bar{display:flex;gap:12px;padding:12px 28px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
   .sum-card{text-align:center;flex:1;min-width:60px}
   .sum-num{font-size:20px;font-weight:600;letter-spacing:-0.5px}
@@ -408,6 +421,8 @@ function buildHTML(events) {
   .pill-gold-football{background:#FEF3C7;color:#B45309}
   .pill-navy-football{background:#DBEAFE;color:#1E40AF}
   .pill-nora-softball{background:#FCE7F3;color:#BE185D}
+  .pill-nora-volleyball{background:#F3E8FF;color:#7E22CE}
+  .pill-parker{background:#EDE9FE;color:#6D28D9}
   .busy-badge{display:inline-block;font-size:9px;font-family:'DM Mono',monospace;background:#F3F0EA;color:var(--subtle);border-radius:3px;padding:1px 4px;margin-bottom:3px}
   .updated-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:5px 28px;font-size:11px;color:var(--subtle);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;align-items:center}
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;padding:20px}
@@ -443,6 +458,8 @@ function buildHTML(events) {
     <div class="leg"><div class="leg-swatch" style="background:#D97706"></div><span class="leg-name">Preston</span> · Eagles Gold · Flag Football</div>
     <div class="leg"><div class="leg-swatch" style="background:#1D4ED8"></div><span class="leg-name">Preston</span> · Eagles Navy · Flag Football</div>
     <div class="leg"><div class="leg-swatch" style="background:#DB2777"></div><span class="leg-name">Nora</span> · Team Melton · Softball 9/10U</div>
+    <div class="leg"><div class="leg-swatch" style="background:#9333EA"></div><span class="leg-name">Nora</span> · Waves · Volleyball</div>
+    <div class="leg"><div class="leg-swatch" style="background:#7C3AED"></div><span class="leg-name">Parker</span> · TBD · Baseball</div>
   </div>
 </div>
 <div class="updated-bar"><span>Last synced: ${lastUpdated}</span><span id="conflict-label" style="color:#B91C1C"></span></div>
@@ -453,6 +470,7 @@ function buildHTML(events) {
   <button class="filter-btn" data-kid="cameron">Cameron</button>
   <button class="filter-btn" data-kid="preston">Preston</button>
   <button class="filter-btn" data-kid="nora">Nora</button>
+  <button class="filter-btn" data-kid="parker">Parker</button>
 </div>
 <div class="summary-bar" id="summary-bar"></div>
 <div class="cal-nav">
@@ -475,7 +493,9 @@ const KIDS={
   'cameron':      {label:'Cameron', sport:'Baseball',     team:'KC Sharks',     age:'12U',  cls:'pill-cameron',      color:'#059669',group:'cameron'},
   'gold-football':{label:'Preston', sport:'Flag Football',team:'Eagles Gold',   age:'',     cls:'pill-gold-football',color:'#D97706',group:'preston'},
   'navy-football':{label:'Preston', sport:'Flag Football',team:'Eagles Navy',   age:'',     cls:'pill-navy-football',color:'#1D4ED8',group:'preston'},
-  'nora-softball':{label:'Nora',    sport:'Softball',     team:'Team Melton',  age:'9/10U',cls:'pill-nora-softball',color:'#DB2777',group:'nora'},
+  'nora-softball':{label:'Nora',    sport:'Softball',     team:'Team Melton',  age:'9/10U',cls:'pill-nora-softball',   color:'#DB2777',group:'nora'},
+  'nora-volleyball':{label:'Nora', sport:'Volleyball',   team:'Waves',        age:'',     cls:'pill-nora-volleyball', color:'#9333EA',group:'nora'},
+  'parker':       {label:'Parker',  sport:'Baseball',     team:'TBD',          age:'',     cls:'pill-parker',       color:'#7C3AED',group:'parker'},
 };
 const EVENTS=${eventsJson};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -483,7 +503,7 @@ const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY=new Date().toISOString().slice(0,10);
 let curYear=new Date().getFullYear(),curMonth=new Date().getMonth(),activeFilter='all';
 const bar=document.getElementById('summary-bar');
-[['dawson'],['cameron'],['gold-football','navy-football'],['nora-softball']].forEach(keys=>{
+[['dawson'],['cameron'],['gold-football','navy-football'],['nora-softball','nora-volleyball'],['parker']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
   const t=KIDS[keys[0]];
   bar.innerHTML+=\`<div class="sum-card"><div class="sum-num" style="color:\${t.color}">\${n}</div><div class="sum-label">\${t.label}</div></div>\`;
