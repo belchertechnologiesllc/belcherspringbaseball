@@ -212,6 +212,7 @@ function parseGCiCal(icsText, kid) {
     const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
     if (!summary) continue;
     if (/practice|camp|meeting/i.test(summary)) continue;
+    if (/\bTBD\b/i.test(summary)) continue; // skip unconfirmed placeholders
 
     // Handle both datetime and all-day date formats
     // DTSTART;VALUE=DATE:20260930          → all-day, no time
@@ -226,7 +227,8 @@ function parseGCiCal(icsText, kid) {
 
     let dateKey, timeFormatted = '', endFormatted = '';
 
-    if (/VALUE=DATE/i.test(dtParams)) {
+    if (/VALUE=DATE/i.test(dtParams)) continue; // skip all-day/unscheduled events
+    if (false) {
       // All-day event — just a date
       const y = dtVal.slice(0,4), m = dtVal.slice(4,6), d = dtVal.slice(6,8);
       dateKey = `${y}-${m}-${d}`;
