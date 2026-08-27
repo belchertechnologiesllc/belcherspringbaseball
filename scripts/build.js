@@ -337,13 +337,17 @@ async function main() {
       const ics   = await fetchUrl(feed.url);
       const games = parseGCiCal(ics, feed.kid);
       console.log(`  → ${games.length} games`);
+      if (games.length === 0) {
+        // Log first 500 chars of feed for debugging
+        console.log(`  ⚠ Feed preview: ${ics.slice(0, 300).replace(/\n/g, ' ')}`);
+      }
       // Only use GC games for kids that NKCA didn't already find
       // (GC is supplementary — adds tournaments, makeup games, etc.)
       const nkcaDates = new Set(liveGames.filter(g => g.kid === feed.kid).map(g => g.date + g.time));
       const newGames  = games.filter(g => !nkcaDates.has(g.date + g.time));
       console.log(`  → ${newGames.length} new/additional games from GameChanger`);
       liveGames.push(...newGames);
-      gcKidsFound.add(feed.kid);
+      if (newGames.length > 0) gcKidsFound.add(feed.kid); // only mark as found if we got real games
     } catch (err) {
       console.warn(`  ⚠ ${feed.label} GC feed failed: ${err.message} — continuing`);
     }
@@ -394,6 +398,7 @@ async function main() {
   }
 
   if (!changed && process.env.FORCE_REBUILD !== '1') { process.exit(0); }
+  if (!changed) console.log('🔄 Force rebuild requested — rebuilding anyway.');
 
   fs.writeFileSync(SNAPSHOT_FILE, newSnapshot);
   fs.writeFileSync(CHANGE_LOG, JSON.stringify(changes, null, 2));
