@@ -45,18 +45,12 @@ const GC_FEEDS = [
     url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=5683a9ec-54a0-4bac-8716-4ccb015308f3&token=260be27b263f0132104c53ab6ac6907328cb6a774e946240bb1f35fc7b30aeb3',
   },
   {
-    kid:   'nora-softball',
-    label: 'Nora',
-    team:  'Team Melton',
-    url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=ea0953e3-591b-490e-a153-b801b9c9f8ad&token=bbb439d074d26415e3fe4341ae2c7db5b0b936a640918da0d50f3a0dd9677cab',
-  },
-  {
     kid:   'parker',
     label: 'Parker',
     team:  'TBD',
     url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=958c2928-7e95-478b-8664-42eb815654c2&token=c175c47fd421697bc215603542a333d5b8631f7f8d98383537cd7d27c5be3132',
   },
-  // nora-volleyball uses STATIC_EVENTS — SportsYou feed returns incomplete data
+  // nora-softball and nora-volleyball use STATIC_EVENTS
 ];
 
 // ── TeamSnap iCal feeds ───────────────────────────────────────────────────────
@@ -143,7 +137,17 @@ function parseTeamSnapiCal(icsText) {
   return result;
 }
 const STATIC_EVENTS = [
-  // NORA — Waves Volleyball (Liberty Parks & Rec / TeamSideline — JS-rendered, hardcoded)
+  // NORA — Team Melton Softball 9/10U (Liberty Parks & Rec — hardcoded)
+  { kid:'nora-softball', date:'2026-09-08', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-09-15', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Team Coultis',          field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-09-22', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-09-29', time:'7:30 PM',  end:'9:00 PM', home:true,  opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-13', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Cotton Candy Crushers', field:'Sonic · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-20', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Team Coultis',          field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-27', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-27', time:'7:30 PM',  end:'9:00 PM', home:false, opp:'Cotton Candy Crushers', field:'The Landing · Liberty Parks & Rec' },
+
+  // NORA — Waves Volleyball (Liberty Parks & Rec / TeamSideline — hardcoded)
   { kid:'nora-volleyball', date:'2026-09-12', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Husnain',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-09-26', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-03', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Lady Warriors', field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
@@ -152,7 +156,7 @@ const STATIC_EVENTS = [
   { kid:'nora-volleyball', date:'2026-10-17', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Broadbent',     field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-]; // Preston football now scraped from TeamSnap iCal
+]; // Preston football scraped from TeamSnap iCal; Dawson/Cameron from NKCA + GameChanger
 
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
 const OUTPUT_FILE   = path.join(__dirname, '..', 'public', 'index.html');
