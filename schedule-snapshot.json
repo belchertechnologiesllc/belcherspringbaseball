@@ -72,15 +72,6 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "nora-softball",
-    "date": "2026-09-08",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
     "kid": "cameron",
     "date": "2026-09-10",
     "time": "7:00 PM",
@@ -90,13 +81,13 @@
     "field": ""
   },
   {
-    "kid": "cameron",
-    "date": "2026-09-11",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
+    "kid": "nora-volleyball",
+    "date": "2026-09-12",
+    "time": "1:30 PM",
+    "end": "2:30 PM",
     "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
+    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Husnain",
+    "field": "SVMS"
   },
   {
     "kid": "navy-football",
@@ -108,15 +99,6 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "cameron",
-    "date": "2026-09-12",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
     "kid": "gold-football",
     "date": "2026-09-12",
     "time": "8:00 AM",
@@ -124,15 +106,6 @@
     "home": true,
     "opp": "1st grade at S1A",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-09-13",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
   },
   {
     "kid": "dawson",
@@ -153,15 +126,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "nora-softball",
-    "date": "2026-09-15",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
     "kid": "cameron",
     "date": "2026-09-16",
     "time": "5:45 PM",
@@ -180,15 +144,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "cameron",
-    "date": "2026-09-18",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
     "kid": "navy-football",
     "date": "2026-09-19",
     "time": "12:30 PM",
@@ -198,15 +153,6 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "cameron",
-    "date": "2026-09-19",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
     "kid": "gold-football",
     "date": "2026-09-19",
     "time": "9:30 AM",
@@ -214,15 +160,6 @@
     "home": true,
     "opp": "EB1",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-09-20",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "2800 NW 100th St\\nNorthland\\, MO 64154"
   },
   {
     "kid": "dawson",
@@ -243,15 +180,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "nora-softball",
-    "date": "2026-09-22",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
     "kid": "cameron",
     "date": "2026-09-23",
     "time": "5:45 PM",
@@ -268,6 +196,15 @@
     "home": true,
     "opp": "KC Natives 12U Fall baseball",
     "field": "9217 N Brighton Ave\\nKansas City MO"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-09-26",
+    "time": "10:30 AM",
+    "end": "11:30 AM",
+    "home": true,
+    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Strikers",
+    "field": "South Valley Middle School"
   },
   {
     "kid": "navy-football",
@@ -306,24 +243,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "nora-softball",
-    "date": "2026-09-29",
-    "time": "7:30 PM",
-    "end": "9:00 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-10-02",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
     "kid": "gold-football",
     "date": "2026-10-03",
     "time": "11:00 AM",
@@ -342,22 +261,13 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "cameron",
+    "kid": "nora-volleyball",
     "date": "2026-10-03",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
+    "time": "8:30 AM",
+    "end": "9:30 AM",
     "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-10-04",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
+    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Lady Warriors",
+    "field": "South Valley Middle School"
   },
   {
     "kid": "dawson",
@@ -378,6 +288,15 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
+    "kid": "nora-volleyball",
+    "date": "2026-10-10",
+    "time": "10:30 AM",
+    "end": "11:30 AM",
+    "home": true,
+    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Panthers",
+    "field": "South Valley Middle School"
+  },
+  {
     "kid": "gold-football",
     "date": "2026-10-10",
     "time": "11:00 AM",
@@ -394,6 +313,15 @@
     "home": true,
     "opp": "1st grade at S1B",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-10",
+    "time": "9:30 AM",
+    "end": "10:30 AM",
+    "home": true,
+    "opp": "Fall-Liberty Parks&Rec 5/6th grade - FCA Knights",
+    "field": "South Valley Misdle Scho"
   },
   {
     "kid": "dawson",
@@ -432,15 +360,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "nora-softball",
-    "date": "2026-10-13",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
     "kid": "dawson",
     "date": "2026-10-18",
     "time": "4:30 PM",
@@ -475,59 +394,5 @@
     "home": true,
     "opp": "Saints Baseball Club 12U",
     "field": "9217 N Brighton Ave\\nKansas City MO"
-  },
-  {
-    "kid": "nora-softball",
-    "date": "2026-10-20",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
-    "kid": "nora-softball",
-    "date": "2026-10-27",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
-    "kid": "nora-softball",
-    "date": "2026-10-27",
-    "time": "7:30 PM",
-    "end": "9:00 PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "Capitol Federal Sports Complex of Liberty\\nLiberty\\, MO\\, United"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-10-30",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-10-31",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
-  },
-  {
-    "kid": "cameron",
-    "date": "2026-11-01",
-    "time": "12:NaN PM",
-    "end": "12:NaN PM",
-    "home": true,
-    "opp": "TBD",
-    "field": "1501 N 90th St\\nKansas City KS"
   }
 ]
