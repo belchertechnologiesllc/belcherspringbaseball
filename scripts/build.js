@@ -56,12 +56,7 @@ const GC_FEEDS = [
     team:  'TBD',
     url:   'https://api.team-manager.gc.com/ics-calendar-documents/user/18cba33e-a5b0-4edc-ae5f-89231fc8d1cf.ics?teamId=958c2928-7e95-478b-8664-42eb815654c2&token=c175c47fd421697bc215603542a333d5b8631f7f8d98383537cd7d27c5be3132',
   },
-  {
-    kid:   'nora-volleyball',
-    label: 'Nora',
-    team:  'Waves',
-    url:   'https://calendar.sportsyou.com/access/us-36b6927f-a916-48cc-baf1-0e05eb3ef8a7/ae299666-b4ae-4d47-b1fa-30c81c9b5e58',
-  },
+  // nora-volleyball uses STATIC_EVENTS — SportsYou feed returns incomplete data
 ];
 
 // ── TeamSnap iCal feeds ───────────────────────────────────────────────────────
