@@ -200,66 +200,104 @@ function parseNKCA(html, kid) {
   return games;
 }
 
-// ── Parse GameChanger iCal feed ───────────────────────────────────────────────
+// ── Parse GameChanger / Google Calendar iCal feed ────────────────────────────
 function parseGCiCal(icsText, kid) {
   const games = [];
-  // Split into VEVENT blocks
   const eventBlocks = icsText.split('BEGIN:VEVENT').slice(1);
+
   for (const block of eventBlocks) {
     const end = block.indexOf('END:VEVENT');
     const ev  = block.slice(0, end);
 
-    // Only include games, not practices
     const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
     if (!summary) continue;
-    // Skip practices — GC labels them "Practice" or "Team Practice"
-    if (/practice/i.test(summary)) continue;
+    if (/practice|camp|meeting/i.test(summary)) continue;
 
-    // Date/time: DTSTART;TZID=...:20260913T163000 or DTSTART:20260913T163000Z
-    const dtMatch = ev.match(/DTSTART(?:;[^:]+)?:(\d{8})T(\d{6})/);
-    if (!dtMatch) continue;
-    const dateStr = dtMatch[1]; // e.g. 20260913
-    const timeStr = dtMatch[2]; // e.g. 163000
-    const year  = parseInt(dateStr.slice(0,4));
-    const month = parseInt(dateStr.slice(4,6));
-    const day   = parseInt(dateStr.slice(6,8));
-    const hour  = parseInt(timeStr.slice(0,2));
-    const min   = parseInt(timeStr.slice(2,4));
-    const dateKey = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    // Handle both datetime and all-day date formats
+    // DTSTART;VALUE=DATE:20260930          → all-day, no time
+    // DTSTART:20260930T180000              → local time
+    // DTSTART:20260930T230000Z            → UTC, needs CDT conversion (-5h)
+    // DTSTART;TZID=America/Chicago:20260930T180000 → already local
 
-    // Format time as "4:30 PM"
-    const h12  = hour % 12 || 12;
-    const ampm = hour < 12 ? 'AM' : 'PM';
-    const timeFormatted = `${h12}:${String(min).padStart(2,'0')} ${ampm}`;
+    const dtRaw = ev.match(/^DTSTART([^:]*):(.+)$/m);
+    if (!dtRaw) continue;
+    const dtParams = dtRaw[1]; // e.g. ";VALUE=DATE" or ";TZID=America/Chicago" or ""
+    const dtVal   = dtRaw[2].replace(/\r/g,'').trim();
 
-    // End time
-    let endFormatted = '';
-    const dtEnd = ev.match(/DTEND(?:;[^:]+)?:(\d{8})T(\d{6})/);
-    if (dtEnd) {
-      const eh = parseInt(dtEnd[2].slice(0,2));
-      const em = parseInt(dtEnd[2].slice(2,4));
-      const eh12 = eh % 12 || 12;
-      const eampm = eh < 12 ? 'AM' : 'PM';
-      endFormatted = `${eh12}:${String(em).padStart(2,'0')} ${eampm}`;
+    let dateKey, timeFormatted = '', endFormatted = '';
+
+    if (/VALUE=DATE/i.test(dtParams)) {
+      // All-day event — just a date
+      const y = dtVal.slice(0,4), m = dtVal.slice(4,6), d = dtVal.slice(6,8);
+      dateKey = `${y}-${m}-${d}`;
+    } else {
+      // Datetime event
+      const dateStr = dtVal.slice(0,8);
+      const timeStr = dtVal.slice(9,15);
+      const isUtc   = dtVal.endsWith('Z');
+
+      let year  = parseInt(dateStr.slice(0,4));
+      let month = parseInt(dateStr.slice(4,6));
+      let day   = parseInt(dateStr.slice(6,8));
+      let hour  = parseInt(timeStr.slice(0,2));
+      let min   = parseInt(timeStr.slice(2,4));
+
+      if (isUtc) {
+        // Convert UTC to CDT (UTC-5) — fall season is after DST ends Nov 1
+        // Sep/Oct = CDT (UTC-5), Nov+ = CST (UTC-6)
+        const offsetHours = (month < 11) ? 5 : 6;
+        hour -= offsetHours;
+        if (hour < 0) {
+          hour += 24;
+          day  -= 1;
+          // Handle month rollback
+          if (day < 1) {
+            month -= 1;
+            if (month < 1) { month = 12; year -= 1; }
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            day = daysInPrevMonth;
+          }
+        }
+      }
+
+      dateKey = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      const h12  = hour % 12 || 12;
+      const ampm = hour < 12 ? 'AM' : 'PM';
+      timeFormatted = `${h12}:${String(min).padStart(2,'0')} ${ampm}`;
+
+      // End time
+      const dtEndRaw = ev.match(/^DTEND([^:]*):(.+)$/m);
+      if (dtEndRaw) {
+        const ev2    = dtEndRaw[2].replace(/\r/g,'').trim();
+        const isUtc2 = ev2.endsWith('Z');
+        let eh = parseInt(ev2.slice(9,11));
+        let em = parseInt(ev2.slice(11,13));
+        let ed = parseInt(ev2.slice(6,8));
+        let emo= parseInt(ev2.slice(4,6));
+        if (isUtc2) {
+          const offsetHours = (emo < 11) ? 5 : 6;
+          eh -= offsetHours;
+          if (eh < 0) eh += 24;
+        }
+        endFormatted = `${eh % 12 || 12}:${String(em).padStart(2,'0')} ${eh < 12 ? 'AM' : 'PM'}`;
+      }
     }
 
-    // Location
+    if (dateKey < '2026-08-25') continue;
+
     const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
 
-    // Opponent — GC puts "vs OpponentName" or "@ OpponentName" in summary
-    let opp = summary;
+    let opp  = summary;
     let home = true;
-    const vsMatch = summary.match(/^.*?(?:vs\.?\s+|@\s*)(.+)$/i);
+    const vsMatch = summary.match(/(?:vs\.?\s+|@\s*)(.+)$/i);
     if (vsMatch) {
       opp  = vsMatch[1].trim();
-      home = !/^\s*@/.test(summary);
+      home = !/@/.test(summary.slice(0, summary.search(/vs\.|@/i)));
     }
-
-    // Only include future events (from Aug 25 2026)
-    if (dateKey < '2026-08-25') continue;
 
     games.push({ kid, date: dateKey, time: timeFormatted, end: endFormatted, home, opp, field: location });
   }
+
   return games;
 }
 
