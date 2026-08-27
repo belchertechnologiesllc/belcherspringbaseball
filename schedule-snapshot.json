@@ -81,15 +81,6 @@
     "field": ""
   },
   {
-    "kid": "nora-volleyball",
-    "date": "2026-09-12",
-    "time": "1:30 PM",
-    "end": "2:30 PM",
-    "home": true,
-    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Husnain",
-    "field": "SVMS"
-  },
-  {
     "kid": "navy-football",
     "date": "2026-09-12",
     "time": "11:00 AM",
@@ -198,15 +189,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "nora-volleyball",
-    "date": "2026-09-26",
-    "time": "10:30 AM",
-    "end": "11:30 AM",
-    "home": true,
-    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Strikers",
-    "field": "South Valley Middle School"
-  },
-  {
     "kid": "navy-football",
     "date": "2026-09-26",
     "time": "11:00 AM",
@@ -261,15 +243,6 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "nora-volleyball",
-    "date": "2026-10-03",
-    "time": "8:30 AM",
-    "end": "9:30 AM",
-    "home": true,
-    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Lady Warriors",
-    "field": "South Valley Middle School"
-  },
-  {
     "kid": "dawson",
     "date": "2026-10-04",
     "time": "4:30 PM",
@@ -288,15 +261,6 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "nora-volleyball",
-    "date": "2026-10-10",
-    "time": "10:30 AM",
-    "end": "11:30 AM",
-    "home": true,
-    "opp": "Fall-Liberty Parks&Rec 5/6th grade - Panthers",
-    "field": "South Valley Middle School"
-  },
-  {
     "kid": "gold-football",
     "date": "2026-10-10",
     "time": "11:00 AM",
@@ -313,15 +277,6 @@
     "home": true,
     "opp": "1st grade at S1B",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
-  },
-  {
-    "kid": "nora-volleyball",
-    "date": "2026-10-10",
-    "time": "9:30 AM",
-    "end": "10:30 AM",
-    "home": true,
-    "opp": "Fall-Liberty Parks&Rec 5/6th grade - FCA Knights",
-    "field": "South Valley Misdle Scho"
   },
   {
     "kid": "dawson",
