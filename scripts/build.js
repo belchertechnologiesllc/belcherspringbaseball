@@ -60,7 +60,7 @@ const GC_FEEDS = [
     kid:   'nora-volleyball',
     label: 'Nora',
     team:  'Waves',
-    url:   'https://calendar.google.com/calendar/ical/i112eo380a71u1ef10q9djc7mj82qs2l%40import.calendar.google.com/public/basic.ics',
+    url:   'https://calendar.sportsyou.com/access/us-36b6927f-a916-48cc-baf1-0e05eb3ef8a7/ae299666-b4ae-4d47-b1fa-30c81c9b5e58',
   },
 ];
 
@@ -145,7 +145,17 @@ function parseTeamSnapiCal(icsText) {
 
   return result;
 }
-const STATIC_EVENTS = []; // Preston football now scraped from TeamSnap iCal
+const STATIC_EVENTS = [
+  // NORA — Waves Volleyball (Liberty Parks & Rec / TeamSideline — JS-rendered, hardcoded)
+  { kid:'nora-volleyball', date:'2026-09-12', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Husnain',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-09-26', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-03', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Lady Warriors', field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-10', time:'9:30 AM',  end:'10:30 AM', home:false, opp:'FCA Knights',   field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-10', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Panthers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-17', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Broadbent',     field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+]; // Preston football now scraped from TeamSnap iCal
 
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
 const OUTPUT_FILE   = path.join(__dirname, '..', 'public', 'index.html');
@@ -359,7 +369,9 @@ async function main() {
   }
 
   // 4. Merge live + static, sort
-  const allEvents = [...liveGames, ...STATIC_EVENTS];
+  // Only include static events for kids NOT successfully fetched from a live feed
+  const filteredStatic = STATIC_EVENTS.filter(e => !gcKidsFound.has(e.kid));
+  const allEvents = [...liveGames, ...filteredStatic];
   allEvents.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
   liveGames.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
 
