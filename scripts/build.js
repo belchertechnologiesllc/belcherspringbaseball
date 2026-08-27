@@ -379,9 +379,7 @@ async function main() {
   }
 
   // 4. Merge live + static, sort
-  // Only include static events for kids NOT successfully fetched from a live feed
-  const filteredStatic = STATIC_EVENTS.filter(e => !gcKidsFound.has(e.kid));
-  const allEvents = [...liveGames, ...filteredStatic];
+  const allEvents = [...liveGames, ...STATIC_EVENTS];
   allEvents.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
   liveGames.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
 
