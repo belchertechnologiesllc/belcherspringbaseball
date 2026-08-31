@@ -47,11 +47,20 @@
   {
     "kid": "gold-football",
     "date": "2026-09-04",
-    "time": "12:00 AM",
-    "end": "12:00 AM",
+    "time": "6:25 PM",
+    "end": "6:25 PM",
     "home": true,
     "opp": "Liberty North)",
     "field": "1000 NE 104th St\\nLiberty MO 64068\\nUnited States"
+  },
+  {
+    "kid": "parker",
+    "date": "2026-09-04",
+    "time": "7:30 PM",
+    "end": "8:30 PM",
+    "home": true,
+    "opp": "Thunder Baseball 11U",
+    "field": "1501 N 90th St\\nKansas City KS"
   },
   {
     "kid": "gold-football",
@@ -61,6 +70,15 @@
     "home": true,
     "opp": "1st grade at S1B",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+  },
+  {
+    "kid": "parker",
+    "date": "2026-09-05",
+    "time": "12:00 PM",
+    "end": "1:00 PM",
+    "home": true,
+    "opp": "11u Millhouse Pirates",
+    "field": "16050 Long Ball Street\\nParkville MO"
   },
   {
     "kid": "navy-football",

@@ -1,51 +1,43 @@
 {
-  "detected_at": "2026-08-27T20:44:23.397Z",
-  "added": [],
+  "detected_at": "2026-08-31T18:54:28.568Z",
+  "added": [
+    {
+      "kid": "gold-football",
+      "date": "2026-09-04",
+      "time": "6:25 PM",
+      "end": "6:25 PM",
+      "home": true,
+      "opp": "Liberty North)",
+      "field": "1000 NE 104th St\\nLiberty MO 64068\\nUnited States"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-09-04",
+      "time": "7:30 PM",
+      "end": "8:30 PM",
+      "home": true,
+      "opp": "Thunder Baseball 11U",
+      "field": "1501 N 90th St\\nKansas City KS"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-09-05",
+      "time": "12:00 PM",
+      "end": "1:00 PM",
+      "home": true,
+      "opp": "11u Millhouse Pirates",
+      "field": "16050 Long Ball Street\\nParkville MO"
+    }
+  ],
   "removed": [
     {
-      "kid": "nora-volleyball",
-      "date": "2026-09-12",
-      "time": "1:30 PM",
-      "end": "2:30 PM",
+      "kid": "gold-football",
+      "date": "2026-09-04",
+      "time": "12:00 AM",
+      "end": "12:00 AM",
       "home": true,
-      "opp": "Fall-Liberty Parks&Rec 5/6th grade - Husnain",
-      "field": "SVMS"
-    },
-    {
-      "kid": "nora-volleyball",
-      "date": "2026-09-26",
-      "time": "10:30 AM",
-      "end": "11:30 AM",
-      "home": true,
-      "opp": "Fall-Liberty Parks&Rec 5/6th grade - Strikers",
-      "field": "South Valley Middle School"
-    },
-    {
-      "kid": "nora-volleyball",
-      "date": "2026-10-03",
-      "time": "8:30 AM",
-      "end": "9:30 AM",
-      "home": true,
-      "opp": "Fall-Liberty Parks&Rec 5/6th grade - Lady Warriors",
-      "field": "South Valley Middle School"
-    },
-    {
-      "kid": "nora-volleyball",
-      "date": "2026-10-10",
-      "time": "10:30 AM",
-      "end": "11:30 AM",
-      "home": true,
-      "opp": "Fall-Liberty Parks&Rec 5/6th grade - Panthers",
-      "field": "South Valley Middle School"
-    },
-    {
-      "kid": "nora-volleyball",
-      "date": "2026-10-10",
-      "time": "9:30 AM",
-      "end": "10:30 AM",
-      "home": true,
-      "opp": "Fall-Liberty Parks&Rec 5/6th grade - FCA Knights",
-      "field": "South Valley Misdle Scho"
+      "opp": "Liberty North)",
+      "field": "1000 NE 104th St\\nLiberty MO 64068\\nUnited States"
     }
   ],
   "modified": []
