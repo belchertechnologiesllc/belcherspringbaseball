@@ -1,44 +1,27 @@
 {
-  "detected_at": "2026-08-31T18:54:28.568Z",
-  "added": [
+  "detected_at": "2026-09-02T16:08:08.959Z",
+  "added": [],
+  "removed": [],
+  "modified": [
     {
-      "kid": "gold-football",
-      "date": "2026-09-04",
-      "time": "6:25 PM",
-      "end": "6:25 PM",
-      "home": true,
-      "opp": "Liberty North)",
-      "field": "1000 NE 104th St\\nLiberty MO 64068\\nUnited States"
-    },
-    {
-      "kid": "parker",
-      "date": "2026-09-04",
-      "time": "7:30 PM",
-      "end": "8:30 PM",
-      "home": true,
-      "opp": "Thunder Baseball 11U",
-      "field": "1501 N 90th St\\nKansas City KS"
-    },
-    {
-      "kid": "parker",
-      "date": "2026-09-05",
-      "time": "12:00 PM",
-      "end": "1:00 PM",
-      "home": true,
-      "opp": "11u Millhouse Pirates",
-      "field": "16050 Long Ball Street\\nParkville MO"
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-10",
+        "time": "7:00 PM",
+        "end": "8:00 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": ""
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-10",
+        "time": "7:00 PM",
+        "end": "8:00 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "1 Royal Way\\nKansas City MO"
+      }
     }
-  ],
-  "removed": [
-    {
-      "kid": "gold-football",
-      "date": "2026-09-04",
-      "time": "12:00 AM",
-      "end": "12:00 AM",
-      "home": true,
-      "opp": "Liberty North)",
-      "field": "1000 NE 104th St\\nLiberty MO 64068\\nUnited States"
-    }
-  ],
-  "modified": []
+  ]
 }
