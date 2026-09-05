@@ -99,6 +99,15 @@
     "field": "1 Royal Way\\nKansas City MO"
   },
   {
+    "kid": "cameron",
+    "date": "2026-09-11",
+    "time": "7:00 PM",
+    "end": "8:45 PM",
+    "home": true,
+    "opp": "Kansas City Reign 12U",
+    "field": "15900 Long Ball St\\nParkville MO"
+  },
+  {
     "kid": "navy-football",
     "date": "2026-09-12",
     "time": "11:00 AM",
@@ -106,6 +115,15 @@
     "home": true,
     "opp": "PC1B",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+  },
+  {
+    "kid": "cameron",
+    "date": "2026-09-12",
+    "time": "4:00 PM",
+    "end": "5:45 PM",
+    "home": true,
+    "opp": "12U Icemen Wallraff",
+    "field": "1501 N 90th St\\nKansas City KS"
   },
   {
     "kid": "gold-football",
