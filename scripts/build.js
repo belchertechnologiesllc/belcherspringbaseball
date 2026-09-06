@@ -114,24 +114,19 @@ function parseTeamSnapiCal(icsText) {
       home = !/@/.test(summary.slice(0, summary.search(/vs\.|@/i)));
     }
 
-    games.push({ dateKey, timeFormatted, endFormatted, home, opp, field: location, hour, min });
+    games.push({ dateKey, timeFormatted, endFormatted, home, opp, field: location, hour, min, summary });
   }
 
   // Sort by date then time
   games.sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.hour * 60 + a.min - (b.hour * 60 + b.min));
 
-  // Split into Gold (earlier game) and Navy (later game) by day
-  const byDay = {};
-  for (const g of games) {
-    (byDay[g.dateKey] = byDay[g.dateKey] || []).push(g);
-  }
-
+  // Assign Gold/Navy based on "Navy" or "Gold" in the event summary title
   const result = [];
-  for (const [date, dayGames] of Object.entries(byDay)) {
-    dayGames.forEach((g, idx) => {
-      const kid = idx === 0 ? 'gold-football' : 'navy-football';
-      result.push({ kid, date, time: g.timeFormatted, end: g.endFormatted, home: g.home, opp: g.opp, field: g.field });
-    });
+  for (const g of games) {
+    let kid = 'gold-football'; // default
+    if (/navy/i.test(g.summary)) kid = 'navy-football';
+    else if (/gold/i.test(g.summary)) kid = 'gold-football';
+    result.push({ kid, date: g.dateKey, time: g.timeFormatted, end: g.endFormatted, home: g.home, opp: g.opp, field: g.field });
   }
 
   return result;
