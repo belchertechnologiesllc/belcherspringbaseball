@@ -1,25 +1,164 @@
 {
-  "detected_at": "2026-09-05T14:45:27.063Z",
+  "detected_at": "2026-09-06T02:44:20.981Z",
   "added": [
     {
-      "kid": "cameron",
-      "date": "2026-09-11",
-      "time": "7:00 PM",
-      "end": "8:45 PM",
+      "kid": "gold-football",
+      "date": "2026-08-30",
+      "time": "2:15 PM",
+      "end": "2:15 PM",
       "home": true,
-      "opp": "Kansas City Reign 12U",
-      "field": "15900 Long Ball St\\nParkville MO"
+      "opp": "1st grade - Flag pictures",
+      "field": "1000 NE 104th St\\, Liberty\\, MO 64068"
     },
     {
-      "kid": "cameron",
+      "kid": "gold-football",
       "date": "2026-09-12",
-      "time": "4:00 PM",
-      "end": "5:45 PM",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
       "home": true,
-      "opp": "12U Icemen Wallraff",
-      "field": "1501 N 90th St\\nKansas City KS"
+      "opp": "PC1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "gold-football",
+      "date": "2026-09-19",
+      "time": "12:30 PM",
+      "end": "12:30 PM",
+      "home": true,
+      "opp": "S2D",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "gold-football",
+      "date": "2026-09-26",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "1st grade at PC1A",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "gold-football",
+      "date": "2026-10-03",
+      "time": "12:30 PM",
+      "end": "12:30 PM",
+      "home": true,
+      "opp": "EB1",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "gold-football",
+      "date": "2026-10-04",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "1st grade at S1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "gold-football",
+      "date": "2026-10-04",
+      "time": "2:00 PM",
+      "end": "2:00 PM",
+      "home": true,
+      "opp": "1st grade at PC1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
     }
   ],
-  "removed": [],
-  "modified": []
+  "removed": [
+    {
+      "kid": "navy-football",
+      "date": "2026-08-30",
+      "time": "2:15 PM",
+      "end": "2:15 PM",
+      "home": true,
+      "opp": "1st grade - Flag pictures",
+      "field": "1000 NE 104th St\\, Liberty\\, MO 64068"
+    },
+    {
+      "kid": "gold-football",
+      "date": "2026-09-05",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "1st grade at S1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "navy-football",
+      "date": "2026-09-05",
+      "time": "2:00 PM",
+      "end": "2:00 PM",
+      "home": true,
+      "opp": "1st grade at PC1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "navy-football",
+      "date": "2026-09-12",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "PC1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "navy-football",
+      "date": "2026-09-19",
+      "time": "12:30 PM",
+      "end": "12:30 PM",
+      "home": true,
+      "opp": "S2D",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "navy-football",
+      "date": "2026-09-26",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "1st grade at PC1A",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "navy-football",
+      "date": "2026-10-03",
+      "time": "12:30 PM",
+      "end": "12:30 PM",
+      "home": true,
+      "opp": "EB1",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    },
+    {
+      "kid": "navy-football",
+      "date": "2026-10-10",
+      "time": "11:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "1st grade at S1B",
+      "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+    }
+  ],
+  "modified": [
+    {
+      "old": {
+        "kid": "gold-football",
+        "date": "2026-10-10",
+        "time": "11:00 AM",
+        "end": "11:00 AM",
+        "home": true,
+        "opp": "1st grade at S2C",
+        "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+      },
+      "new": {
+        "kid": "gold-football",
+        "date": "2026-10-10",
+        "time": "11:00 AM",
+        "end": "11:00 AM",
+        "home": true,
+        "opp": "1st grade at S1B",
+        "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+      }
+    }
+  ]
 }

@@ -36,7 +36,7 @@
     "field": "TBD"
   },
   {
-    "kid": "navy-football",
+    "kid": "gold-football",
     "date": "2026-08-30",
     "time": "2:15 PM",
     "end": "2:15 PM",
@@ -63,15 +63,6 @@
     "field": "1501 N 90th St\\nKansas City KS"
   },
   {
-    "kid": "gold-football",
-    "date": "2026-09-05",
-    "time": "11:00 AM",
-    "end": "11:00 AM",
-    "home": true,
-    "opp": "1st grade at S1B",
-    "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
-  },
-  {
     "kid": "parker",
     "date": "2026-09-05",
     "time": "12:00 PM",
@@ -79,15 +70,6 @@
     "home": true,
     "opp": "11u Millhouse Pirates",
     "field": "16050 Long Ball Street\\nParkville MO"
-  },
-  {
-    "kid": "navy-football",
-    "date": "2026-09-05",
-    "time": "2:00 PM",
-    "end": "2:00 PM",
-    "home": true,
-    "opp": "1st grade at PC1B",
-    "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
     "kid": "cameron",
@@ -108,7 +90,7 @@
     "field": "15900 Long Ball St\\nParkville MO"
   },
   {
-    "kid": "navy-football",
+    "kid": "gold-football",
     "date": "2026-09-12",
     "time": "11:00 AM",
     "end": "11:00 AM",
@@ -171,7 +153,7 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "navy-football",
+    "kid": "gold-football",
     "date": "2026-09-19",
     "time": "12:30 PM",
     "end": "12:30 PM",
@@ -225,7 +207,7 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
-    "kid": "navy-football",
+    "kid": "gold-football",
     "date": "2026-09-26",
     "time": "11:00 AM",
     "end": "11:00 AM",
@@ -270,12 +252,30 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "navy-football",
+    "kid": "gold-football",
     "date": "2026-10-03",
     "time": "12:30 PM",
     "end": "12:30 PM",
     "home": true,
     "opp": "EB1",
+    "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-10-04",
+    "time": "11:00 AM",
+    "end": "11:00 AM",
+    "home": true,
+    "opp": "1st grade at S1B",
+    "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-10-04",
+    "time": "2:00 PM",
+    "end": "2:00 PM",
+    "home": true,
+    "opp": "1st grade at PC1B",
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
@@ -306,7 +306,7 @@
     "field": "17130 RT-371\\nPlatte City MO 64079\\nUnited States"
   },
   {
-    "kid": "navy-football",
+    "kid": "gold-football",
     "date": "2026-10-10",
     "time": "11:00 AM",
     "end": "11:00 AM",
