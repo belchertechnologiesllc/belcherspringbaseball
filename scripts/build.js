@@ -54,14 +54,8 @@ const GC_FEEDS = [
 ];
 
 // ── TeamSnap iCal feeds ───────────────────────────────────────────────────────
-// These are fetched as plain iCal. Games are split into Gold/Navy by time slot.
-// Gold = earlier game each day, Navy = later game each day.
-const TEAMSNAP_FEEDS = [
-  {
-    label: 'Preston Eagles',
-    url:   'https://ical-cdn.teamsnap.com/team_schedule/7e606136-a4f4-421c-884d-d945b17870fb.ics',
-  },
-];
+// Preston football uses STATIC_EVENTS — TeamSnap titles don't indicate Gold/Navy
+const TEAMSNAP_FEEDS = [];
 
 // ── Parse TeamSnap iCal ───────────────────────────────────────────────────────
 function parseTeamSnapiCal(icsText) {
@@ -151,7 +145,23 @@ const STATIC_EVENTS = [
   { kid:'nora-volleyball', date:'2026-10-17', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Broadbent',     field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-]; // Preston football scraped from TeamSnap iCal; Dawson/Cameron from NKCA + GameChanger
+
+  // PRESTON — Eagles Navy (LN1B) — War Eagle Football
+  { kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:true,  opp:'S1A',  field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:true,  opp:'S2D',  field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:true,  opp:'PC1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'EB1',  field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-04', time:'2:00 PM',  end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO', note:'Rescheduled from Sep 5' },
+  { kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'S1B',  field:'Platte Ridge Park Field 2 · Platte City MO' },
+
+  // PRESTON — Eagles Gold — update these once you have the Gold schedule image
+  { kid:'gold-football', date:'2026-09-05', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:true,  opp:'EB1',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S2C',  field:'Platte Ridge Park · Platte City MO' },
+];
 
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
 const OUTPUT_FILE   = path.join(__dirname, '..', 'public', 'index.html');
