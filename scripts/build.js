@@ -146,21 +146,21 @@ const STATIC_EVENTS = [
   { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
 
-  // PRESTON — Eagles Navy (LN1B) — War Eagle Football
-  { kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:true,  opp:'S1A',  field:'Platte Ridge Park Field 1 · Platte City MO' },
-  { kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:true,  opp:'S2D',  field:'Platte Ridge Park Field 2 · Platte City MO' },
-  { kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:true,  opp:'PC1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
-  { kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'EB1',  field:'Platte Ridge Park Field 1 · Platte City MO' },
-  { kid:'navy-football', date:'2026-10-04', time:'2:00 PM',  end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO' },
-  { kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'S1B',  field:'Platte Ridge Park Field 2 · Platte City MO' },
+// PRESTON — LN1A (Liberty North 1A, PCYFL Tackle Football)
+{ kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:false, opp:'PC1B', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:false, opp:'EB1',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'gold-football', date:'2026-09-20', time:'2:00 PM',  end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S2C',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
 
-  // PRESTON — Eagles Gold — update these once you have the Gold schedule image
-  { kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:true,  opp:'EB1',  field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-10-04', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S2C',  field:'Platte Ridge Park · Platte City MO' },
+// PRESTON — LN1B (Liberty North 1B, PCYFL Tackle Football)
+{ kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:false, opp:'S2D',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'navy-football', date:'2026-09-20', time:'11:00 AM', end:'', home:false, opp:'PC1B', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'EB1',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+{ kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
 ];
 
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
