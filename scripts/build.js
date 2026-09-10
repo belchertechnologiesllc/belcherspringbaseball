@@ -146,21 +146,21 @@ const STATIC_EVENTS = [
   { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
   { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
 
-// PRESTON — LN1A (Liberty North 1A, PCYFL Tackle Football)
-{ kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:false, opp:'PC1B', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:false, opp:'EB1',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'gold-football', date:'2026-09-20', time:'2:00 PM',  end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S2C',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+  // PRESTON — Eagles Navy (LN1B) — War Eagle Football
+  { kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:true,  opp:'S1A',  field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:true,  opp:'S2D',  field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:true,  opp:'PC1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'EB1',  field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-04', time:'2:00 PM',  end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO', note:'Rescheduled from Sep 5' },
+  { kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'S1B',  field:'Platte Ridge Park Field 2 · Platte City MO' },
 
-// PRESTON — LN1B (Liberty North 1B, PCYFL Tackle Football)
-{ kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:false, opp:'S2D',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'navy-football', date:'2026-09-20', time:'11:00 AM', end:'', home:false, opp:'PC1B', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'EB1',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
-{ kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · 17130 RT-371, Platte City MO' },
+  // PRESTON — Eagles Gold — update these once you have the Gold schedule image
+  { kid:'gold-football', date:'2026-09-05', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:true,  opp:'EB1',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S2C',  field:'Platte Ridge Park · Platte City MO' },
 ];
 
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
@@ -568,7 +568,7 @@ const EVENTS=${eventsJson};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY=new Date().toISOString().slice(0,10);
-let curYear=new Date().getFullYear(),curMonth=new Date().getMonth(),activeFilter='all';
+let curYear=new Date().getFullYear(),curMonth=new Date().getMonth(),activeFilters=new Set(['all']);
 const bar=document.getElementById('summary-bar');
 [['dawson'],['cameron'],['gold-football','navy-football'],['nora-softball','nora-volleyball'],['parker']].forEach(keys=>{
   const n=EVENTS.filter(e=>keys.includes(e.kid)).length;
@@ -579,13 +579,13 @@ document.getElementById('hdr-totals').textContent=EVENTS.length+' total events';
 const byDate={};EVENTS.forEach(e=>{byDate[e.date]=(byDate[e.date]||[]).concat(e)});
 let conflicts=0;for(const evs of Object.values(byDate)){if([...new Set(evs.map(e=>KIDS[e.kid].group))].length>=3)conflicts++;}
 if(conflicts)document.getElementById('conflict-label').textContent='⚠ '+conflicts+' busy day'+(conflicts>1?'s':'')+' (3+ kids)';
-document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeFilter=btn.dataset.kid;render();});});
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{const kid=btn.dataset.kid;if(kid==='all'){activeFilters=new Set(['all']);}else{activeFilters.delete('all');if(activeFilters.has(kid)){activeFilters.delete(kid);if(activeFilters.size===0)activeFilters=new Set(['all']);}else{activeFilters.add(kid);}}document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.toggle('active',activeFilters.has(b.dataset.kid));});render();});});
 function pad(n){return String(n).padStart(2,'0')}
 function dateKey(y,m,d){return \`\${y}-\${pad(m+1)}-\${pad(d)}\`}
 function daysInMonth(y,m){return new Date(y,m+1,0).getDate()}
 function firstDow(y,m){return new Date(y,m,1).getDay()}
 function eventsOn(dk){return EVENTS.filter(e=>e.date===dk)}
-function visibleOn(dk){return eventsOn(dk).filter(e=>activeFilter==='all'||KIDS[e.kid].group===activeFilter)}
+function visibleOn(dk){return eventsOn(dk).filter(e=>activeFilters.has('all')||activeFilters.has(KIDS[e.kid].group));}
 function timeSort(a,b){const p=t=>{const[hm,ap]=t.split(' ');let[h,mn]=hm.split(':').map(Number);if(ap==='PM'&&h!==12)h+=12;if(ap==='AM'&&h===12)h=0;return h*60+mn};return p(a.time)-p(b.time);}
 function render(){
   document.getElementById('month-label').textContent=MONTHS[curMonth]+' '+curYear;
@@ -613,7 +613,7 @@ function render(){
       pill.onclick=e=>{e.stopPropagation();showModal(dk,eventsOn(dk).sort(timeSort))};cell.appendChild(pill);
     });grid.appendChild(cell);
   }
-  document.getElementById('game-count').textContent=monthGames+' event'+(monthGames!==1?'s':'')+' this month'+(activeFilter!=='all'?' (filtered)':'');
+  document.getElementById('game-count').textContent=monthGames+' event'+(monthGames!==1?'s':'')+' this month'+(!activeFilters.has('all')?' (filtered)':'');
 }
 function showModal(dk,evs){
   const d=new Date(dk+'T12:00:00');
