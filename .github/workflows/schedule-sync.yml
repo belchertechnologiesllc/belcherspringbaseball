@@ -2,7 +2,9 @@ name: Check & Deploy Schedule
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 11 * * *'   # 6am CDT — morning check
+    - cron: '0 17 * * *'   # noon CDT — midday check
+    - cron: '0 23 * * *'   # 6pm CDT — evening check
   workflow_dispatch:
     inputs:
       force_rebuild:
@@ -10,9 +12,6 @@ on:
         required: false
         default: 'false'
         type: boolean
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   check-and-deploy:
@@ -34,46 +33,31 @@ jobs:
         env:
           FORCE_REBUILD: ${{ inputs.force_rebuild == 'true' && '1' || '0' }}
         run: |
-          set +e
-          node scripts/build.js
-          CODE=$?
-          set -e
+          node scripts/build.js; CODE=$?
           echo "exit_code=$CODE" >> $GITHUB_OUTPUT
-          echo "Build exited with code $CODE"
           if [ "$CODE" = "2" ]; then
-            echo "Network or parse error - aborting"
+            echo "Network/parse error - aborting"
             exit 1
           fi
+          echo "Build finished with code $CODE"
 
-      - name: Show built file info
+      - name: Commit and deploy if changed
         if: steps.build.outputs.exit_code == '1'
         run: |
-          echo "=== public/index.html ==="
-          ls -lh public/index.html || echo "FILE NOT FOUND"
-          echo "=== schedule-snapshot.json ==="
-          ls -lh schedule-snapshot.json || echo "FILE NOT FOUND"
-          echo "=== changes.json ==="
-          ls -lh changes.json || echo "FILE NOT FOUND"
-          echo "=== Event count in index.html ==="
-          grep -o "kid:'" public/index.html | wc -l || echo "could not count"
-
-      - name: Commit and push if changed
-        if: steps.build.outputs.exit_code == '1'
-        run: |
+          echo "Changes detected - committing and deploying"
           git config user.name "Schedule Bot"
           git config user.email "bot@belcherfamily.net"
-          git add public/index.html
-          git add schedule-snapshot.json || true
-          git add changes.json || true
-          git status
-          git diff --cached --stat
-          git commit -m "chore: schedule sync $(date -u '+%Y-%m-%d %H:%M UTC')" || echo "Nothing to commit"
-          git push || echo "Nothing to push"
+          git add public/index.html schedule-snapshot.json changes.json
+          git commit -m "chore: schedule sync $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+          echo "Pushed - Netlify will redeploy automatically"
 
-      - name: No changes detected
+      - name: No changes
         if: steps.build.outputs.exit_code == '0'
-        run: echo "No schedule changes - skipping deploy"
+        run: echo "No schedule changes detected - skipping deploy"
 
-      - name: Show change summary
+      - name: Log change summary
         if: steps.build.outputs.exit_code == '1'
-        run: cat changes.json || echo "No changes.json found"
+        run: |
+          echo "=== Change Summary ==="
+          cat changes.json | python3 -m json.tool
