@@ -1,26 +1,25 @@
 {
-  "detected_at": "2026-09-09T21:42:09.157Z",
+  "detected_at": "2026-09-12T15:10:14.776Z",
   "added": [
     {
-      "kid": "cameron",
-      "date": "2026-09-11",
-      "time": "7:00 PM",
-      "end": "8:45 PM",
+      "kid": "parker",
+      "date": "2026-09-12",
+      "time": "4:00 PM",
+      "end": "5:45 PM",
       "home": true,
-      "opp": "KC Prodigy Wilhoite 12U",
-      "field": "15900 Long Ball St\\nParkville MO"
-    }
-  ],
-  "removed": [
+      "opp": "11U Icemen Gominsky",
+      "field": "1501 N 90th St\\nKansas City KS"
+    },
     {
-      "kid": "cameron",
-      "date": "2026-09-11",
-      "time": "6:00 PM",
-      "end": "7:45 PM",
+      "kid": "parker",
+      "date": "2026-09-12",
+      "time": "8:00 PM",
+      "end": "9:45 PM",
       "home": true,
-      "opp": "Kansas City Reign 12U",
-      "field": "15900 Long Ball St\\nParkville MO"
+      "opp": "KC Scrappers 10U",
+      "field": "1501 N 90th St\\nKansas City KS"
     }
   ],
+  "removed": [],
   "modified": []
 }
