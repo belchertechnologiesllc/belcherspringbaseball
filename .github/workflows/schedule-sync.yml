@@ -1,10 +1,15 @@
+bash
+
+cat /home/claude/baseball-schedule/.github/workflows/schedule-sync.yml
+Output
+
 name: Check & Deploy Schedule
 
 on:
   schedule:
-    - cron: '0 11 * * *'   # 6am CDT — morning check
-    - cron: '0 17 * * *'   # noon CDT — midday check
-    - cron: '0 23 * * *'   # 6pm CDT — evening check
+    - cron: '0 11 * * *'
+    - cron: '0 17 * * *'
+    - cron: '0 23 * * *'
   workflow_dispatch:
     inputs:
       force_rebuild:
@@ -32,19 +37,23 @@ jobs:
         id: build
         env:
           FORCE_REBUILD: ${{ inputs.force_rebuild == 'true' && '1' || '0' }}
+        shell: bash
         run: |
-          node scripts/build.js; CODE=$?
+          set +e
+          node scripts/build.js
+          CODE=$?
+          set -e
           echo "exit_code=$CODE" >> $GITHUB_OUTPUT
+          echo "Build finished with code $CODE"
           if [ "$CODE" = "2" ]; then
             echo "Network/parse error - aborting"
             exit 1
           fi
-          echo "Build finished with code $CODE"
+          exit 0
 
       - name: Commit and deploy if changed
         if: steps.build.outputs.exit_code == '1'
         run: |
-          echo "Changes detected - committing and deploying"
           git config user.name "Schedule Bot"
           git config user.email "bot@belcherfamily.net"
           git add public/index.html schedule-snapshot.json changes.json
@@ -58,6 +67,4 @@ jobs:
 
       - name: Log change summary
         if: steps.build.outputs.exit_code == '1'
-        run: |
-          echo "=== Change Summary ==="
-          cat changes.json | python3 -m json.tool
+        run: cat changes.json | python3 -m json.tool
