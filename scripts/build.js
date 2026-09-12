@@ -126,35 +126,36 @@ function parseTeamSnapiCal(icsText) {
   return result;
 }
 const STATIC_EVENTS = [
-  // NORA — Team Melton Softball 9/10U (Liberty Parks & Rec — hardcoded)
-  { kid:'nora-softball', date:'2026-09-08', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
-  { kid:'nora-softball', date:'2026-09-15', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Team Coultis',          field:'The Landing · Liberty Parks & Rec' },
+  // NORA — Team Melton Softball 9/10U (Liberty Parks & Rec — updated Sep 8 2026)
+  // Week 1 (Sep 8) was canceled due to severe heat
+  { kid:'nora-softball', date:'2026-09-15', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Tsunami',               field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-09-22', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
-  { kid:'nora-softball', date:'2026-09-29', time:'7:30 PM',  end:'9:00 PM', home:true,  opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-09-22', time:'7:30 PM',  end:'9:00 PM', home:true,  opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-13', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Cotton Candy Crushers', field:'Sonic · Liberty Parks & Rec' },
-  { kid:'nora-softball', date:'2026-10-20', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Team Coultis',          field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-20', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Tsunami',               field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-27', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-27', time:'7:30 PM',  end:'9:00 PM', home:false, opp:'Cotton Candy Crushers', field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-11-03', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
 
-  // NORA — Waves Volleyball (Liberty Parks & Rec / TeamSideline — hardcoded)
-  { kid:'nora-volleyball', date:'2026-09-12', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Husnain',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-09-26', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-10-03', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Lady Warriors', field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-10-10', time:'9:30 AM',  end:'10:30 AM', home:false, opp:'FCA Knights',   field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-10-10', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Panthers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-10-17', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Broadbent',     field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
-  { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',      field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  // NORA — Waves Volleyball (Liberty Parks & Rec — updated Aug 24 2026)
+  { kid:'nora-volleyball', date:'2026-09-12', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Diamond Divers', field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-09-26', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Strikers',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-03', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Lady Warriors',  field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-10', time:'9:30 AM',  end:'10:30 AM', home:false, opp:'FCA Knights',    field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-10', time:'10:30 AM', end:'11:30 AM', home:true,  opp:'Panthers',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-17', time:'1:30 PM',  end:'2:30 PM',  home:true,  opp:'Water Hawks',    field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-24', time:'8:30 AM',  end:'9:30 AM',  home:false, opp:'Dolphins',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
+  { kid:'nora-volleyball', date:'2026-10-31', time:'8:30 AM',  end:'9:30 AM',  home:true,  opp:'Strikers',       field:'SVMS Court B, 1000 Midjay Dr, Liberty' },
 
-  // PRESTON — Eagles Navy (LN1B) — War Eagle Football
-  { kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:true,  opp:'S1A',  field:'Platte Ridge Park Field 1 · Platte City MO' },
-  { kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:true,  opp:'S2D',  field:'Platte Ridge Park Field 2 · Platte City MO' },
-  { kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:true,  opp:'PC1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
-  { kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'EB1',  field:'Platte Ridge Park Field 1 · Platte City MO' },
-  { kid:'navy-football', date:'2026-10-04', time:'2:00 PM',  end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO', note:'Rescheduled from Sep 5' },
-  { kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'S1B',  field:'Platte Ridge Park Field 2 · Platte City MO' },
+  // PRESTON — Eagles Navy (LN1B) — PCYFL schedule from PDF
+  { kid:'navy-football', date:'2026-09-12', time:'8:00 AM',  end:'', home:true,  opp:'Smithville 1A',    field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'navy-football', date:'2026-09-19', time:'12:30 PM', end:'', home:true,  opp:'Smithville 2D',    field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-09-20', time:'11:00 AM', end:'', home:true,  opp:'Platte County 1B', field:'Platte Ridge Park Field 2 · Platte City MO', note:'Sunday game' },
+  { kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:true,  opp:'Platte County 1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'East Buchanan 1',  field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'Smithville 1B',    field:'Platte Ridge Park Field 2 · Platte City MO' },
 
-  // PRESTON — Eagles Gold — update these once you have the Gold schedule image
+  // PRESTON — Eagles Gold — update when Gold schedule is available
   { kid:'gold-football', date:'2026-09-05', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · Platte City MO' },
   { kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO' },
   { kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:true,  opp:'EB1',  field:'Platte Ridge Park · Platte City MO' },
@@ -354,8 +355,18 @@ async function main() {
       const games = parseGCiCal(ics, feed.kid);
       console.log(`  → ${games.length} games`);
       if (games.length === 0) {
-        // Log first 500 chars of feed for debugging
+        // Log first 300 chars of feed for debugging
         console.log(`  ⚠ Feed preview: ${ics.slice(0, 300).replace(/\n/g, ' ')}`);
+        // If snapshot exists and had games for this kid, don't wipe them — skip this feed
+        if (fs.existsSync(SNAPSHOT_FILE)) {
+          const prev = JSON.parse(fs.readFileSync(SNAPSHOT_FILE, 'utf8'));
+          const hadGames = prev.filter(g => g.kid === feed.kid).length;
+          if (hadGames > 0) {
+            console.log(`  ⚠ Previously had ${hadGames} games — keeping snapshot, skipping empty feed`);
+            liveGames.push(...prev.filter(g => g.kid === feed.kid));
+            continue;
+          }
+        }
       }
       // Only use GC games for kids that NKCA didn't already find
       // (GC is supplementary — adds tournaments, makeup games, etc.)
