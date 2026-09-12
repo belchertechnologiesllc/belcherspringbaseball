@@ -36,6 +36,15 @@
     "field": "1501 N 90th St\\nKansas City KS"
   },
   {
+    "kid": "gold-football",
+    "date": "2026-09-05",
+    "time": "11:00 AM",
+    "end": "",
+    "home": false,
+    "opp": "S1B",
+    "field": "Platte Ridge Park · Platte City MO"
+  },
+  {
     "kid": "parker",
     "date": "2026-09-05",
     "time": "12:00 PM",
@@ -72,6 +81,24 @@
     "field": "15900 Long Ball St\\nParkville MO"
   },
   {
+    "kid": "nora-volleyball",
+    "date": "2026-09-12",
+    "time": "1:30 PM",
+    "end": "2:30 PM",
+    "home": true,
+    "opp": "Diamond Divers",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-09-12",
+    "time": "11:00 AM",
+    "end": "",
+    "home": true,
+    "opp": "PC1B",
+    "field": "Platte Ridge Park · Platte City MO"
+  },
+  {
     "kid": "cameron",
     "date": "2026-09-12",
     "time": "4:00 PM",
@@ -88,6 +115,15 @@
     "home": true,
     "opp": "11U Icemen Gominsky",
     "field": "1501 N 90th St\\nKansas City KS"
+  },
+  {
+    "kid": "navy-football",
+    "date": "2026-09-12",
+    "time": "8:00 AM",
+    "end": "",
+    "home": true,
+    "opp": "Smithville 1A",
+    "field": "Platte Ridge Park Field 1 · Platte City MO"
   },
   {
     "kid": "parker",
@@ -117,6 +153,15 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
+    "kid": "nora-softball",
+    "date": "2026-09-15",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": true,
+    "opp": "Tsunami",
+    "field": "The Landing · Liberty Parks & Rec"
+  },
+  {
     "kid": "cameron",
     "date": "2026-09-16",
     "time": "5:45 PM",
@@ -133,6 +178,34 @@
     "home": true,
     "opp": "NoMo MudDogs Fall L/T 12u",
     "field": "9217 N Brighton Ave\\nKansas City MO"
+  },
+  {
+    "kid": "navy-football",
+    "date": "2026-09-19",
+    "time": "12:30 PM",
+    "end": "",
+    "home": true,
+    "opp": "Smithville 2D",
+    "field": "Platte Ridge Park Field 2 · Platte City MO"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-09-19",
+    "time": "9:30 AM",
+    "end": "",
+    "home": true,
+    "opp": "EB1",
+    "field": "Platte Ridge Park · Platte City MO"
+  },
+  {
+    "kid": "navy-football",
+    "date": "2026-09-20",
+    "time": "11:00 AM",
+    "end": "",
+    "home": true,
+    "opp": "Platte County 1B",
+    "field": "Platte Ridge Park Field 2 · Platte City MO",
+    "note": "Sunday game"
   },
   {
     "kid": "dawson",
@@ -153,6 +226,24 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
+    "kid": "nora-softball",
+    "date": "2026-09-22",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": false,
+    "opp": "Savage Queens",
+    "field": "The Landing · Liberty Parks & Rec"
+  },
+  {
+    "kid": "nora-softball",
+    "date": "2026-09-22",
+    "time": "7:30 PM",
+    "end": "9:00 PM",
+    "home": true,
+    "opp": "Savage Queens",
+    "field": "The Landing · Liberty Parks & Rec"
+  },
+  {
     "kid": "cameron",
     "date": "2026-09-23",
     "time": "5:45 PM",
@@ -169,6 +260,33 @@
     "home": true,
     "opp": "KC Natives 12U Fall baseball",
     "field": "9217 N Brighton Ave\\nKansas City MO"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-09-26",
+    "time": "10:30 AM",
+    "end": "11:30 AM",
+    "home": true,
+    "opp": "Strikers",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "navy-football",
+    "date": "2026-09-26",
+    "time": "11:00 AM",
+    "end": "",
+    "home": true,
+    "opp": "Platte County 1A",
+    "field": "Platte Ridge Park Field 2 · Platte City MO"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-09-26",
+    "time": "8:00 AM",
+    "end": "",
+    "home": false,
+    "opp": "S1A",
+    "field": "Platte Ridge Park · Platte City MO"
   },
   {
     "kid": "cameron",
@@ -189,6 +307,33 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
+    "kid": "gold-football",
+    "date": "2026-10-03",
+    "time": "11:00 AM",
+    "end": "",
+    "home": false,
+    "opp": "PC1A",
+    "field": "Platte Ridge Park · Platte City MO"
+  },
+  {
+    "kid": "navy-football",
+    "date": "2026-10-03",
+    "time": "12:30 PM",
+    "end": "",
+    "home": false,
+    "opp": "East Buchanan 1",
+    "field": "Platte Ridge Park Field 1 · Platte City MO"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-03",
+    "time": "8:30 AM",
+    "end": "9:30 AM",
+    "home": false,
+    "opp": "Lady Warriors",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
     "kid": "dawson",
     "date": "2026-10-04",
     "time": "4:30 PM",
@@ -205,6 +350,42 @@
     "home": true,
     "opp": "Triple Play Sharks",
     "field": "9217 N Brighton Ave\\nKansas City MO"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-10",
+    "time": "10:30 AM",
+    "end": "11:30 AM",
+    "home": true,
+    "opp": "Panthers",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "navy-football",
+    "date": "2026-10-10",
+    "time": "11:00 AM",
+    "end": "",
+    "home": true,
+    "opp": "Smithville 1B",
+    "field": "Platte Ridge Park Field 2 · Platte City MO"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-10-10",
+    "time": "11:00 AM",
+    "end": "",
+    "home": false,
+    "opp": "S2C",
+    "field": "Platte Ridge Park · Platte City MO"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-10",
+    "time": "9:30 AM",
+    "end": "10:30 AM",
+    "home": false,
+    "opp": "FCA Knights",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
   },
   {
     "kid": "dawson",
@@ -243,6 +424,24 @@
     "field": "9217 N Brighton Ave\\nKansas City MO"
   },
   {
+    "kid": "nora-softball",
+    "date": "2026-10-13",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": true,
+    "opp": "Cotton Candy Crushers",
+    "field": "Sonic · Liberty Parks & Rec"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-17",
+    "time": "1:30 PM",
+    "end": "2:30 PM",
+    "home": true,
+    "opp": "Water Hawks",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
     "kid": "dawson",
     "date": "2026-10-18",
     "time": "4:30 PM",
@@ -277,5 +476,59 @@
     "home": true,
     "opp": "Saints Baseball Club 12U",
     "field": "9217 N Brighton Ave\\nKansas City MO"
+  },
+  {
+    "kid": "nora-softball",
+    "date": "2026-10-20",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": false,
+    "opp": "Tsunami",
+    "field": "The Landing · Liberty Parks & Rec"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-24",
+    "time": "8:30 AM",
+    "end": "9:30 AM",
+    "home": false,
+    "opp": "Dolphins",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "nora-softball",
+    "date": "2026-10-27",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": true,
+    "opp": "Ducks",
+    "field": "The Landing · Liberty Parks & Rec"
+  },
+  {
+    "kid": "nora-softball",
+    "date": "2026-10-27",
+    "time": "7:30 PM",
+    "end": "9:00 PM",
+    "home": false,
+    "opp": "Cotton Candy Crushers",
+    "field": "The Landing · Liberty Parks & Rec"
+  },
+  {
+    "kid": "nora-volleyball",
+    "date": "2026-10-31",
+    "time": "8:30 AM",
+    "end": "9:30 AM",
+    "home": true,
+    "opp": "Strikers",
+    "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "nora-softball",
+    "date": "2026-11-03",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": false,
+    "opp": "Ducks",
+    "field": "The Landing · Liberty Parks & Rec"
   }
 ]

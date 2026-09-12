@@ -1,25 +1,6 @@
 {
-  "detected_at": "2026-09-12T15:10:14.776Z",
-  "added": [
-    {
-      "kid": "parker",
-      "date": "2026-09-12",
-      "time": "4:00 PM",
-      "end": "5:45 PM",
-      "home": true,
-      "opp": "11U Icemen Gominsky",
-      "field": "1501 N 90th St\\nKansas City KS"
-    },
-    {
-      "kid": "parker",
-      "date": "2026-09-12",
-      "time": "8:00 PM",
-      "end": "9:45 PM",
-      "home": true,
-      "opp": "KC Scrappers 10U",
-      "field": "1501 N 90th St\\nKansas City KS"
-    }
-  ],
+  "detected_at": "2026-09-12T21:51:36.362Z",
+  "added": [],
   "removed": [],
   "modified": []
 }
