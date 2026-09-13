@@ -135,6 +135,15 @@
     "field": "1501 N 90th St\\nKansas City KS"
   },
   {
+    "kid": "cameron",
+    "date": "2026-09-13",
+    "time": "2:00 PM",
+    "end": "3:30 PM",
+    "home": true,
+    "opp": "Kansas City Reign 12U",
+    "field": "1501 N 90th St\\nKansas City KS"
+  },
+  {
     "kid": "dawson",
     "date": "2026-09-13",
     "time": "4:30 PM",
@@ -151,6 +160,15 @@
     "home": true,
     "opp": "Triple Play Sharks",
     "field": "9217 N Brighton Ave\\nKansas City MO"
+  },
+  {
+    "kid": "parker",
+    "date": "2026-09-13",
+    "time": "9:45 AM",
+    "end": "11:15 AM",
+    "home": true,
+    "opp": "Competitive Edge 11U - KT",
+    "field": "100 McDanield St\\nBonner Springs KS"
   },
   {
     "kid": "nora-softball",
