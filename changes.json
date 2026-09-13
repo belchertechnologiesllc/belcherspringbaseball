@@ -1,25 +1,6 @@
 {
-  "detected_at": "2026-09-13T13:27:32.563Z",
-  "added": [
-    {
-      "kid": "cameron",
-      "date": "2026-09-13",
-      "time": "2:00 PM",
-      "end": "3:30 PM",
-      "home": true,
-      "opp": "Kansas City Reign 12U",
-      "field": "1501 N 90th St\\nKansas City KS"
-    },
-    {
-      "kid": "parker",
-      "date": "2026-09-13",
-      "time": "9:45 AM",
-      "end": "11:15 AM",
-      "home": true,
-      "opp": "Competitive Edge 11U - KT",
-      "field": "100 McDanield St\\nBonner Springs KS"
-    }
-  ],
+  "detected_at": "2026-09-13T13:58:17.270Z",
+  "added": [],
   "removed": [
     {
       "kid": "gold-football",
@@ -275,5 +256,606 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": []
+  "modified": [
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-04",
+        "time": "7:30 PM",
+        "end": "8:30 PM",
+        "home": true,
+        "opp": "Thunder Baseball 11U",
+        "field": "1501 N 90th St\\nKansas City KS"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-04",
+        "time": "7:30 PM",
+        "end": "8:30 PM",
+        "home": true,
+        "opp": "Thunder Baseball 11U",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-05",
+        "time": "12:00 PM",
+        "end": "1:00 PM",
+        "home": true,
+        "opp": "11u Millhouse Pirates",
+        "field": "16050 Long Ball Street\\nParkville MO"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-05",
+        "time": "12:00 PM",
+        "end": "1:00 PM",
+        "home": true,
+        "opp": "11u Millhouse Pirates",
+        "field": "16050 Long Ball Street, Parkville MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-06",
+        "time": "10:00 AM",
+        "end": "12:00 PM",
+        "home": true,
+        "opp": "11u Millhouse Pirates",
+        "field": "16050 Long Ball Street\\nParkville MO"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-06",
+        "time": "10:00 AM",
+        "end": "12:00 PM",
+        "home": true,
+        "opp": "11u Millhouse Pirates",
+        "field": "16050 Long Ball Street, Parkville MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-10",
+        "time": "7:00 PM",
+        "end": "8:00 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "1 Royal Way\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-10",
+        "time": "7:00 PM",
+        "end": "8:00 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "1 Royal Way, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-11",
+        "time": "7:00 PM",
+        "end": "8:45 PM",
+        "home": true,
+        "opp": "KC Prodigy Wilhoite 12U",
+        "field": "15900 Long Ball St\\nParkville MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-11",
+        "time": "7:00 PM",
+        "end": "8:45 PM",
+        "home": true,
+        "opp": "KC Prodigy Wilhoite 12U",
+        "field": "15900 Long Ball St, Parkville MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-12",
+        "time": "4:00 PM",
+        "end": "5:45 PM",
+        "home": true,
+        "opp": "12U Icemen Wallraff",
+        "field": "1501 N 90th St\\nKansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-12",
+        "time": "4:00 PM",
+        "end": "5:45 PM",
+        "home": true,
+        "opp": "12U Icemen Wallraff",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-12",
+        "time": "4:00 PM",
+        "end": "5:45 PM",
+        "home": true,
+        "opp": "11U Icemen Gominsky",
+        "field": "1501 N 90th St\\nKansas City KS"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-12",
+        "time": "4:00 PM",
+        "end": "5:45 PM",
+        "home": true,
+        "opp": "11U Icemen Gominsky",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-12",
+        "time": "8:00 PM",
+        "end": "9:45 PM",
+        "home": true,
+        "opp": "KC Scrappers 10U",
+        "field": "1501 N 90th St\\nKansas City KS"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-12",
+        "time": "8:00 PM",
+        "end": "9:45 PM",
+        "home": true,
+        "opp": "KC Scrappers 10U",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-13",
+        "time": "2:00 PM",
+        "end": "3:30 PM",
+        "home": true,
+        "opp": "Kansas City Reign 12U",
+        "field": "1501 N 90th St\\nKansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-13",
+        "time": "2:00 PM",
+        "end": "3:30 PM",
+        "home": true,
+        "opp": "Kansas City Reign 12U",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-09-13",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "KC Pilots",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-09-13",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "KC Pilots",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-09-13",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "Triple Play Sharks",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-09-13",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "Triple Play Sharks",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-13",
+        "time": "9:45 AM",
+        "end": "11:15 AM",
+        "home": true,
+        "opp": "Competitive Edge 11U - KT",
+        "field": "100 McDanield St\\nBonner Springs KS"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-13",
+        "time": "9:45 AM",
+        "end": "11:15 AM",
+        "home": true,
+        "opp": "Competitive Edge 11U - KT",
+        "field": "100 McDanield St, Bonner Springs KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-16",
+        "time": "5:45 PM",
+        "end": "7:30 PM",
+        "home": true,
+        "opp": "NoMo MudDogs Fall L/T 12u",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-16",
+        "time": "5:45 PM",
+        "end": "7:30 PM",
+        "home": true,
+        "opp": "NoMo MudDogs Fall L/T 12u",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-16",
+        "time": "8:00 PM",
+        "end": "9:00 PM",
+        "home": true,
+        "opp": "NoMo MudDogs Fall L/T 12u",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-16",
+        "time": "8:00 PM",
+        "end": "9:00 PM",
+        "home": true,
+        "opp": "NoMo MudDogs Fall L/T 12u",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-09-20",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "KC gators",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-09-20",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "KC gators",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-09-20",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "816 Avengers",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-09-20",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "816 Avengers",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "5:45 PM",
+        "end": "7:30 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "5:45 PM",
+        "end": "7:30 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "8:00 PM",
+        "end": "9:45 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "8:00 PM",
+        "end": "9:45 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-27",
+        "time": "11:00 AM",
+        "end": "12:45 PM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-27",
+        "time": "11:00 AM",
+        "end": "12:45 PM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-27",
+        "time": "9:00 AM",
+        "end": "10:45 AM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-27",
+        "time": "9:00 AM",
+        "end": "10:45 AM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-10-04",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "KC Pilots",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-10-04",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "KC Pilots",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-10-04",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "Triple Play Sharks",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-10-04",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "Triple Play Sharks",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-10-11",
+        "time": "1:00 PM",
+        "end": "2:00 PM",
+        "home": true,
+        "opp": "KC Pilots",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-10-11",
+        "time": "1:00 PM",
+        "end": "2:00 PM",
+        "home": true,
+        "opp": "KC Pilots",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "11:00 AM",
+        "end": "12:45 PM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "11:00 AM",
+        "end": "12:45 PM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-10-11",
+        "time": "2:45 PM",
+        "end": "3:45 PM",
+        "home": true,
+        "opp": "Triple Play Sharks",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-10-11",
+        "time": "2:45 PM",
+        "end": "3:45 PM",
+        "home": true,
+        "opp": "Triple Play Sharks",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "9:00 AM",
+        "end": "10:45 AM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "9:00 AM",
+        "end": "10:45 AM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-10-18",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "816 Avengers",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-10-18",
+        "time": "4:30 PM",
+        "end": "5:30 PM",
+        "home": true,
+        "opp": "816 Avengers",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-18",
+        "time": "5:00 PM",
+        "end": "6:45 PM",
+        "home": true,
+        "opp": "Saints Baseball Club 12U",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-18",
+        "time": "5:00 PM",
+        "end": "6:45 PM",
+        "home": true,
+        "opp": "Saints Baseball Club 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "dawson",
+        "date": "2026-10-18",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "KC gators",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "dawson",
+        "date": "2026-10-18",
+        "time": "6:15 PM",
+        "end": "7:15 PM",
+        "home": true,
+        "opp": "KC gators",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-18",
+        "time": "7:00 PM",
+        "end": "8:45 PM",
+        "home": true,
+        "opp": "Saints Baseball Club 12U",
+        "field": "9217 N Brighton Ave\\nKansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-18",
+        "time": "7:00 PM",
+        "end": "8:45 PM",
+        "home": true,
+        "opp": "Saints Baseball Club 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    }
+  ]
 }
