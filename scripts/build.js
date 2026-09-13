@@ -68,7 +68,7 @@ function parseTeamSnapiCal(icsText) {
     const end = block.indexOf('END:VEVENT');
     const ev  = block.slice(0, end);
 
-    const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+    const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').replace(/\\n/g,', ').trim();
     if (!summary) continue;
     if (/practice|camp|meeting/i.test(summary)) continue;
 
@@ -97,7 +97,7 @@ function parseTeamSnapiCal(icsText) {
       endFormatted = `${eh % 12 || 12}:${String(em).padStart(2,'0')} ${eh < 12 ? 'AM' : 'PM'}`;
     }
 
-    const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+    const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').replace(/\\n/g,', ').trim();
 
     // Opponent from summary — TeamSnap format: "Eagles vs Opponent" or "Eagles @ Opponent"
     let opp  = summary;
@@ -231,7 +231,7 @@ function parseGCiCal(icsText, kid) {
     const end = block.indexOf('END:VEVENT');
     const ev  = block.slice(0, end);
 
-    const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+    const summary = (ev.match(/^SUMMARY:(.+)$/m)?.[1] || '').replace(/\r/g,'').replace(/\\n/g,', ').trim();
     if (!summary) continue;
     if (/practice|camp|meeting/i.test(summary)) continue;
     if (/\bTBD\b/i.test(summary)) continue; // skip unconfirmed placeholders
@@ -245,7 +245,7 @@ function parseGCiCal(icsText, kid) {
     const dtRaw = ev.match(/^DTSTART([^:]*):(.+)$/m);
     if (!dtRaw) continue;
     const dtParams = dtRaw[1]; // e.g. ";VALUE=DATE" or ";TZID=America/Chicago" or ""
-    const dtVal   = dtRaw[2].replace(/\r/g,'').trim();
+    const dtVal   = dtRaw[2].replace(/\r/g,'').replace(/\\n/g,', ').trim();
 
     let dateKey, timeFormatted = '', endFormatted = '';
 
@@ -292,7 +292,7 @@ function parseGCiCal(icsText, kid) {
       // End time
       const dtEndRaw = ev.match(/^DTEND([^:]*):(.+)$/m);
       if (dtEndRaw) {
-        const ev2    = dtEndRaw[2].replace(/\r/g,'').trim();
+        const ev2    = dtEndRaw[2].replace(/\r/g,'').replace(/\\n/g,', ').trim();
         const isUtc2 = ev2.endsWith('Z');
         let eh = parseInt(ev2.slice(9,11));
         let em = parseInt(ev2.slice(11,13));
@@ -309,7 +309,7 @@ function parseGCiCal(icsText, kid) {
 
     if (dateKey < '2026-08-25') continue;
 
-    const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').trim();
+    const location = (ev.match(/^LOCATION:(.+)$/m)?.[1] || '').replace(/\r/g,'').replace(/\\n/g,', ').trim();
 
     let opp  = summary;
     let home = true;
