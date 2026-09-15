@@ -1,25 +1,6 @@
 {
-  "detected_at": "2026-09-14T16:39:40.899Z",
-  "added": [
-    {
-      "kid": "cameron",
-      "date": "2026-09-18",
-      "time": "5:00 PM",
-      "end": "6:45 PM",
-      "home": true,
-      "opp": "Elks Baseball 12U",
-      "field": "1501 N 90th St, Kansas City KS"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-09-18",
-      "time": "9:00 PM",
-      "end": "10:45 PM",
-      "home": true,
-      "opp": "12U Top Tier KC - Red",
-      "field": "1501 N 90th St, Kansas City KS"
-    }
-  ],
+  "detected_at": "2026-09-15T01:13:25.959Z",
+  "added": [],
   "removed": [
     {
       "kid": "gold-football",
@@ -275,5 +256,46 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": []
+  "modified": [
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-18",
+        "time": "5:00 PM",
+        "end": "6:45 PM",
+        "home": true,
+        "opp": "Elks Baseball 12U",
+        "field": "1501 N 90th St, Kansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-18",
+        "time": "5:00 PM",
+        "end": "6:45 PM",
+        "home": true,
+        "opp": "12U Top Tier KC - Red",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-18",
+        "time": "9:00 PM",
+        "end": "10:45 PM",
+        "home": true,
+        "opp": "12U Top Tier KC - Red",
+        "field": "1501 N 90th St, Kansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-18",
+        "time": "9:00 PM",
+        "end": "10:45 PM",
+        "home": true,
+        "opp": "Elks Baseball 12U",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    }
+  ]
 }
