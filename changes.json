@@ -1,6 +1,25 @@
 {
-  "detected_at": "2026-09-16T15:11:42.791Z",
-  "added": [],
+  "detected_at": "2026-09-16T19:55:14.926Z",
+  "added": [
+    {
+      "kid": "parker",
+      "date": "2026-09-18",
+      "time": "5:00 PM",
+      "end": "6:45 PM",
+      "home": true,
+      "opp": "Precision Baseball Benne 11U",
+      "field": "1501 N 90th St, Kansas City KS"
+    },
+    {
+      "kid": "parker",
+      "date": "2026-09-18",
+      "time": "7:00 PM",
+      "end": "8:45 PM",
+      "home": true,
+      "opp": "KC Scrappers 10U",
+      "field": "1501 N 90th St, Kansas City KS"
+    }
+  ],
   "removed": [
     {
       "kid": "gold-football",
@@ -256,46 +275,5 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": [
-    {
-      "old": {
-        "kid": "dawson",
-        "date": "2026-09-20",
-        "time": "4:30 PM",
-        "end": "5:30 PM",
-        "home": true,
-        "opp": "KC gators",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      },
-      "new": {
-        "kid": "dawson",
-        "date": "2026-09-20",
-        "time": "4:30 PM",
-        "end": "5:30 PM",
-        "home": true,
-        "opp": "KC Bones",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      }
-    },
-    {
-      "old": {
-        "kid": "dawson",
-        "date": "2026-10-18",
-        "time": "6:15 PM",
-        "end": "7:15 PM",
-        "home": true,
-        "opp": "KC gators",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      },
-      "new": {
-        "kid": "dawson",
-        "date": "2026-10-18",
-        "time": "6:15 PM",
-        "end": "7:15 PM",
-        "home": true,
-        "opp": "KC Bones",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      }
-    }
-  ]
+  "modified": []
 }
