@@ -128,7 +128,7 @@ function parseTeamSnapiCal(icsText) {
 const STATIC_EVENTS = [
   // NORA — Team Melton Softball 9/10U (Liberty Parks & Rec — updated Sep 8 2026)
   // Week 1 (Sep 8) was canceled due to severe heat
-  { kid:'nora-softball', date:'2026-09-15', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Tsunami',               field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-14', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Tsunami',               field:'The Fish Market · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-09-22', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-09-22', time:'7:30 PM',  end:'9:00 PM', home:true,  opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-13', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Cotton Candy Crushers', field:'Sonic · Liberty Parks & Rec' },
