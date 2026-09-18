@@ -171,15 +171,6 @@
     "field": "100 McDanield St, Bonner Springs KS"
   },
   {
-    "kid": "nora-softball",
-    "date": "2026-09-15",
-    "time": "6:00 PM",
-    "end": "7:30 PM",
-    "home": true,
-    "opp": "Tsunami",
-    "field": "The Landing · Liberty Parks & Rec"
-  },
-  {
     "kid": "cameron",
     "date": "2026-09-16",
     "time": "5:45 PM",
@@ -485,6 +476,15 @@
     "home": true,
     "opp": "Cotton Candy Crushers",
     "field": "Sonic · Liberty Parks & Rec"
+  },
+  {
+    "kid": "nora-softball",
+    "date": "2026-10-14",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": true,
+    "opp": "Tsunami",
+    "field": "The Fish Market · Liberty Parks & Rec"
   },
   {
     "kid": "nora-volleyball",
