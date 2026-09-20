@@ -280,6 +280,15 @@
     "field": "100 McDanield St, Bonner Springs KS"
   },
   {
+    "kid": "parker",
+    "date": "2026-09-20",
+    "time": "8:00 AM",
+    "end": "10:00 AM",
+    "home": true,
+    "opp": "Precision Baseball Benne 11U",
+    "field": "16050 Long Ball Street, Parkville MO"
+  },
+  {
     "kid": "nora-softball",
     "date": "2026-09-22",
     "time": "6:00 PM",

@@ -1,14 +1,14 @@
 {
-  "detected_at": "2026-09-20T00:44:34.080Z",
+  "detected_at": "2026-09-20T14:22:07.916Z",
   "added": [
     {
-      "kid": "cameron",
+      "kid": "parker",
       "date": "2026-09-20",
       "time": "8:00 AM",
-      "end": "9:45 AM",
+      "end": "10:00 AM",
       "home": true,
-      "opp": "Sluggers 12u",
-      "field": "100 McDanield St, Bonner Springs KS"
+      "opp": "Precision Baseball Benne 11U",
+      "field": "16050 Long Ball Street, Parkville MO"
     }
   ],
   "removed": [
