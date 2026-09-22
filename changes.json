@@ -1,16 +1,6 @@
 {
-  "detected_at": "2026-09-20T14:22:07.916Z",
-  "added": [
-    {
-      "kid": "parker",
-      "date": "2026-09-20",
-      "time": "8:00 AM",
-      "end": "10:00 AM",
-      "home": true,
-      "opp": "Precision Baseball Benne 11U",
-      "field": "16050 Long Ball Street, Parkville MO"
-    }
-  ],
+  "detected_at": "2026-09-22T15:12:30.287Z",
+  "added": [],
   "removed": [
     {
       "kid": "gold-football",
@@ -266,5 +256,46 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": []
+  "modified": [
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "11:00 AM",
+        "end": "12:45 PM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "11:00 AM",
+        "end": "12:45 PM",
+        "home": true,
+        "opp": "36 Hwy 11u",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "9:00 AM",
+        "end": "10:45 AM",
+        "home": true,
+        "opp": "36 Hwy Athletics 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-11",
+        "time": "9:00 AM",
+        "end": "10:45 AM",
+        "home": true,
+        "opp": "36 Hwy 11u",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    }
+  ]
 }
