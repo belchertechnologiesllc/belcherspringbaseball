@@ -130,7 +130,7 @@ const STATIC_EVENTS = [
   // Week 1 (Sep 8) was canceled due to severe heat
   { kid:'nora-softball', date:'2026-10-14', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Tsunami',               field:'The Fish Market · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-09-22', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
-  { kid:'nora-softball', date:'2026-09-22', time:'7:30 PM',  end:'9:00 PM', home:true,  opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-09-29', time:'7:30 PM',  end:'9:00 PM', home:true,  opp:'Savage Queens',         field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-13', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Cotton Candy Crushers', field:'Sonic · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-20', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Tsunami',               field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-27', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
