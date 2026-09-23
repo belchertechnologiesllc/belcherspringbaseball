@@ -1,5 +1,5 @@
 {
-  "detected_at": "2026-09-22T15:12:30.287Z",
+  "detected_at": "2026-09-23T00:55:26.405Z",
   "added": [],
   "removed": [
     {
@@ -256,46 +256,5 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": [
-    {
-      "old": {
-        "kid": "cameron",
-        "date": "2026-10-11",
-        "time": "11:00 AM",
-        "end": "12:45 PM",
-        "home": true,
-        "opp": "36 Hwy Athletics 12U",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      },
-      "new": {
-        "kid": "cameron",
-        "date": "2026-10-11",
-        "time": "11:00 AM",
-        "end": "12:45 PM",
-        "home": true,
-        "opp": "36 Hwy 11u",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      }
-    },
-    {
-      "old": {
-        "kid": "cameron",
-        "date": "2026-10-11",
-        "time": "9:00 AM",
-        "end": "10:45 AM",
-        "home": true,
-        "opp": "36 Hwy Athletics 12U",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      },
-      "new": {
-        "kid": "cameron",
-        "date": "2026-10-11",
-        "time": "9:00 AM",
-        "end": "10:45 AM",
-        "home": true,
-        "opp": "36 Hwy 11u",
-        "field": "9217 N Brighton Ave, Kansas City MO"
-      }
-    }
-  ]
+  "modified": []
 }
