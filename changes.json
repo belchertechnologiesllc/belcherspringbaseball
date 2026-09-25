@@ -1,6 +1,16 @@
 {
-  "detected_at": "2026-09-23T00:55:26.405Z",
-  "added": [],
+  "detected_at": "2026-09-25T15:36:05.854Z",
+  "added": [
+    {
+      "kid": "dawson",
+      "date": "2026-09-26",
+      "time": "12:00 PM",
+      "end": "1:00 PM",
+      "home": true,
+      "opp": "Bambitos Grey 7U",
+      "field": "8000 Monticello Rd, Shawnee KS"
+    }
+  ],
   "removed": [
     {
       "kid": "gold-football",
@@ -76,15 +86,6 @@
       "field": "The Landing · Liberty Parks & Rec"
     },
     {
-      "kid": "nora-softball",
-      "date": "2026-09-22",
-      "time": "7:30 PM",
-      "end": "9:00 PM",
-      "home": true,
-      "opp": "Savage Queens",
-      "field": "The Landing · Liberty Parks & Rec"
-    },
-    {
       "kid": "nora-volleyball",
       "date": "2026-09-26",
       "time": "10:30 AM",
@@ -110,6 +111,15 @@
       "home": false,
       "opp": "S1A",
       "field": "Platte Ridge Park · Platte City MO"
+    },
+    {
+      "kid": "nora-softball",
+      "date": "2026-09-29",
+      "time": "7:30 PM",
+      "end": "9:00 PM",
+      "home": true,
+      "opp": "Savage Queens",
+      "field": "The Landing · Liberty Parks & Rec"
     },
     {
       "kid": "gold-football",
