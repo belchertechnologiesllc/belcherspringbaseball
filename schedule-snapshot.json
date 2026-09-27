@@ -361,15 +361,6 @@
     "field": "Platte Ridge Park · Platte City MO"
   },
   {
-    "kid": "dawson",
-    "date": "2026-09-27",
-    "time": "11:00 AM",
-    "end": "12:00 PM",
-    "home": true,
-    "opp": "Monarchs 8U",
-    "field": "8000 Monticello Rd, Shawnee KS"
-  },
-  {
     "kid": "cameron",
     "date": "2026-09-27",
     "time": "11:00 AM",
@@ -377,6 +368,15 @@
     "home": true,
     "opp": "36 Hwy Athletics 12U",
     "field": "9217 N Brighton Ave, Kansas City MO"
+  },
+  {
+    "kid": "dawson",
+    "date": "2026-09-27",
+    "time": "2:00 PM",
+    "end": "3:00 PM",
+    "home": true,
+    "opp": "Monarchs 8U",
+    "field": "8000 Monticello Rd, Shawnee KS"
   },
   {
     "kid": "cameron",
