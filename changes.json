@@ -1,13 +1,13 @@
 {
-  "detected_at": "2026-09-27T15:24:52.979Z",
+  "detected_at": "2026-09-27T19:59:14.704Z",
   "added": [
     {
       "kid": "dawson",
       "date": "2026-09-27",
-      "time": "2:00 PM",
-      "end": "3:00 PM",
+      "time": "4:30 PM",
+      "end": "5:30 PM",
       "home": true,
-      "opp": "Monarchs 8U",
+      "opp": "Blue Bananas 8u 8U",
       "field": "8000 Monticello Rd, Shawnee KS"
     }
   ],
@@ -115,8 +115,8 @@
     {
       "kid": "dawson",
       "date": "2026-09-27",
-      "time": "11:00 AM",
-      "end": "12:00 PM",
+      "time": "2:00 PM",
+      "end": "3:00 PM",
       "home": true,
       "opp": "Monarchs 8U",
       "field": "8000 Monticello Rd, Shawnee KS"
