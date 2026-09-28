@@ -379,6 +379,15 @@
     "field": "8000 Monticello Rd, Shawnee KS"
   },
   {
+    "kid": "dawson",
+    "date": "2026-09-27",
+    "time": "6:00 PM",
+    "end": "7:00 PM",
+    "home": true,
+    "opp": "KC Hustlers",
+    "field": "8000 Monticello Terr, \\, KS 66227"
+  },
+  {
     "kid": "cameron",
     "date": "2026-09-27",
     "time": "9:00 AM",
