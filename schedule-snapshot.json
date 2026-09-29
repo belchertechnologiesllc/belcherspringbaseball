@@ -415,6 +415,15 @@
     "field": "Platte Ridge Park · Platte City MO"
   },
   {
+    "kid": "cameron",
+    "date": "2026-10-03",
+    "time": "12:00 PM",
+    "end": "1:45 PM",
+    "home": true,
+    "opp": "Precision Baseball Lowry 12U",
+    "field": "20000 Johnson Dr, Shawnee KS"
+  },
+  {
     "kid": "navy-football",
     "date": "2026-10-03",
     "time": "12:30 PM",
@@ -422,6 +431,15 @@
     "home": false,
     "opp": "East Buchanan 1",
     "field": "Platte Ridge Park Field 1 · Platte City MO"
+  },
+  {
+    "kid": "cameron",
+    "date": "2026-10-03",
+    "time": "8:00 AM",
+    "end": "9:45 AM",
+    "home": true,
+    "opp": "KC Dirtbags 12U",
+    "field": "20000 Johnson Dr, Shawnee KS"
   },
   {
     "kid": "nora-volleyball",
