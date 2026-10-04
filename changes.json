@@ -1,16 +1,6 @@
 {
-  "detected_at": "2026-10-04T02:26:23.508Z",
-  "added": [
-    {
-      "kid": "cameron",
-      "date": "2026-10-04",
-      "time": "8:00 AM",
-      "end": "9:45 AM",
-      "home": true,
-      "opp": "Sandlot KC - Black 12U",
-      "field": "20000 Johnson Dr, Shawnee KS"
-    }
-  ],
+  "detected_at": "2026-10-04T15:31:16.747Z",
+  "added": [],
   "removed": [
     {
       "kid": "gold-football",
@@ -266,5 +256,66 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": []
+  "modified": [
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-10",
+        "time": "7:00 PM",
+        "end": "8:00 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "1 Royal Way, Kansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-10",
+        "time": "7:00 PM",
+        "end": "8:00 PM",
+        "home": true,
+        "opp": "KC Natives 12U",
+        "field": "1 Royal Way, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "5:45 PM",
+        "end": "7:30 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "5:45 PM",
+        "end": "7:30 PM",
+        "home": true,
+        "opp": "KC Natives 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "8:00 PM",
+        "end": "9:45 PM",
+        "home": true,
+        "opp": "KC Natives 12U Fall baseball",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-09-23",
+        "time": "8:00 PM",
+        "end": "9:45 PM",
+        "home": true,
+        "opp": "KC Natives 12U",
+        "field": "9217 N Brighton Ave, Kansas City MO"
+      }
+    }
+  ]
 }
