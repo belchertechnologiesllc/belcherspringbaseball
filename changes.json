@@ -1,22 +1,13 @@
 {
-  "detected_at": "2026-09-29T21:18:48.189Z",
+  "detected_at": "2026-10-04T02:26:23.508Z",
   "added": [
     {
       "kid": "cameron",
-      "date": "2026-10-03",
-      "time": "12:00 PM",
-      "end": "1:45 PM",
-      "home": true,
-      "opp": "Precision Baseball Lowry 12U",
-      "field": "20000 Johnson Dr, Shawnee KS"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-10-03",
+      "date": "2026-10-04",
       "time": "8:00 AM",
       "end": "9:45 AM",
       "home": true,
-      "opp": "KC Dirtbags 12U",
+      "opp": "Sandlot KC - Black 12U",
       "field": "20000 Johnson Dr, Shawnee KS"
     }
   ],
