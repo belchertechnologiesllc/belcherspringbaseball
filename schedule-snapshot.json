@@ -622,6 +622,15 @@
     "field": "The Landing · Liberty Parks & Rec"
   },
   {
+    "kid": "cameron",
+    "date": "2026-10-24",
+    "time": "12:NaN PM",
+    "end": "12:NaN PM",
+    "home": true,
+    "opp": "Tournament",
+    "field": ""
+  },
+  {
     "kid": "nora-volleyball",
     "date": "2026-10-24",
     "time": "8:30 AM",
@@ -649,6 +658,24 @@
     "field": "The Landing · Liberty Parks & Rec"
   },
   {
+    "kid": "cameron",
+    "date": "2026-10-30",
+    "time": "12:NaN PM",
+    "end": "12:NaN PM",
+    "home": true,
+    "opp": "Tournament",
+    "field": "1501 N 90th St, Kansas City KS"
+  },
+  {
+    "kid": "cameron",
+    "date": "2026-10-31",
+    "time": "12:NaN PM",
+    "end": "12:NaN PM",
+    "home": true,
+    "opp": "Tournament",
+    "field": "1501 N 90th St, Kansas City KS"
+  },
+  {
     "kid": "nora-volleyball",
     "date": "2026-10-31",
     "time": "8:30 AM",
@@ -656,6 +683,15 @@
     "home": true,
     "opp": "Strikers",
     "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "cameron",
+    "date": "2026-11-01",
+    "time": "12:NaN PM",
+    "end": "12:NaN PM",
+    "home": true,
+    "opp": "Tournament",
+    "field": "1501 N 90th St, Kansas City KS"
   },
   {
     "kid": "nora-softball",
