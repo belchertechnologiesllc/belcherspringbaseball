@@ -1,43 +1,6 @@
 {
-  "detected_at": "2026-10-05T23:05:22.709Z",
-  "added": [
-    {
-      "kid": "cameron",
-      "date": "2026-10-24",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
-      "home": true,
-      "opp": "Tournament",
-      "field": ""
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-10-30",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
-      "home": true,
-      "opp": "Tournament",
-      "field": "1501 N 90th St, Kansas City KS"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-10-31",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
-      "home": true,
-      "opp": "Tournament",
-      "field": "1501 N 90th St, Kansas City KS"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-11-01",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
-      "home": true,
-      "opp": "Tournament",
-      "field": "1501 N 90th St, Kansas City KS"
-    }
-  ],
+  "detected_at": "2026-10-06T02:43:42.750Z",
+  "added": [],
   "removed": [
     {
       "kid": "gold-football",
@@ -293,5 +256,86 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": []
+  "modified": [
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-24",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "Tournament",
+        "field": ""
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-24",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "Halloween havoc tournament",
+        "field": ""
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-30",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "Tournament",
+        "field": "1501 N 90th St, Kansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-30",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "KC Halloween hit fest",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-10-31",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "Tournament",
+        "field": "1501 N 90th St, Kansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-10-31",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "KC Halloween hit fest",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    },
+    {
+      "old": {
+        "kid": "cameron",
+        "date": "2026-11-01",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "Tournament",
+        "field": "1501 N 90th St, Kansas City KS"
+      },
+      "new": {
+        "kid": "cameron",
+        "date": "2026-11-01",
+        "time": "12:NaN PM",
+        "end": "12:NaN PM",
+        "home": true,
+        "opp": "KC Halloween hit fest",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    }
+  ]
 }
