@@ -154,14 +154,15 @@ const STATIC_EVENTS = [
   { kid:'navy-football', date:'2026-09-26', time:'11:00 AM', end:'', home:true,  opp:'Platte County 1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
   { kid:'navy-football', date:'2026-10-03', time:'12:30 PM', end:'', home:false, opp:'East Buchanan 1',  field:'Platte Ridge Park Field 1 · Platte City MO' },
   { kid:'navy-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'Smithville 1B',    field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'navy-football', date:'2026-10-17', time:'9:30 AM',  end:'', home:true,  opp:'Mid-Buchanan',     field:'Platte Ridge Park Field 2 · Platte City MO' },
 
   // PRESTON — Eagles Gold — update when Gold schedule is available
-  { kid:'gold-football', date:'2026-09-05', time:'11:00 AM', end:'', home:false, opp:'S1B',  field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:true,  opp:'PC1B', field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:true,  opp:'EB1',  field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:false, opp:'S1A',  field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:false, opp:'PC1A', field:'Platte Ridge Park · Platte City MO' },
-  { kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:false, opp:'S2C',  field:'Platte Ridge Park · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-12', time:'11:00 AM', end:'', home:true,  opp:'Platte County 1B', field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-19', time:'9:30 AM',  end:'', home:false, opp:'East Buchanan 1',   field:'Platte Ridge Park Field 1 · Platte City MO' },
+  { kid:'gold-football', date:'2026-09-20', time:'2:00 PM',  end:'', home:true,  opp:'Smithville 1B',    field:'Platte Ridge Park Field 2 · Platte City MO', note:'Sunday game' },
+  { kid:'gold-football', date:'2026-09-26', time:'8:00 AM',  end:'', home:true,  opp:'Smithville 1A',    field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'gold-football', date:'2026-10-03', time:'11:00 AM', end:'', home:true,  opp:'Platte County 1A', field:'Platte Ridge Park Field 2 · Platte City MO' },
+  { kid:'gold-football', date:'2026-10-10', time:'11:00 AM', end:'', home:true,  opp:'Smithville 2C',    field:'Platte Ridge Park Field 3 · Platte City MO' },
 ];
 
 const SNAPSHOT_FILE = path.join(__dirname, '..', 'schedule-snapshot.json');
