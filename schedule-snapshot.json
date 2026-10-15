@@ -668,6 +668,15 @@
     "field": "The Landing · Liberty Parks & Rec"
   },
   {
+    "kid": "nora-softball",
+    "date": "2026-10-28",
+    "time": "6:00 PM",
+    "end": "7:30 PM",
+    "home": true,
+    "opp": "Cotton Candy Crushers",
+    "field": "Sonic · Liberty Parks & Rec"
+  },
+  {
     "kid": "cameron",
     "date": "2026-10-30",
     "time": "12:NaN PM",
