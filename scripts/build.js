@@ -135,6 +135,7 @@ const STATIC_EVENTS = [
   { kid:'nora-softball', date:'2026-10-20', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Tsunami',               field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-27', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-10-27', time:'7:30 PM',  end:'9:00 PM', home:false, opp:'Cotton Candy Crushers', field:'The Landing · Liberty Parks & Rec' },
+  { kid:'nora-softball', date:'2026-10-28', time:'6:00 PM',  end:'7:30 PM', home:true,  opp:'Cotton Candy Crushers', field:'Sonic · Liberty Parks & Rec' },
   { kid:'nora-softball', date:'2026-11-03', time:'6:00 PM',  end:'7:30 PM', home:false, opp:'Ducks',                 field:'The Landing · Liberty Parks & Rec' },
 
   // NORA — Waves Volleyball (Liberty Parks & Rec — updated Aug 24 2026)
