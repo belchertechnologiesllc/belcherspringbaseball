@@ -1,6 +1,16 @@
 {
-  "detected_at": "2026-10-15T22:02:41.635Z",
-  "added": [],
+  "detected_at": "2026-10-16T15:02:50.072Z",
+  "added": [
+    {
+      "kid": "dawson",
+      "date": "2026-10-20",
+      "time": "5:30 PM",
+      "end": "6:30 PM",
+      "home": true,
+      "opp": "Moms",
+      "field": "2800 NW 100th St, Kansas City MO"
+    }
+  ],
   "removed": [
     {
       "kid": "nora-volleyball",
@@ -246,6 +256,15 @@
       "home": false,
       "opp": "Cotton Candy Crushers",
       "field": "The Landing · Liberty Parks & Rec"
+    },
+    {
+      "kid": "nora-softball",
+      "date": "2026-10-28",
+      "time": "6:00 PM",
+      "end": "7:30 PM",
+      "home": true,
+      "opp": "Cotton Candy Crushers",
+      "field": "Sonic · Liberty Parks & Rec"
     },
     {
       "kid": "nora-volleyball",
