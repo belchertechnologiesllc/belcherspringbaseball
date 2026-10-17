@@ -641,6 +641,15 @@
     "field": "The Landing · Liberty Parks & Rec"
   },
   {
+    "kid": "navy-football",
+    "date": "2026-10-24",
+    "time": "12:30 PM",
+    "end": "",
+    "home": true,
+    "opp": "Platte County 1A",
+    "field": "Platte Ridge Park Field 2 · Platte City MO"
+  },
+  {
     "kid": "cameron",
     "date": "2026-10-24",
     "time": "12:NaN PM",
@@ -657,6 +666,15 @@
     "home": false,
     "opp": "Dolphins",
     "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
+  },
+  {
+    "kid": "gold-football",
+    "date": "2026-10-24",
+    "time": "9:30 AM",
+    "end": "",
+    "home": true,
+    "opp": "Platte County 1B",
+    "field": "Platte Ridge Park Field 2 · Platte City MO"
   },
   {
     "kid": "nora-softball",
