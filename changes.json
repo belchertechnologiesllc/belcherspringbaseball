@@ -1,23 +1,14 @@
 {
-  "detected_at": "2026-10-20T01:37:07.600Z",
+  "detected_at": "2026-10-20T15:24:53.219Z",
   "added": [
     {
-      "kid": "cameron",
+      "kid": "dawson",
       "date": "2026-10-24",
-      "time": "12:00 PM",
-      "end": "1:45 PM",
+      "time": "6:00 PM",
+      "end": "7:00 PM",
       "home": true,
-      "opp": "A-Team Aces - Riggins 12U",
-      "field": "1310 E 2100 Rd, \\, KS 66025"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-10-24",
-      "time": "2:00 PM",
-      "end": "3:45 PM",
-      "home": true,
-      "opp": "KC Cannon Ballers 12U",
-      "field": ""
+      "opp": "KC Bones",
+      "field": "9217 N Brighton Ave, Kansas City MO"
     }
   ],
   "removed": [
@@ -247,15 +238,6 @@
       "home": true,
       "opp": "Platte County 1A",
       "field": "Platte Ridge Park Field 2 · Platte City MO"
-    },
-    {
-      "kid": "cameron",
-      "date": "2026-10-24",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
-      "home": true,
-      "opp": "Halloween havoc tournament",
-      "field": ""
     },
     {
       "kid": "nora-volleyball",
