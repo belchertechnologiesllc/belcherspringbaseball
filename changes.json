@@ -1,14 +1,23 @@
 {
-  "detected_at": "2026-10-20T15:24:53.219Z",
+  "detected_at": "2026-10-24T14:09:02.217Z",
   "added": [
     {
-      "kid": "dawson",
-      "date": "2026-10-24",
-      "time": "6:00 PM",
-      "end": "7:00 PM",
+      "kid": "cameron",
+      "date": "2026-10-30",
+      "time": "7:00 PM",
+      "end": "8:45 PM",
       "home": true,
-      "opp": "KC Bones",
-      "field": "9217 N Brighton Ave, Kansas City MO"
+      "opp": "Building Champions 11U Navy",
+      "field": "15900 Long Ball St, Parkville MO"
+    },
+    {
+      "kid": "cameron",
+      "date": "2026-10-30",
+      "time": "9:00 PM",
+      "end": "10:45 PM",
+      "home": true,
+      "opp": "12U Top Tier KC - Navy",
+      "field": "15900 Long Ball St, Parkville MO"
     }
   ],
   "removed": [
@@ -283,6 +292,15 @@
       "home": true,
       "opp": "Cotton Candy Crushers",
       "field": "Sonic · Liberty Parks & Rec"
+    },
+    {
+      "kid": "cameron",
+      "date": "2026-10-30",
+      "time": "12:NaN PM",
+      "end": "12:NaN PM",
+      "home": true,
+      "opp": "KC Halloween hit fest",
+      "field": "1501 N 90th St, Kansas City KS"
     },
     {
       "kid": "nora-volleyball",
