@@ -1,14 +1,86 @@
 {
-  "detected_at": "2026-10-25T00:53:19.378Z",
+  "detected_at": "2026-10-25T01:55:20.586Z",
   "added": [
     {
-      "kid": "cameron",
-      "date": "2026-10-24",
-      "time": "6:30 PM",
-      "end": "8:15 PM",
+      "kid": "ryman",
+      "date": "2026-10-25",
+      "time": "9:15 AM",
+      "end": "10:15 AM",
       "home": true,
-      "opp": "Legends 11U",
-      "field": "1310 E 2100 Rd, \\, KS 66025"
+      "opp": "Squirt Adams Outlaws at Squirt Adams Saints",
+      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-11-07",
+      "time": "2:00 PM",
+      "end": "3:00 PM",
+      "home": true,
+      "opp": "Squirt Adams Saints at Squirt Adams Stars",
+      "field": "19900 Johnson Drive\\, Shawnee\\, KS 66218-9661\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-11-08",
+      "time": "10:00 AM",
+      "end": "11:00 AM",
+      "home": true,
+      "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
+      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-11-09",
+      "time": "5:00 PM",
+      "end": "5:50 PM",
+      "home": true,
+      "opp": "Squirt Individual Pictures",
+      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO 64151-2912\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-11-14",
+      "time": "5:30 PM",
+      "end": "6:30 PM",
+      "home": true,
+      "opp": "Squirt Adams Saints at Squirt Adams Outlaws",
+      "field": "19100 East Valley View Parkway\\, Independence\\, MO\\, 64055\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-11-21",
+      "time": "12:45 PM",
+      "end": "1:45 PM",
+      "home": true,
+      "opp": "Squirt Adams Stars at Squirt Adams Saints",
+      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-12-05",
+      "time": "5:15 PM",
+      "end": "6:15 PM",
+      "home": true,
+      "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
+      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-12-06",
+      "time": "7:55 AM",
+      "end": "8:55 AM",
+      "home": true,
+      "opp": "Squirt Adams Carriage Club at Squirt Adams Saints",
+      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+    },
+    {
+      "kid": "ryman",
+      "date": "2026-12-20",
+      "time": "8:10 AM",
+      "end": "9:10 AM",
+      "home": true,
+      "opp": "Squirt Adams Saints at Squirt Adams Icehawks 2",
+      "field": "16201 Shawnee Drive\\, Overland Park\\, KS\\, 66223\\, US"
     }
   ],
   "removed": [
