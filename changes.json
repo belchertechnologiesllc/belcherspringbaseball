@@ -1,14 +1,14 @@
 {
-  "detected_at": "2026-10-26T21:30:27.865Z",
+  "detected_at": "2026-10-28T16:51:25.223Z",
   "added": [
     {
-      "kid": "ryman",
-      "date": "2026-11-08",
-      "time": "11:15 AM",
-      "end": "12:15 PM",
+      "kid": "cameron",
+      "date": "2026-10-30",
+      "time": "5:00 PM",
+      "end": "6:45 PM",
       "home": true,
-      "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
-      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO 64151-2912\\, US"
+      "opp": "Building Champions 11U Navy",
+      "field": "15900 Long Ball St, Parkville MO"
     }
   ],
   "removed": [
@@ -285,6 +285,15 @@
       "field": "Sonic · Liberty Parks & Rec"
     },
     {
+      "kid": "cameron",
+      "date": "2026-10-30",
+      "time": "7:00 PM",
+      "end": "8:45 PM",
+      "home": true,
+      "opp": "Building Champions 11U Navy",
+      "field": "15900 Long Ball St, Parkville MO"
+    },
+    {
       "kid": "nora-volleyball",
       "date": "2026-10-31",
       "time": "8:30 AM",
@@ -301,15 +310,6 @@
       "home": false,
       "opp": "Ducks",
       "field": "The Landing · Liberty Parks & Rec"
-    },
-    {
-      "kid": "ryman",
-      "date": "2026-11-08",
-      "time": "10:00 AM",
-      "end": "11:00 AM",
-      "home": true,
-      "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
-      "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
     }
   ],
   "modified": []
