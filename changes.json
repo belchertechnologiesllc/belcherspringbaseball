@@ -1,6 +1,16 @@
 {
-  "detected_at": "2026-10-29T02:10:31.026Z",
-  "added": [],
+  "detected_at": "2026-10-31T02:04:16.366Z",
+  "added": [
+    {
+      "kid": "cameron",
+      "date": "2026-10-31",
+      "time": "2:30 PM",
+      "end": "4:15 PM",
+      "home": true,
+      "opp": "KC Diablos 12U",
+      "field": "15900 Long Ball St, Parkville MO"
+    }
+  ],
   "removed": [
     {
       "kid": "nora-volleyball",
@@ -276,12 +286,12 @@
     },
     {
       "kid": "cameron",
-      "date": "2026-10-31",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
+      "date": "2026-10-30",
+      "time": "9:00 PM",
+      "end": "10:45 PM",
       "home": true,
-      "opp": "KC Halloween hit fest",
-      "field": "1501 N 90th St, Kansas City KS"
+      "opp": "KC Diablos 12U",
+      "field": "15900 Long Ball St, Parkville MO"
     },
     {
       "kid": "nora-volleyball",
