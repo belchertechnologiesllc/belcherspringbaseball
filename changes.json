@@ -1,16 +1,6 @@
 {
-  "detected_at": "2026-11-01T01:55:24.178Z",
-  "added": [
-    {
-      "kid": "cameron",
-      "date": "2026-11-01",
-      "time": "12:00 PM",
-      "end": "1:45 PM",
-      "home": true,
-      "opp": "12U Top Tier KC - Navy",
-      "field": "15900 Long Ball St, Parkville MO"
-    }
-  ],
+  "detected_at": "2026-11-01T21:01:27.727Z",
+  "added": [],
   "removed": [
     {
       "kid": "nora-volleyball",
@@ -294,15 +284,6 @@
       "field": "SVMS Court B, 1000 Midjay Dr, Liberty"
     },
     {
-      "kid": "cameron",
-      "date": "2026-11-01",
-      "time": "12:NaN PM",
-      "end": "12:NaN PM",
-      "home": true,
-      "opp": "KC Halloween hit fest",
-      "field": "1501 N 90th St, Kansas City KS"
-    },
-    {
       "kid": "nora-softball",
       "date": "2026-11-03",
       "time": "6:00 PM",
@@ -312,5 +293,26 @@
       "field": "The Landing · Liberty Parks & Rec"
     }
   ],
-  "modified": []
+  "modified": [
+    {
+      "old": {
+        "kid": "parker",
+        "date": "2026-09-04",
+        "time": "7:30 PM",
+        "end": "8:30 PM",
+        "home": true,
+        "opp": "Thunder Baseball 11U",
+        "field": "1501 N 90th St, Kansas City KS"
+      },
+      "new": {
+        "kid": "parker",
+        "date": "2026-09-04",
+        "time": "7:30 PM",
+        "end": "8:30 PM",
+        "home": true,
+        "opp": "Thunder Baseball (Fall '26)",
+        "field": "1501 N 90th St, Kansas City KS"
+      }
+    }
+  ]
 }
