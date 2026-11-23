@@ -1,5 +1,5 @@
 {
-  "detected_at": "2026-11-01T21:01:27.727Z",
+  "detected_at": "2026-11-23T22:16:21.189Z",
   "added": [],
   "removed": [
     {
@@ -296,22 +296,182 @@
   "modified": [
     {
       "old": {
-        "kid": "parker",
-        "date": "2026-09-04",
-        "time": "7:30 PM",
-        "end": "8:30 PM",
+        "kid": "ryman",
+        "date": "2026-10-25",
+        "time": "9:15 AM",
+        "end": "10:15 AM",
         "home": true,
-        "opp": "Thunder Baseball 11U",
-        "field": "1501 N 90th St, Kansas City KS"
+        "opp": "Squirt Adams Outlaws at Squirt Adams Saints",
+        "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
       },
       "new": {
-        "kid": "parker",
-        "date": "2026-09-04",
-        "time": "7:30 PM",
-        "end": "8:30 PM",
+        "kid": "ryman",
+        "date": "2026-10-25",
+        "time": "9:15 AM",
+        "end": "10:15 AM",
         "home": true,
-        "opp": "Thunder Baseball (Fall '26)",
-        "field": "1501 N 90th St, Kansas City KS"
+        "opp": "Squirt Adams Outlaws at Squirt Adams Saints",
+        "field": "Line Creek Community Center and Ice Arena"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-11-07",
+        "time": "2:00 PM",
+        "end": "3:00 PM",
+        "home": true,
+        "opp": "Squirt Adams Saints at Squirt Adams Stars",
+        "field": "19900 Johnson Drive\\, Shawnee\\, KS 66218-9661\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-11-07",
+        "time": "2:00 PM",
+        "end": "3:00 PM",
+        "home": true,
+        "opp": "Squirt Adams Saints at Squirt Adams Stars",
+        "field": "Kansas City Ice Center and Pavilion"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-11-08",
+        "time": "11:15 AM",
+        "end": "12:15 PM",
+        "home": true,
+        "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
+        "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO 64151-2912\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-11-08",
+        "time": "11:15 AM",
+        "end": "12:15 PM",
+        "home": true,
+        "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
+        "field": "Line Creek Community Center and Ice Arena"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-11-09",
+        "time": "5:00 PM",
+        "end": "5:50 PM",
+        "home": true,
+        "opp": "Squirt Individual Pictures",
+        "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO 64151-2912\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-11-09",
+        "time": "5:00 PM",
+        "end": "5:50 PM",
+        "home": true,
+        "opp": "Squirt Individual Pictures",
+        "field": "Line Creek Community Center and Ice Arena"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-11-14",
+        "time": "5:30 PM",
+        "end": "6:30 PM",
+        "home": true,
+        "opp": "Squirt Adams Saints at Squirt Adams Outlaws",
+        "field": "19100 East Valley View Parkway\\, Independence\\, MO\\, 64055\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-11-14",
+        "time": "5:30 PM",
+        "end": "6:30 PM",
+        "home": true,
+        "opp": "Squirt Adams Saints at Squirt Adams Outlaws",
+        "field": "Independence Community Ice"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-11-21",
+        "time": "12:45 PM",
+        "end": "1:45 PM",
+        "home": true,
+        "opp": "Squirt Adams Stars at Squirt Adams Saints",
+        "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-11-21",
+        "time": "12:45 PM",
+        "end": "1:45 PM",
+        "home": true,
+        "opp": "Squirt Adams Stars at Squirt Adams Saints",
+        "field": "Line Creek Community Center and Ice Arena"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-12-05",
+        "time": "5:15 PM",
+        "end": "6:15 PM",
+        "home": true,
+        "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
+        "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-12-05",
+        "time": "5:15 PM",
+        "end": "6:15 PM",
+        "home": true,
+        "opp": "Squirt Adams Icehawks 1 at Squirt Adams Saints",
+        "field": "Line Creek Community Center and Ice Arena"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-12-06",
+        "time": "7:55 AM",
+        "end": "8:55 AM",
+        "home": true,
+        "opp": "Squirt Adams Carriage Club at Squirt Adams Saints",
+        "field": "5940 Northwest Waukomis Drive\\, Kansas City\\, MO\\, 64151-2912\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-12-06",
+        "time": "7:55 AM",
+        "end": "8:55 AM",
+        "home": true,
+        "opp": "Squirt Adams Carriage Club at Squirt Adams Saints",
+        "field": "Line Creek Community Center and Ice Arena"
+      }
+    },
+    {
+      "old": {
+        "kid": "ryman",
+        "date": "2026-12-20",
+        "time": "8:10 AM",
+        "end": "9:10 AM",
+        "home": true,
+        "opp": "Squirt Adams Saints at Squirt Adams Icehawks 2",
+        "field": "16201 Shawnee Drive\\, Overland Park\\, KS\\, 66223\\, US"
+      },
+      "new": {
+        "kid": "ryman",
+        "date": "2026-12-20",
+        "time": "8:10 AM",
+        "end": "9:10 AM",
+        "home": true,
+        "opp": "Squirt Adams Saints at Squirt Adams Icehawks 2",
+        "field": "AdventHealth Sports Park at Bluhawk"
       }
     }
   ]
